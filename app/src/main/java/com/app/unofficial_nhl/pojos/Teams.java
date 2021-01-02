@@ -12,6 +12,9 @@ public class Teams {
     @SerializedName("teams")
     @Expose
     private List<Team> teams = null;
+    @SerializedName("records")
+    @Expose
+    private List<Record> records = null;
 
     public String getCopyright() {
         return copyright;
@@ -27,6 +30,13 @@ public class Teams {
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+    public List<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
 
 }

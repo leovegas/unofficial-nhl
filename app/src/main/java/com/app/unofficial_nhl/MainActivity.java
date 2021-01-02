@@ -15,6 +15,8 @@ import retrofit2.Response;
 
 import java.io.CharArrayWriter;
 import java.io.StringWriter;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,14 +36,43 @@ public class MainActivity extends AppCompatActivity {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getAllTeams()
+                .getRosterOfTeam(1)
                 .enqueue(new Callback<Teams>() {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull  Response<Teams> response) {
                         Teams teams = response.body();
-
                         System.out.println(teams.getCopyright());
+                        teams.getTeams().forEach(team -> {
+                            team.getRoster().getRoster().forEach(per -> {
+                                System.out.println(per.getPerson().getFullName());
+                            });
+                        });
                         System.out.println(teams.getTeams().get(0).getName());
+
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
+                        System.out.println("Error occurred while getting request!");
+                        t.printStackTrace();
+                    }
+
+                });
+
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getStandings()
+                .enqueue(new Callback<Teams>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Teams> call, @NonNull  Response<Teams> response) {
+                        Map<Integer,String> standings = new TreeMap<>();
+                        Teams teams = response.body();
+                        teams.getRecords().forEach(team -> {
+                            team.getTeamRecords().forEach(t -> {
+                                standings.put(Integer.valueOf(t.getLeagueRank()),t.getTeam().getName());
+                            });
+                        });
+                        System.out.println(standings);
 
                     }
 

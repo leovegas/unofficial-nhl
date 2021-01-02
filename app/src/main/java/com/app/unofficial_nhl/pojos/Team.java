@@ -38,6 +38,9 @@ public class Team {
     @SerializedName("franchise")
     @Expose
     private Franchise franchise;
+    @SerializedName("roster")
+    @Expose
+    private Roster roster;
     @SerializedName("shortName")
     @Expose
     private String shortName;
@@ -137,6 +140,14 @@ public class Team {
 
     public void setFranchise(Franchise franchise) {
         this.franchise = franchise;
+    }
+
+    public Roster getRoster() {
+        return roster;
+    }
+
+    public void setRoster(Roster roster) {
+        this.roster = roster;
     }
 
     public String getShortName() {
