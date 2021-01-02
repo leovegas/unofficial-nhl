@@ -1,4 +1,4 @@
-package com.example.unofficial_nhl;
+package com.app.unofficial_nhl;
 
 import org.junit.Test;
 

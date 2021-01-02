@@ -1,12 +1,20 @@
-package com.example.unofficial_nhl;
+package com.app.unofficial_nhl;
 
 import android.os.Bundle;
+import androidx.annotation.NonNull;
+import com.app.unofficial_nhl.pojos.Teams;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.io.CharArrayWriter;
+import java.io.StringWriter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +31,27 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getAllTeams()
+                .enqueue(new Callback<Teams>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Teams> call, @NonNull  Response<Teams> response) {
+                        Teams teams = response.body();
+
+                        System.out.println(teams.getCopyright());
+                        System.out.println(teams.getTeams().get(0).getName());
+
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
+                        System.out.println("Error occurred while getting request!");
+                        t.printStackTrace();
+                    }
+
+                });
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.unofficial_nhl;
+package com.app.unofficial_nhl;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
