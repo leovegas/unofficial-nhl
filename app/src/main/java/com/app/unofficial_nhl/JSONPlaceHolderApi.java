@@ -15,4 +15,8 @@ public interface JSONPlaceHolderApi {
     Call<Teams> getRosterOfTeam(@Path("id") int id);
     @GET("api/v1/standings")
     Call<Teams> getStandings();
+    @GET("/api/v1/teams/{id}/stats")
+    Call<Teams> getTeamStats(@Path("id") int id);
+    @GET("/api/v1/people/{id}")
+    Call<Teams> getPlayerInfoById(@Path("id") int id);
 }

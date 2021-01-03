@@ -36,18 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getRosterOfTeam(1)
+                .getPlayerInfoById(8477474)
                 .enqueue(new Callback<Teams>() {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull  Response<Teams> response) {
-                        Teams teams = response.body();
-                        System.out.println(teams.getCopyright());
-                        teams.getTeams().forEach(team -> {
-                            team.getRoster().getRoster().forEach(per -> {
-                                System.out.println(per.getPerson().getFullName());
-                            });
-                        });
-                        System.out.println(teams.getTeams().get(0).getName());
+                        Teams people = response.body();
+
+                        System.out.println(people.getPeople().get(0).getFullName());
+                        System.out.println(people.getPeople().get(0).getBirthCity());
+                        System.out.println(people.getPeople().get(0).getBirthCountry());
+                        System.out.println(people.getPeople().get(0).getLink());
 
                     }
 

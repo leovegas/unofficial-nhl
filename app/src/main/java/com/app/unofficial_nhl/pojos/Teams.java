@@ -1,6 +1,7 @@
 package com.app.unofficial_nhl.pojos;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,6 +16,22 @@ public class Teams {
     @SerializedName("records")
     @Expose
     private List<Record> records = null;
+
+    public List<Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(List<Person> people) {
+        this.people = people;
+    }
+
+    @SerializedName("people")
+    @Expose
+    private List<Person> people = null;
+
+    @SerializedName("stats")
+    @Expose
+    private List<Stat> stats = null;
 
     public String getCopyright() {
         return copyright;
@@ -31,6 +48,7 @@ public class Teams {
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
+
     public List<Record> getRecords() {
         return records;
     }
@@ -39,4 +57,11 @@ public class Teams {
         this.records = records;
     }
 
+    public List<Stat> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<Stat> stats) {
+        this.stats = stats;
+    }
 }
