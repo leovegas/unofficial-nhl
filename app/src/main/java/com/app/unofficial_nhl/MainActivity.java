@@ -1,22 +1,19 @@
 package com.app.unofficial_nhl;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import androidx.annotation.NonNull;
+import com.app.unofficial_nhl.pojos.Record;
+import com.app.unofficial_nhl.pojos.TeamRecord;
 import com.app.unofficial_nhl.pojos.Teams;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.io.CharArrayWriter;
-import java.io.StringWriter;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,15 +21,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
 
         NetworkService.getInstance()
                 .getJSONApi()
@@ -65,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<Teams> call, @NonNull  Response<Teams> response) {
                         Map<Integer,String> standings = new TreeMap<>();
                         Teams teams = response.body();
-                        teams.getRecords().forEach(team -> {
-                            team.getTeamRecords().forEach(t -> {
-                                standings.put(Integer.valueOf(t.getLeagueRank()),t.getTeam().getName());
-                            });
-                        });
+                        for (Record team : teams.getRecords()) {
+                            for (TeamRecord t : team.getTeamRecords()) {
+                                standings.put(Integer.valueOf(t.getLeagueRank()), t.getTeam().getName());
+                            }
+                        }
                         System.out.println(standings);
 
                     }
@@ -81,6 +71,44 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+
+        final ListView listview = (ListView) findViewById(R.id.listview);
+        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+                "Android", "iPhone", "WindowsMobile" };
+
+        final ArrayList<String> list = new ArrayList<String>(Arrays.asList(values));
+        final ArrayAdapter adapter = new ArrayAdapter(this, R.layout.closest_games_list,
+               R.id.textView5, list);
+        listview.setAdapter(adapter);
+
+    }
+
+    private static class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
     }
 
 }
