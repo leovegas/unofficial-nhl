@@ -13,15 +13,15 @@ public class NetworkService {
 
     private NetworkService() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+       // interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
-        OkHttpClient.Builder client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor);
+//        OkHttpClient.Builder client = new OkHttpClient.Builder()
+//                .addInterceptor(interceptor);
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client.build())
+              //  .client(client.build())
                 .build();
     }
 

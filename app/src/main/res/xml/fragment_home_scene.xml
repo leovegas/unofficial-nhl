@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="5000">
+       <KeyFrameSet>
+           <KeyCycle motion:motionTarget="@+id/listview" motion:framePosition="0" motion:wavePeriod="1"
+                     motion:waveOffset="0.5"/>
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@+id/textView13" motion:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="1dp" android:layout_height="1dp"
+                    motion:layout_constraintTop_toTopOf="parent" motion:layout_constraintHorizontal_bias="0.5"
+                    motion:layout_constraintStart_toStartOf="parent" android:layout_marginTop="5dp"/>
+        <Constraint android:id="@+id/listview" motion:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    motion:layout_constraintTop_toBottomOf="@+id/textView13"
+                    motion:layout_constraintHorizontal_bias="0.5" motion:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="0dp"/>
+    </ConstraintSet>
+</MotionScene>

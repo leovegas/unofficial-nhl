@@ -5,6 +5,7 @@ import com.app.unofficial_nhl.pojos.Teams;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface JSONPlaceHolderApi {
     Call<Teams> getTeamStats(@Path("id") int id);
     @GET("/api/v1/people/{id}")
     Call<Teams> getPlayerInfoById(@Path("id") int id);
+    @GET("api/v1/schedule")
+    Call<Teams> getSheduledGamesByDate(@Query("date") String date);
 
 }
