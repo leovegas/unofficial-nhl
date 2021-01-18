@@ -30,8 +30,8 @@ public class DashboardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
 
-        Intent myIntent = new Intent(getActivity(), MainActivity.class);
-        getActivity().startActivity(myIntent);
+//        Intent myIntent = new Intent(getActivity(), MainActivity.class);
+//        getActivity().startActivity(myIntent);
 
 
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

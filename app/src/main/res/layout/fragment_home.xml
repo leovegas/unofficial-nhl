@@ -6,44 +6,31 @@
         android:layout_height="match_parent"
         tools:context="com.app.unofficial_nhl.ui.home.HomeFragment"
         android:background="@android:color/transparent" app:layoutDescription="@xml/fragment_home_scene">
-
-    <FrameLayout
+    <com.google.android.material.tabs.TabLayout
+            android:background="@color/background"
             android:layout_width="match_parent"
-            android:layout_height="48dp" app:layout_constraintStart_toStartOf="parent"
+            app:tabTextColor="@color/colorPrimary"
+            android:layout_height="wrap_content" android:id="@+id/tab_layout">
+
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday"/>
+
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday"/>
+
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday"/>
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:id="@+id/view_pager"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:id="@+id/frameLayout2">
-
-    </FrameLayout>
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:id="@+id/frameLayout11" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent">
-
-        <SearchView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/corners" android:layout_marginTop="10dp"
-                android:id="@+id/searchView">
-            <TextView
-                    android:text="NHL STATS INFO"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView13"
-                    android:textSize="34sp" android:fontFamily="@font/rubik_bold"
-                    android:textColor="#FF6500"
-            />
-        </SearchView>
-    </FrameLayout>
-    <ListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/backgr"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
-            app:layout_constraintBottom_toTopOf="@+id/frameLayout11" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent">
-    </ListView>
+            android:layout_height="0dp" app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

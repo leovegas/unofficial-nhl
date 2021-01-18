@@ -72,14 +72,6 @@ public class MainActivity2 extends AppCompatActivity {
             actionBar.hide();
 
         }
-        ViewPager2 vp = findViewById(R.id.view_pager);
-        TabLayout tl = findViewById(R.id.tab_layout);
-
-        vp.setAdapter(new ViewPagerFragmentAdapter(this));
-
-        // attaching tab mediator
-        new TabLayoutMediator(tl, vp,
-                (tab, position) -> tab.setText(titles[position])).attach();
 
 
 
@@ -133,31 +125,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
-    private class ViewPagerFragmentAdapter extends FragmentStateAdapter {
 
-        public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
-            super(fragmentActivity);
-        }
-
-        @NonNull
-        @Override
-        public Fragment createFragment(int position) {
-            switch (position) {
-                case 0:
-                    return new HomeFragment();
-                case 1:
-                    return new Today();
-                case 2:
-                    return new Tomorrow();
-            }
-            return new Yesteday();
-        }
-
-        @Override
-        public int getItemCount() {
-            return titles.length;
-        }
-    }
 
 
 }
