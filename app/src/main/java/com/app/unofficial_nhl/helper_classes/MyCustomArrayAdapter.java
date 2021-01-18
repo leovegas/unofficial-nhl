@@ -33,6 +33,9 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
         TextView detailedState;
         TextView gameDate;
         TextView gameTime;
+        TextView homeScore;
+        TextView awayScore;
+
     }
 
     @Override
@@ -50,6 +53,8 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
             viewHolder.detailedState = (TextView) convertView.findViewById(R.id.detailedState);
             viewHolder.gameDate = (TextView) convertView.findViewById(R.id.gameDate);
             viewHolder.gameTime = (TextView) convertView.findViewById(R.id.gameTime);
+            viewHolder.homeScore = (TextView) convertView.findViewById(R.id.home_score);
+            viewHolder.awayScore = (TextView) convertView.findViewById(R.id.away_score);
 
             convertView.setTag(viewHolder);
         }
@@ -58,7 +63,8 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
 
         //you can use data.get(position) too
         final ListRow myDataItem = listRows.get(position);
-
+        viewHolder.homeScore.setText(myDataItem.homeScore);
+        viewHolder.awayScore.setText(myDataItem.awayScore);
         viewHolder.team1.setText(myDataItem.team_1);
         viewHolder.team2.setText(myDataItem.team_2);
         viewHolder.logo1.setImageDrawable(myDataItem.lt1);

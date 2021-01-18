@@ -5,20 +5,24 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
+import android.os.*;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.ListRow;
 import com.app.unofficial_nhl.helper_classes.MyCustomArrayAdapter;
+import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.Game;
 import com.app.unofficial_nhl.pojos.Teams;
 import retrofit2.Call;
@@ -31,107 +35,114 @@ import java.util.*;
 
 public class Today extends Fragment {
 
-    public static Map<String, Integer> logosMap = null;
-
-
-    static {
-        Map<String,Integer> aMap = new HashMap<String, Integer>();
-        aMap.put("Winnipeg Jets", R.drawable.winnipeg_jets_logo);
-        aMap.put("Washington Capitals", R.drawable.washington_capitals_logo);
-        aMap.put("Vegas Golden Knights", R.drawable.vegas_golden_knights_logo);
-        aMap.put("Vancouver Canucks", R.drawable.vancouver_canucks_logo);
-        aMap.put("Toronto Maple Leafs", R.drawable.toronto_maple_leafs_logo);
-        aMap.put("Tampa Bay Lightning", R.drawable.tampa_bay_lightning_logo);
-        aMap.put("St. Louis Blues", R.drawable.st_louis_blues_logo);
-        aMap.put("San Jose Sharks", R.drawable.san_jose_sharks_logo);
-        aMap.put("Pittsburgh Penguins", R.drawable.pittsburgh_penguins_logo);
-        aMap.put("Philadelphia Flyers", R.drawable.philadelphia_flyers_logo);
-        aMap.put("Ottawa Senators", R.drawable.ottawa_senators_logo);
-        aMap.put("New York Rangers", R.drawable.new_york_rangers_logo);
-        aMap.put("New York Islanders", R.drawable.new_york_islanders_logo);
-        aMap.put("New Jersey Devils", R.drawable.new_jersey_devils_logo);
-        aMap.put("Nashville Predators", R.drawable.nashville_predators_logo);
-        aMap.put("Montréal Canadiens", R.drawable.montreal_canadiens_logo);
-        aMap.put("Minnesota Wild", R.drawable.minnesota_wild_logo);
-        aMap.put("Los Angeles Kings", R.drawable.los_angeles_kings_logo);
-        aMap.put("Florida Panthers", R.drawable.florida_panthers_logo);
-        aMap.put("Edmonton Oilers", R.drawable.edmonton_oilers_logo);
-        aMap.put("Detroit Red Wings", R.drawable.detroit_red_wings_logo);
-        aMap.put("Dallas Stars", R.drawable.dallas_stars_logo);
-        aMap.put("Columbus Blue Jackets", R.drawable.columbus_blue_jackets_logo);
-        aMap.put("Colorado Avalanche", R.drawable.colorado_avalanche_logo);
-        aMap.put("Chicago Blackhawks", R.drawable.chicago_blackhawks_logo);
-        aMap.put("Carolina Hurricanes", R.drawable.carolina_hurricanes_logo);
-        aMap.put("Calgary Flames", R.drawable.calgary_flames_logo);
-        aMap.put("Buffalo Sabres", R.drawable.buffalo_sabres_logo);
-        aMap.put("Boston Bruins", R.drawable.boston_bruins_logo);
-        aMap.put("Arizona Coyotes", R.drawable.arizona_coyotes_logo);
-        aMap.put("Anaheim Ducks", R.drawable.anaheim_ducks_logo);
-        logosMap = Collections.unmodifiableMap(aMap);
-    }
-
     private ArrayList<Game> gamesByDate = new ArrayList<>();
     String teamHome = "";
     String teamAway = "";
-    String detailedState  = "";
-    String venueName  = "";
-    String gameTime  = "";
-    String gameDate  = "";
+    String detailedState = "";
+    String venueName = "";
+    String gameTime = "";
+    String gameDate = "";
 
-        @Override
-        public View onCreateView(
-                LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState
-        ) {
-            View root = inflater.inflate(R.layout.fragment_today, container, false);
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState
+    ) {
+        View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
+        SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
+        ProgressBar loadingBar = root.findViewById(R.id.progressBar);
+        loadingBar.setVisibility(View.VISIBLE);
 
-            NetworkService.getInstance()
-                    .getJSONApi()
-                    .getSheduledGamesByDate("2021-01-18")
-                    .enqueue(new Callback<Teams>() {
-                        @Override
-                        public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
-                            Teams data = response.body();
-                            gamesByDate.addAll(data.getDates().get(0).getGames());
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis())))
+                .enqueue(new Callback<Teams>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
+                        Teams data = response.body();
+                        gamesByDate.addAll(data.getDates().get(0).getGames());
 
-                            ArrayList<ListRow> alldata = new ArrayList<ListRow>();
+                        ArrayList<ListRow> alldata = new ArrayList<ListRow>();
 
-                            System.out.println(gamesByDate.size());
-                        for (Game game : gamesByDate)
-                        {
+                        System.out.println(gamesByDate.size());
+                        for (Game game : gamesByDate) {
                             teamHome = game.getTeams().getHome().getTeam().getName();
                             teamAway = game.getTeams().getAway().getTeam().getName();
                             detailedState = game.getStatus().getDetailedState();
                             venueName = game.getVenue().getName();
-                            gameTime = getDateOrTime(game.getGameDate(),false);
-                            gameDate = getDateOrTime(game.getGameDate(),true);
+                            gameTime = getDateOrTime(game.getGameDate(), 2);
+                            gameDate = getDateOrTime(game.getGameDate(), 1);
 
                             @DrawableRes
-                            Drawable logo_team1 = resizeImage(logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
                             @DrawableRes
-                            Drawable logo_team2 = resizeImage(logosMap.get(game.getTeams().getAway().getTeam().getName()));
+                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
 
 
-                            ListRow listRow = new ListRow(teamHome, teamAway, logo_team1, logo_team2, venueName, gameTime, gameDate, detailedState);
+                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, "", "", logo_team1, logo_team2);
                             alldata.add(listRow);
-                        }
-
-                            MyCustomArrayAdapter adapter = new MyCustomArrayAdapter (getActivity(), alldata);
-                            final ListView listview = (ListView) root.findViewById(R.id.listview);
-                            listview.setAdapter(adapter);
+                            loadingBar.setVisibility(View.GONE);
 
                         }
 
-                        @Override
-                        public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
-                            System.out.println("Error occurred while getting request!");
-                            t.printStackTrace();
-                        }
+                        MyCustomArrayAdapter adapter = new MyCustomArrayAdapter(getActivity(), alldata);
+                        final ListView listview = (ListView) root.findViewById(R.id.listview);
+                        listview.setAdapter(adapter);
 
-                    });
-            // Inflate the layout for this fragment
-            return root;
-        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
+                        System.out.println("Error occurred while getting request!");
+                        t.printStackTrace();
+                    }
+
+                });
+        // Inflate the layout for this fragment
+        return root;
+    }
+
+    private void doSomethingOnUi(Object response) {
+        Handler uiThread = new Handler(Looper.getMainLooper());
+        uiThread.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), "Please wait", 5000).show();
+            }
+        });
+    }
+
+    public void doSomeTaskAsync() {
+        HandlerThread ht = new HandlerThread("MyHandlerThread");
+        ht.start();
+        Handler asyncHandler = new Handler(ht.getLooper()) {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                Object response = msg.obj;
+                doSomethingOnUi(response);
+            }
+        };
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                // your async code goes here.
+                try {
+                    Thread.sleep(1000);
+
+
+                    Message message = new Message();
+                    message.obj = "My Message!";
+
+                    asyncHandler.sendMessage(message);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        asyncHandler.post(runnable);
+    }
+
     /************************ Resize Bitmap *********************************/
     public Drawable resizeImage(int imageResource) {// R.drawable.large_image
         // Get device dimensions
@@ -152,6 +163,7 @@ public class Today extends Fragment {
 
         return drawable;
     }
+
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
 
         int width = bm.getWidth();
@@ -172,9 +184,10 @@ public class Today extends Fragment {
 
         return resizedBitmap;
     }
+    /************************ Resize Bitmap *********************************/
 
-    public String getDateOrTime(String stringTime, boolean areYouNeedDate)
-    {
+
+    public String getDateOrTime(String stringTime, int index) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         sdf.setTimeZone(TimeZone.getDefault());
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -186,8 +199,9 @@ public class Today extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (areYouNeedDate) return sdfDate.format(date);
-        else return sdfTime.format(date);
+        if (index == 1) return sdfDate.format(date);
+        if (index == 2) return sdfTime.format(date);
+        return sdfDate.format(date);
     }
 
 
@@ -213,7 +227,6 @@ public class Today extends Fragment {
         public boolean hasStableIds() {
             return true;
         }
-
 
 
     }

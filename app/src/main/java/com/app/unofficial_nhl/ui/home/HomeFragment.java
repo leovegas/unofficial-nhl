@@ -1,45 +1,22 @@
 package com.app.unofficial_nhl.ui.home;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-import com.app.unofficial_nhl.MainActivity2;
-import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
-import com.app.unofficial_nhl.helper_classes.ListRow;
-import com.app.unofficial_nhl.helper_classes.MyCustomArrayAdapter;
-import com.app.unofficial_nhl.pojos.Game;
-import com.app.unofficial_nhl.pojos.Teams;
 import com.app.unofficial_nhl.tabs.Today;
 import com.app.unofficial_nhl.tabs.Tomorrow;
 import com.app.unofficial_nhl.tabs.Yesteday;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class HomeFragment extends Fragment {
 
@@ -60,11 +37,17 @@ public class HomeFragment extends Fragment {
         ViewPager2 vp = root.findViewById(R.id.view_pager);
         TabLayout tl = root.findViewById(R.id.tab_layout);
 
+        vp.setUserInputEnabled(false);
+
+
+
         vp.setAdapter(new ViewPagerFragmentAdapter(this));
 
         // attaching tab mediator
         new TabLayoutMediator(tl, vp,
                 (tab, position) -> tab.setText(titles[position])).attach();
+
+        tl.getTabAt(1).select();
 
 
         return root;
@@ -87,7 +70,7 @@ public class HomeFragment extends Fragment {
                 case 2:
                     return new Tomorrow();
             }
-            return new Today();
+            return null;
         }
 
         @Override

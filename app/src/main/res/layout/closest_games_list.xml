@@ -19,7 +19,7 @@
                         android:layout_weight="1" app:srcCompat="@drawable/arizona"/>
                 <TextView
                         android:text="Team1"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/team_1"
                         android:layout_weight="1"
                         android:textColor="#BEFFFFFF" android:textAlignment="center"
@@ -35,30 +35,51 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center">
-                <TextView
-                        android:text="Scheduled"
+                <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/detailedState"
-                        android:layout_weight="1"
-                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"/>
+                        android:layout_height="match_parent" android:layout_weight="1">
+                    <TextView
+                            android:text="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/home_score" android:layout_weight="1"
+                            android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                            android:textSize="17sp" android:textAlignment="center"/>
+                    <TextView
+                            android:text="Scheduled"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/detailedState"
+                            android:layout_weight="1"
+                            android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"
+                            android:fontFamily="@font/rubik"/>
+                    <TextView
+                            android:text="0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/away_score" android:layout_weight="1"
+                            android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                            android:textSize="17sp" android:textAlignment="center"/>
+                </LinearLayout>
                 <TextView
                         android:text="Xcel Energy Center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/venueName"
                         android:layout_weight="1"
-                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"/>
+                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"
+                        android:fontFamily="@font/rubik"/>
                 <TextView
                         android:text="5:00PM"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/gameTime"
                         android:layout_weight="1"
-                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="17sp"/>
+                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="17sp"
+                        android:fontFamily="@font/rubik"/>
                 <TextView
                         android:text="2018-01-03"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/gameDate"
                         android:layout_weight="1"
-                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"/>
+                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"
+                        android:fontFamily="@font/rubik"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -71,7 +92,7 @@
                         android:layout_weight="1" app:srcCompat="@drawable/new_york_rangers"/>
                 <TextView
                         android:text="Team2"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/team_2"
                         android:layout_weight="1"
                         android:textColor="#BEFFFFFF" android:textAlignment="center"
