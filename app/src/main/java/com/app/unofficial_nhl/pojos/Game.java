@@ -25,7 +25,7 @@ public class Game {
     private Status status;
     @SerializedName("teams")
     @Expose
-    private Teams_ teams;
+    private Teams teams;
     @SerializedName("venue")
     @Expose
     private Venue venue;
@@ -78,11 +78,11 @@ public class Game {
         this.status = status;
     }
 
-    public Teams_ getTeams() {
+    public Teams getTeams() {
         return teams;
     }
 
-    public void setTeams(Teams_ teams) {
+    public void setTeams(Teams teams) {
         this.teams = teams;
     }
 

@@ -1,25 +1,32 @@
 package com.app.unofficial_nhl.helper_classes;
 
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.DrawableRes;
 
 public class ListRow {
 
     public String team_1;
     public String team_2;
-    public @DrawableRes
-    int lt1;
-    public @DrawableRes
-    int lt2;
+    public String venueName;
+    public String gameTime;
+    public String gameDate;
+    public String datailedState;
 
+    Drawable lt1;
+    Drawable lt2;
 
-    public ListRow(String team_1, String team_2, int logo_team_1, int logo_team_2) {
+    public ListRow(String team_1, String team_2, Drawable lt1, Drawable lt2, String venueName, String gameTime, String gameDate, String datailedState) {
         this.team_1 = team_1;
         this.team_2 = team_2;
-        this.lt1 = logo_team_1;
-        this.lt2 = logo_team_2;
+        this.venueName = venueName;
+        this.gameTime = gameTime;
+        this.gameDate = gameDate;
+        this.datailedState = datailedState;
+        this.lt1 = lt1;
+        this.lt2 = lt2;
     }
+
 
     public String getTeam_1() {
         return team_1;
@@ -37,19 +44,52 @@ public class ListRow {
         this.team_2 = team_2;
     }
 
-    public int getLt1() {
+
+    public String getVenueName() {
+        return venueName;
+    }
+
+    public void setVenueName(String venueName) {
+        this.venueName = venueName;
+    }
+
+    public String getGameTime() {
+        return gameTime;
+    }
+
+    public void setGameTime(String gameTime) {
+        this.gameTime = gameTime;
+    }
+
+    public String getGameDate() {
+        return gameDate;
+    }
+
+    public void setGameDate(String gameDate) {
+        this.gameDate = gameDate;
+    }
+
+    public String getDatailedState() {
+        return datailedState;
+    }
+
+    public void setDatailedState(String datailedState) {
+        this.datailedState = datailedState;
+    }
+
+    public Drawable getLt1() {
         return lt1;
     }
 
-    public void setLt1(int lt1) {
+    public void setLt1(Drawable lt1) {
         this.lt1 = lt1;
     }
 
-    public int getLt2() {
+    public Drawable getLt2() {
         return lt2;
     }
 
-    public void setLt2(int lt2) {
+    public void setLt2(Drawable lt2) {
         this.lt2 = lt2;
     }
 }

@@ -22,7 +22,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/team_1"
                         android:layout_weight="1"
-                        android:textColor="#FFFFFF" android:textAlignment="center"
+                        android:textColor="#BEFFFFFF" android:textAlignment="center"
                         android:fontFamily="@font/rubik" android:textSize="17sp"/>
                 <TextView
                         android:text="Home"
@@ -38,25 +38,25 @@
                 <TextView
                         android:text="Scheduled"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/textView11"
+                        android:layout_height="wrap_content" android:id="@+id/detailedState"
                         android:layout_weight="1"
                         android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"/>
                 <TextView
                         android:text="Xcel Energy Center"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/textView12"
+                        android:layout_height="wrap_content" android:id="@+id/venueName"
                         android:layout_weight="1"
                         android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"/>
                 <TextView
                         android:text="5:00PM"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/textView6"
+                        android:layout_height="wrap_content" android:id="@+id/gameTime"
                         android:layout_weight="1"
                         android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="17sp"/>
                 <TextView
                         android:text="2018-01-03"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/textView3"
+                        android:layout_height="wrap_content" android:id="@+id/gameDate"
                         android:layout_weight="1"
                         android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"/>
             </LinearLayout>
@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/team_2"
                         android:layout_weight="1"
-                        android:textColor="#FFFFFF" android:textAlignment="center"
+                        android:textColor="#BEFFFFFF" android:textAlignment="center"
                         android:fontFamily="@font/rubik" android:textSize="17sp"/>
                 <TextView
                         android:text="Away"

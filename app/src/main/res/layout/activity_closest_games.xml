@@ -57,13 +57,13 @@
                         <TextView
                                 android:text="TextView"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:id="@+id/textView6"
+                                android:layout_height="wrap_content" android:id="@+id/gameTime"
                                 android:layout_weight="1"
                                 android:textColor="#FFFFFF" android:textAlignment="center"/>
                         <TextView
                                 android:text="TextView"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:id="@+id/textView3"
+                                android:layout_height="wrap_content" android:id="@+id/gameDate"
                                 android:layout_weight="1"
                                 android:textColor="#FFFFFF" android:textAlignment="center"/>
                     </LinearLayout>

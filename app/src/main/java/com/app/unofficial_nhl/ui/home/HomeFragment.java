@@ -1,13 +1,18 @@
 package com.app.unofficial_nhl.ui.home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,21 +23,63 @@ import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.ListRow;
 import com.app.unofficial_nhl.helper_classes.MyCustomArrayAdapter;
 import com.app.unofficial_nhl.pojos.Game;
-import com.app.unofficial_nhl.pojos.Team_;
 import com.app.unofficial_nhl.pojos.Teams;
-import com.app.unofficial_nhl.pojos.Teams_;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class HomeFragment extends Fragment {
 
+    public static Map<String, Integer> logosMap = null;
+
+    static {
+        Map<String,Integer> aMap = new HashMap<String, Integer>();
+        aMap.put("Winnipeg Jets", R.drawable.winnipeg_jets_logo);
+        aMap.put("Washington Capitals", R.drawable.washington_capitals_logo);
+        aMap.put("Vegas Golden Knights", R.drawable.vegas_golden_knights_logo);
+        aMap.put("Vancouver Canucks", R.drawable.vancouver_canucks_logo);
+        aMap.put("Toronto Maple Leafs", R.drawable.toronto_maple_leafs_logo);
+        aMap.put("Tampa Bay Lightning", R.drawable.tampa_bay_lightning_logo);
+        aMap.put("St. Louis Blues", R.drawable.st_louis_blues_logo);
+        aMap.put("San Jose Sharks", R.drawable.san_jose_sharks_logo);
+        aMap.put("Pittsburgh Penguins", R.drawable.pittsburgh_penguins_logo);
+        aMap.put("Philadelphia Flyers", R.drawable.philadelphia_flyers_logo);
+        aMap.put("Ottawa Senators", R.drawable.ottawa_senators_logo);
+        aMap.put("New York Rangers", R.drawable.new_york_rangers_logo);
+        aMap.put("New York Islanders", R.drawable.new_york_islanders_logo);
+        aMap.put("New Jersey Devils", R.drawable.new_jersey_devils_logo);
+        aMap.put("Nashville Predators", R.drawable.nashville_predators_logo);
+        aMap.put("Montréal Canadiens", R.drawable.montreal_canadiens_logo);
+        aMap.put("Minnesota Wild", R.drawable.minnesota_wild_logo);
+        aMap.put("Los Angeles Kings", R.drawable.los_angeles_kings_logo);
+        aMap.put("Florida Panthers", R.drawable.florida_panthers_logo);
+        aMap.put("Edmonton Oilers", R.drawable.edmonton_oilers_logo);
+        aMap.put("Detroit Red Wings", R.drawable.detroit_red_wings_logo);
+        aMap.put("Dallas Stars", R.drawable.dallas_stars_logo);
+        aMap.put("Columbus Blue Jackets", R.drawable.columbus_blue_jackets_logo);
+        aMap.put("Colorado Avalanche", R.drawable.colorado_avalanche_logo);
+        aMap.put("Chicago Blackhawks", R.drawable.chicago_blackhawks_logo);
+        aMap.put("Carolina Hurricanes", R.drawable.carolina_hurricanes_logo);
+        aMap.put("Calgary Flames", R.drawable.calgary_flames_logo);
+        aMap.put("Buffalo Sabres", R.drawable.buffalo_sabres_logo);
+        aMap.put("Boston Bruins", R.drawable.boston_bruins_logo);
+        aMap.put("Arizona Coyotes", R.drawable.arizona_coyotes_logo);
+        aMap.put("Anaheim Ducks", R.drawable.anaheim_ducks_logo);
+        logosMap = Collections.unmodifiableMap(aMap);
+    }
+
     private HomeViewModel homeViewModel;
+    private ArrayList<Game> gamesByDate = new ArrayList<>();
+    String teamHome = "";
+    String teamAway = "";
+    String detailedState  = "";
+    String venueName  = "";
+    String gameTime  = "";
+    String gameDate  = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,18 +91,54 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        ArrayList<Game> gamesByDate = new ArrayList<>();
-       // getActivity().getActionBar().show();
+//        LocalDateTime ldt = LocalDateTime.now();
+//        System.out.println(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt));
+//        Date myDate = new Date();
+//        System.out.println(myDate);
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(myDate));
+
+//        Instant instant = Instant.parse( "2021-01-18T17:00:00Z" );
+//
+//        ZoneId zoneId = ZoneId.of( "America/Montreal" );
+//        ZonedDateTime zdt = instant.atZone( zoneId );
+//        System.out.println(zdt.getDayOfMonth());
+
+
+        // getActivity().getActionBar().show();
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate("2021-01-17")
+                .getSheduledGamesByDate("2021-01-18")
                 .enqueue(new Callback<Teams>() {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
                         Teams data = response.body();
-                        if (data != null) {
                             gamesByDate.addAll(data.getDates().get(0).getGames());
-                        }
+
+                        ArrayList<ListRow> alldata = new ArrayList<ListRow>();
+
+                        System.out.println(gamesByDate.size());
+//                        for (Game game : gamesByDate)
+//                        {
+//                            teamHome = game.getTeams().getHome().getTeam().getName();
+//                            teamAway = game.getTeams().getAway().getTeam().getName();
+//                            detailedState = game.getStatus().getDetailedState();
+//                            venueName = game.getVenue().getName();
+//                            gameTime = getDateOrTime(game.getGameDate(),false);
+//                            gameDate = getDateOrTime(game.getGameDate(),true);
+//
+//                            @DrawableRes
+//                            Drawable logo_team1 = resizeImage(logosMap.get(game.getTeams().getHome().getTeam().getName()));
+//                            @DrawableRes
+//                            Drawable logo_team2 = resizeImage(logosMap.get(game.getTeams().getAway().getTeam().getName()));
+//
+//
+//                            ListRow listRow = new ListRow(teamHome, teamAway, logo_team1, logo_team2, venueName, gameTime, gameDate, detailedState);
+//                            alldata.add(listRow);
+//                        }
+
+                        MyCustomArrayAdapter adapter = new MyCustomArrayAdapter (getActivity(), alldata);
+                        final ListView listview = (ListView) root.findViewById(R.id.listview);
+                        listview.setAdapter(adapter);
 
                     }
 
@@ -67,33 +150,49 @@ public class HomeFragment extends Fragment {
 
                 });
 
-        @DrawableRes
-        int logo_team1 = R.drawable.arizona;
-        @DrawableRes
-        int logo_team2 = R.drawable.new_york_rangers;
 
-        ArrayList<ListRow> alldata = new ArrayList<ListRow>();
-
-        for (Game game : gamesByDate)
-        {
-            System.out.println(game.getTeams().getHome().getTeam().getName());
-            System.out.println(game.getTeams().getAway().getTeam().getName());
-            Team_ team_h = (Team_) game.getTeams().getHome().getTeam();
-            Team_ team_a = (Team_) game.getTeams().getAway().getTeam();
-
-            ListRow listRow = new ListRow(team_h.getName(), team_a.getName(), logo_team1, logo_team2);
-            alldata.add(listRow);
-        }
-
-        MyCustomArrayAdapter adapter = new MyCustomArrayAdapter (getActivity(), alldata);
-        final ListView listview = (ListView) root.findViewById(R.id.listview);
-        listview.setAdapter(adapter);
         return root;
 
     }
 
+    /************************ Resize Bitmap *********************************/
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
 
+        int width = bm.getWidth();
+        int height = bm.getHeight();
 
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        // create a matrix for the manipulation
+        Matrix matrix = new Matrix();
+
+        // resize the bit map
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // recreate the new Bitmap
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
+                matrix, false);
+
+        return resizedBitmap;
+    }
+
+    public String getDateOrTime(String stringTime, boolean areYouNeedDate)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        sdf.setTimeZone(TimeZone.getDefault());
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
+
+        Date date = new Date();
+        try {
+            date = sdf.parse(stringTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (areYouNeedDate) return sdfDate.format(date);
+        else return sdfTime.format(date);
+    }
 
 
     private static class StableArrayAdapter extends ArrayAdapter<String> {
@@ -118,6 +217,8 @@ public class HomeFragment extends Fragment {
         public boolean hasStableIds() {
             return true;
         }
+
+
 
     }
 }

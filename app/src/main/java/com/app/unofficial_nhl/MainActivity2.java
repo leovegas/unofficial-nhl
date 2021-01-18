@@ -1,36 +1,39 @@
 package com.app.unofficial_nhl;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import com.app.unofficial_nhl.pojos.Record;
-import com.app.unofficial_nhl.pojos.TeamRecord;
-import com.app.unofficial_nhl.pojos.Teams;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+import com.app.unofficial_nhl.pojos.Teams;
+import com.app.unofficial_nhl.tabs.Today;
+import com.app.unofficial_nhl.tabs.Tomorrow;
+import com.app.unofficial_nhl.tabs.Yesteday;
+import com.app.unofficial_nhl.ui.home.HomeFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.*;
-
-import static androidx.appcompat.app.ActionBar.DISPLAY_USE_LOGO;
-import static androidx.appcompat.app.AppCompatDelegate.FEATURE_SUPPORT_ACTION_BAR;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MainActivity2 extends AppCompatActivity {
+
+    private String[] titles = new String[]{"Yesteday", "Today", "Tomorrow"};
+
 
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -69,10 +72,14 @@ public class MainActivity2 extends AppCompatActivity {
             actionBar.hide();
 
         }
+        ViewPager2 vp = findViewById(R.id.view_pager);
+        TabLayout tl = findViewById(R.id.tab_layout);
 
-        // Get a support ActionBar corresponding to this toolbar
+        vp.setAdapter(new ViewPagerFragmentAdapter(this));
 
-        // Enable the Up button
+        // attaching tab mediator
+        new TabLayoutMediator(tl, vp,
+                (tab, position) -> tab.setText(titles[position])).attach();
 
 
 
@@ -125,5 +132,32 @@ public class MainActivity2 extends AppCompatActivity {
                 });
 
     }
+
+    private class ViewPagerFragmentAdapter extends FragmentStateAdapter {
+
+        public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            switch (position) {
+                case 0:
+                    return new HomeFragment();
+                case 1:
+                    return new Today();
+                case 2:
+                    return new Tomorrow();
+            }
+            return new Yesteday();
+        }
+
+        @Override
+        public int getItemCount() {
+            return titles.length;
+        }
+    }
+
 
 }

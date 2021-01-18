@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">unofficial-nhl</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Today</string>
+    <string name="title_dashboard">Tables</string>
+    <string name="title_notifications">Clubs</string>
+    <string name="favorite">Favs</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="title_activity_motion_layout">MainActivity</string>

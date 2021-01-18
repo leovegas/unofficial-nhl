@@ -37,6 +37,13 @@ public class Teams {
     @Expose
     private int totalItems;
 
+    @SerializedName("away")
+    @Expose
+    private Away away;
+    @SerializedName("home")
+    @Expose
+    private Home home;
+
     public int getTotalItems() {
         return totalItems;
     }
@@ -131,5 +138,21 @@ public class Teams {
 
     public void setStats(List<Stat> stats) {
         this.stats = stats;
+    }
+
+    public Away getAway() {
+        return away;
+    }
+
+    public void setAway(Away away) {
+        this.away = away;
+    }
+
+    public Home getHome() {
+        return home;
+    }
+
+    public void setHome(Home home) {
+        this.home = home;
     }
 }

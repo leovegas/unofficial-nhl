@@ -27,6 +27,12 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
     public static class ViewHolder {
         TextView team1;
         TextView team2;
+        ImageView logo1;
+        ImageView logo2;
+        TextView venueName;
+        TextView detailedState;
+        TextView gameDate;
+        TextView gameTime;
     }
 
     @Override
@@ -38,6 +44,13 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
             viewHolder = new ViewHolder();
             viewHolder.team1 = (TextView) convertView.findViewById(R.id.team_1);
             viewHolder.team2 = (TextView) convertView.findViewById(R.id.team_2);
+            viewHolder.logo1 = (ImageView) convertView.findViewById(R.id.logo_team_1);
+            viewHolder.logo2 = (ImageView) convertView.findViewById(R.id.logo_team_2);
+            viewHolder.venueName = (TextView) convertView.findViewById(R.id.venueName);
+            viewHolder.detailedState = (TextView) convertView.findViewById(R.id.detailedState);
+            viewHolder.gameDate = (TextView) convertView.findViewById(R.id.gameDate);
+            viewHolder.gameTime = (TextView) convertView.findViewById(R.id.gameTime);
+
             convertView.setTag(viewHolder);
         }
             viewHolder = (ViewHolder) convertView.getTag();
@@ -48,8 +61,12 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
 
         viewHolder.team1.setText(myDataItem.team_1);
         viewHolder.team2.setText(myDataItem.team_2);
-
-
+        viewHolder.logo1.setImageDrawable(myDataItem.lt1);
+        viewHolder.logo2.setImageDrawable(myDataItem.lt2);
+        viewHolder.venueName.setText(myDataItem.venueName);
+        viewHolder.gameTime.setText(myDataItem.gameTime);
+        viewHolder.gameDate.setText(myDataItem.gameDate);
+        viewHolder.detailedState.setText(myDataItem.datailedState);
         return convertView;
     }
 }

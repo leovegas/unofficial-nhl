@@ -13,7 +13,7 @@ public class Away {
     private int score;
     @SerializedName("team")
     @Expose
-    private Team_ team_;
+    private Team team_;
 
     public LeagueRecord getLeagueRecord() {
         return leagueRecord;
@@ -31,7 +31,7 @@ public class Away {
         this.score = score;
     }
 
-    public Team_ getTeam() {
+    public Team getTeam() {
         return team_;
     }
 

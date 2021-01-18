@@ -14,7 +14,7 @@ public class Home {
     private int score;
     @SerializedName("team")
     @Expose
-    private Team_ team;
+    private Team team;
 
     public LeagueRecord_ getLeagueRecord() {
         return leagueRecord;
@@ -32,11 +32,11 @@ public class Home {
         this.score = score;
     }
 
-    public Team_ getTeam() {
+    public Team getTeam() {
         return team;
     }
 
-    public void setTeam(Team_ team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 
