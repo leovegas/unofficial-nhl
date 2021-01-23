@@ -32,6 +32,7 @@
         <Constraint android:id="@+id/nav_host_fragment" android:layout_width="match_parent"
                     android:layout_height="wrap_content" motion:layout_constraintBottom_toBottomOf="parent"
                     motion:layout_constraintLeft_toLeftOf="parent" motion:layout_constraintRight_toRightOf="parent"
-                    motion:layout_constraintTop_toTopOf="parent" motion:layout_constraintHorizontal_bias="0.5"/>
+                    motion:layout_constraintTop_toTopOf="parent" motion:layout_constraintHorizontal_bias="0.5"
+                    android:layout_marginTop="0dp" android:layout_marginBottom="100dp"/>
     </ConstraintSet>
 </MotionScene>

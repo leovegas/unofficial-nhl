@@ -6,14 +6,8 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.*;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,6 +19,7 @@ import com.app.unofficial_nhl.helper_classes.MyCustomArrayAdapter;
 import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.Game;
 import com.app.unofficial_nhl.pojos.Teams;
+import com.google.android.material.navigation.NavigationView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +37,8 @@ public class Today extends Fragment {
     String venueName = "";
     String gameTime = "";
     String gameDate = "";
+
+
 
     @Override
     public View onCreateView(
@@ -65,29 +62,49 @@ public class Today extends Fragment {
                         ArrayList<ListRow> alldata = new ArrayList<ListRow>();
 
                         System.out.println(gamesByDate.size());
-                        for (Game game : gamesByDate) {
-                            teamHome = game.getTeams().getHome().getTeam().getName();
-                            teamAway = game.getTeams().getAway().getTeam().getName();
-                            detailedState = game.getStatus().getDetailedState();
-                            venueName = game.getVenue().getName();
-                            gameTime = getDateOrTime(game.getGameDate(), 2);
-                            gameDate = getDateOrTime(game.getGameDate(), 1);
-
-                            @DrawableRes
-                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
-                            @DrawableRes
-                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
-
-
-                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, "", "", logo_team1, logo_team2);
-                            alldata.add(listRow);
-                            loadingBar.setVisibility(View.GONE);
-
-                        }
+//                        for (Game game : gamesByDate) {
+//                            teamHome = game.getTeams().getHome().getTeam().getName();
+//                            teamAway = game.getTeams().getAway().getTeam().getName();
+//                            detailedState = game.getStatus().getDetailedState();
+//                            venueName = game.getVenue().getName();
+//                            gameTime = getDateOrTime(game.getGameDate(), 2);
+//                            gameDate = getDateOrTime(game.getGameDate(), 1);
+//
+//                            @DrawableRes
+//                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+//                            @DrawableRes
+//                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+//
+//
+//                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, "", "", logo_team1, logo_team2);
+//                            alldata.add(listRow);
+//                            loadingBar.setVisibility(View.GONE);
+//
+//                        }
 
                         MyCustomArrayAdapter adapter = new MyCustomArrayAdapter(getActivity(), alldata);
                         final ListView listview = (ListView) root.findViewById(R.id.listview);
                         listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Toast.makeText(getActivity(), alldata.get(position).venueName+"", Toast.LENGTH_SHORT).show();
+                                cardflip(view,root.getContext());
+                            }
+                        });
+                        listview.setOnDragListener(new View.OnDragListener() {
+
+                            @Override
+                            public boolean onDrag(View v, DragEvent event) {
+                                NavigationView navigationView = root.findViewById(R.id.nav_view);
+                                navigationView.animate()
+                                        .alpha(100)
+                                        .setDuration(2000)
+                                        .start();
+
+                                return false;
+                            }
+                        });
 
                     }
 
@@ -101,6 +118,27 @@ public class Today extends Fragment {
         // Inflate the layout for this fragment
         return root;
     }
+
+    public synchronized void cardflip (View v,Context context) {
+
+            v.animate().withLayer()
+                    .rotationY(90)
+                    .setDuration(400)
+                    .withEndAction(
+                            new Runnable() {
+                                @Override public void run() {
+                                    float scale = context.getResources().getDisplayMetrics().density;
+                                    float distance = v.getCameraDistance() * (scale + (scale / 3));
+                                    v.setCameraDistance(distance * scale);
+                                    v.setRotationY(-90);
+                                    v.animate().withLayer()
+                                            .rotationY(0)
+                                            .setDuration(400)
+                                            .start();
+                                }
+                            }
+                    ).start();
+        }
 
     private void doSomethingOnUi(Object response) {
         Handler uiThread = new Handler(Looper.getMainLooper());
@@ -230,5 +268,7 @@ public class Today extends Fragment {
 
 
     }
+
+
     }
 

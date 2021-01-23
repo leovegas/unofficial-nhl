@@ -73,6 +73,8 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
         viewHolder.gameTime.setText(myDataItem.gameTime);
         viewHolder.gameDate.setText(myDataItem.gameDate);
         viewHolder.detailedState.setText(myDataItem.datailedState);
+
+
         return convertView;
     }
 }
