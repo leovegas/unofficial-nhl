@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.app.unofficial_nhl.R;
@@ -44,10 +45,21 @@ public class MyTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader
 
     @Override
     public void onBindCellViewHolder(@NonNull AbstractViewHolder holder, @Nullable  Cell cellItemModel, int columnPosition, int rowPosition) {
+
         Cell cell = (Cell) cellItemModel;
 
-        ((CellViewHolder) holder).setCellModel(cell, rowPosition);
 
+        // Get the holder to update cell item text
+        CellViewHolder viewHolder = (CellViewHolder) holder;
+        System.out.println("celldata "+cell.getData());
+        viewHolder.cell_textview.setText(cell.getData());
+
+        // If your TableView should have auto resize for cells & columns.
+        // Then you should consider the below lines. Otherwise, you can ignore them.
+
+        // It is necessary to remeasure itself.
+        viewHolder.cell_container.getLayoutParams().width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        viewHolder.cell_textview.requestLayout();
     }
 
     @Override
@@ -96,12 +108,12 @@ public class MyTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader
 
     @Override
     public int getColumnHeaderItemViewType(int position) {
-        return 0;
+        return 3;
     }
 
     @Override
     public int getRowHeaderItemViewType(int position) {
-        return 0;
+        return 3;
     }
 
     @Override

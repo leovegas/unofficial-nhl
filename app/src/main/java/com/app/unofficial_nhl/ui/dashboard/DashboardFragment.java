@@ -24,6 +24,7 @@ public class DashboardFragment extends Fragment {
     private List<RowHeader> mRowHeaderList;
     private List<ColumnHeader> mColumnHeaderList;
     private List<List<Cell>> mCellList;
+
     private MyTableAdapter mTableAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,7 +54,13 @@ public class DashboardFragment extends Fragment {
         list.add(new Cell("CEll1"));
         list.add(new Cell("CEll2"));
         list.add(new Cell("CEll3"));
-
+        list.add(new Cell("CEll1"));
+        list.add(new Cell("CEll2"));
+        list.add(new Cell("CEll3"));
+        list.add(new Cell("CEll1"));
+        list.add(new Cell("CEll2"));
+        list.add(new Cell("CEll3"));
+        
         mCellList.add(list);
         mTableAdapter = new MyTableAdapter();
         mTableView.setAdapter(mTableAdapter);
