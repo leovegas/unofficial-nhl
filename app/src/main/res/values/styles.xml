@@ -12,5 +12,10 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="backgroundColor">@color/backgroundAlt1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primaryapp</item>
+    </style>
 
 </resources>
