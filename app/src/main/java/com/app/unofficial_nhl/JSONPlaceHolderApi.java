@@ -22,5 +22,4 @@ public interface JSONPlaceHolderApi {
     Call<Teams> getPlayerInfoById(@Path("id") int id);
     @GET("api/v1/schedule")
     Call<Teams> getSheduledGamesByDate(@Query("date") String date);
-
 }

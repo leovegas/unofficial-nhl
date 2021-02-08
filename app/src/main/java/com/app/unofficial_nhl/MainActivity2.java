@@ -89,30 +89,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                 });
 
-        NetworkService.getInstance()
-                .getJSONApi()
-                .getStandings()
-                .enqueue(new Callback<Teams>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
-                        Map<Integer, String> standings = new TreeMap<>();
-                        Teams teams = response.body();
-//                        for (Record team : teams.getRecords()) {
-//                            for (TeamRecord t : team.getTeamRecords()) {
-//                                standings.put(Integer.valueOf(t.getLeagueRank()), t.getTeam().getName());
-//                            }
-//                        }
-//                        System.out.println(standings);
 
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
-                        System.out.println("Error occurred while getting request!");
-                        t.printStackTrace();
-                    }
-
-                });
 
     }
 

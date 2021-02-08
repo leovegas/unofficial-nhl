@@ -47,19 +47,22 @@ public class MyTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader
     public void onBindCellViewHolder(@NonNull AbstractViewHolder holder, @Nullable  Cell cellItemModel, int columnPosition, int rowPosition) {
 
         Cell cell = (Cell) cellItemModel;
-
-
-        // Get the holder to update cell item text
         CellViewHolder viewHolder = (CellViewHolder) holder;
-        System.out.println("celldata "+cell.getData());
-        viewHolder.cell_textview.setText(cell.getData());
 
-        // If your TableView should have auto resize for cells & columns.
-        // Then you should consider the below lines. Otherwise, you can ignore them.
+        viewHolder.setCellModel(cell, columnPosition);
 
-        // It is necessary to remeasure itself.
-        viewHolder.cell_container.getLayoutParams().width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        viewHolder.cell_textview.requestLayout();
+
+
+//        // Get the holder to update cell item text
+//        CellViewHolder viewHolder = (CellViewHolder) holder;
+//        viewHolder.cell_textview.setText(cell.getData());
+//
+//        // If your TableView should have auto resize for cells & columns.
+//        // Then you should consider the below lines. Otherwise, you can ignore them.
+//
+//        // It is necessary to remeasure itself.
+//        viewHolder.cell_container.getLayoutParams().width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//        viewHolder.cell_textview.requestLayout();
     }
 
     @Override
@@ -108,12 +111,12 @@ public class MyTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader
 
     @Override
     public int getColumnHeaderItemViewType(int position) {
-        return 3;
+        return 0;
     }
 
     @Override
     public int getRowHeaderItemViewType(int position) {
-        return 3;
+        return 0;
     }
 
     @Override

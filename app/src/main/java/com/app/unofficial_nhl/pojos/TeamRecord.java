@@ -68,6 +68,9 @@ public class TeamRecord {
     @SerializedName("gamesPlayed")
     @Expose
     private int gamesPlayed;
+    @SerializedName("streak")
+    @Expose
+    private Streak streak;
     @SerializedName("pointsPercentage")
     @Expose
     private double pointsPercentage;
@@ -250,6 +253,14 @@ public class TeamRecord {
 
     public void setGamesPlayed(int gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
+    }
+
+    public Streak getStreak() {
+        return streak;
+    }
+
+    public void setStreak(Streak streak) {
+        this.streak = streak;
     }
 
     public double getPointsPercentage() {

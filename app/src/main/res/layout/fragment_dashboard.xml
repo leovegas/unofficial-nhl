@@ -5,38 +5,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.app.unofficial_nhl.ui.dashboard.DashboardFragment">
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="5dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="5dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="70dp"
-            android:background="@drawable/corners_views" app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="5dp" android:id="@+id/scrollView2">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical">
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/spinner1" android:layout_weight="1"
-                        android:contentDescription="2020/2021" style="@style/Widget.AppCompat.Spinner.DropDown"/>
-                <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/spinner2" android:layout_weight="1"
-                        android:contentDescription="Divisions"/>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="40dp" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="3dp" android:layout_marginEnd="3dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="90dp"
+            android:background="@drawable/corners_views" app:layout_constraintVertical_bias="1.0"
+            android:id="@+id/linearLayout">
 
         <com.evrencoskun.tableview.TableView
                 android:id="@+id/content_container"
@@ -50,5 +28,25 @@
         <!--                app:unselected_color="@color/unselected_background_color"-->
 
 
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  app:layout_constraintTop_toTopOf="parent"
+                  android:layout_marginTop="13dp" app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="3dp"
+                  app:layout_constraintBottom_toTopOf="@+id/linearLayout">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinner1" android:layout_weight="1"
+                    android:contentDescription="2020/2021" style="@style/Widget.AppCompat.Spinner.DropDown"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinner2" android:layout_weight="1"
+                    android:contentDescription="Divisions"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,9 @@ public class Record {
     @SerializedName("division")
     @Expose
     private Division division;
+    @SerializedName("conference")
+    @Expose
+    private Conference conference;
     @SerializedName("teamRecords")
     @Expose
     private List<TeamRecord> teamRecords = null;
@@ -41,6 +44,14 @@ public class Record {
 
     public void setDivision(Division division) {
         this.division = division;
+    }
+
+    public Conference getConference() {
+        return conference;
+    }
+
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
 
     public List<TeamRecord> getTeamRecords() {
