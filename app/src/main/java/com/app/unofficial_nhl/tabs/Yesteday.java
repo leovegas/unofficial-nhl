@@ -59,31 +59,33 @@ public class Yesteday extends Fragment {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
                         Teams data = response.body();
-                        gamesByDate.addAll(data.getDates().get(0).getGames());
+                        if (!data.getDates().isEmpty()) {
+                            gamesByDate.addAll(data.getDates().get(0).getGames());
+                        }
 
                         ArrayList<ListRow> alldata = new ArrayList<ListRow>();
 
                         System.out.println(gamesByDate.size());
-//                        for (Game game : gamesByDate) {
-//                            teamHome = game.getTeams().getHome().getTeam().getName();
-//                            teamAway = game.getTeams().getAway().getTeam().getName();
-//                            detailedState = game.getStatus().getDetailedState();
-//                            venueName = game.getVenue().getName();
-//                            gameTime = getDateOrTime(game.getGameDate(), 2);
-//                            gameDate = getDateOrTime(game.getGameDate(), 1);
-//                            homeScore = String.valueOf(game.getTeams().getHome().getScore());
-//                            awayScore = String.valueOf(game.getTeams().getAway().getScore());
-//
-//
-//                            @DrawableRes
-//                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
-//                            @DrawableRes
-//                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
-//
-//
-//                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
-//                            alldata.add(listRow);
-//                        }
+                        for (Game game : gamesByDate) {
+                            teamHome = game.getTeams().getHome().getTeam().getName();
+                            teamAway = game.getTeams().getAway().getTeam().getName();
+                            detailedState = game.getStatus().getDetailedState();
+                            venueName = game.getVenue().getName();
+                            gameTime = getDateOrTime(game.getGameDate(), 2);
+                            gameDate = getDateOrTime(game.getGameDate(), 1);
+                            homeScore = String.valueOf(game.getTeams().getHome().getScore());
+                            awayScore = String.valueOf(game.getTeams().getAway().getScore());
+
+
+                            @DrawableRes
+                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                            @DrawableRes
+                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+
+
+                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
+                            alldata.add(listRow);
+                        }
 
                         MyCustomArrayAdapter adapter = new MyCustomArrayAdapter(getActivity(), alldata);
                         final ListView listview = (ListView) root.findViewById(R.id.listview);

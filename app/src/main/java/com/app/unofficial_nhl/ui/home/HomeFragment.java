@@ -22,7 +22,7 @@ public class HomeFragment extends Fragment {
 
 
     private HomeViewModel homeViewModel;
-    private String[] titles = new String[]{"Yesteday", "Today", "Tomorrow"};
+    private String[] titles = new String[]{"Yesterday", "Today", "Tomorrow"};
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

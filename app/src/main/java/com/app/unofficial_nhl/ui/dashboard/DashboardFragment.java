@@ -171,10 +171,12 @@ public class DashboardFragment extends Fragment {
         list.add(new ColumnHeader("Points"));
         list.add(new ColumnHeader("GP"));
         list.add(new ColumnHeader("Streak"));
-        list.add(new ColumnHeader("divisionRank"));
-        list.add(new ColumnHeader("conferenceRank"));
-        list.add(new ColumnHeader("leagueRank"));
-        list.add(new ColumnHeader("wildCardRank"));
+        list.add(new ColumnHeader("DR"));
+        list.add(new ColumnHeader("CR"));
+        list.add(new ColumnHeader("LR"));
+        list.add(new ColumnHeader("WCR"));
+        list.add(new ColumnHeader("PPR"));
+
 
         return list;
     }
@@ -217,6 +219,8 @@ public class DashboardFragment extends Fragment {
                 list.add(new Cell(t.getConferenceRank())); // "CreatedAt"
                 list.add(new Cell(t.getLeagueRank())); // "UpdatedAt"
                 list.add(new Cell(t.getWildCardRank()));    // "Address"
+                list.add(new Cell(t.getPpLeagueRank()));    // "Address"
+
 
                 // Add
                 lists.add(list);

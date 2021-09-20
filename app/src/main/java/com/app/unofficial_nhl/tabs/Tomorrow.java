@@ -58,7 +58,9 @@ public class Tomorrow extends Fragment {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
                         Teams data = response.body();
-                        gamesByDate.addAll(data.getDates().get(0).getGames());
+                        if (!data.getDates().isEmpty()) {
+                            gamesByDate.addAll(data.getDates().get(0).getGames());
+                        }
 
                         ArrayList<ListRow> alldata = new ArrayList<ListRow>();
 

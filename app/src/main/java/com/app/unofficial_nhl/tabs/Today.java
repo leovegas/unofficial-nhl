@@ -11,7 +11,6 @@ import android.widget.*;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.ListRow;
@@ -37,6 +36,8 @@ public class Today extends Fragment {
     String venueName = "";
     String gameTime = "";
     String gameDate = "";
+    String homeScore = "";
+    String awayScore = "";
 
 
 
@@ -52,43 +53,52 @@ public class Today extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis())))
+            //    .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis())))
+                .getSheduledGamesByDate("2021-03-13")
                 .enqueue(new Callback<Teams>() {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
+                        System.out.println(response);
                         Teams data = response.body();
-                        gamesByDate.addAll(data.getDates().get(0).getGames());
+                        if (!data.getDates().isEmpty()) {
+                            gamesByDate.addAll(data.getDates().get(0).getGames());
+                        }
 
                         ArrayList<ListRow> alldata = new ArrayList<ListRow>();
+                        ArrayList<ListRow> alldata2 = new ArrayList<ListRow>();
 
                         System.out.println(gamesByDate.size());
-//                        for (Game game : gamesByDate) {
-//                            teamHome = game.getTeams().getHome().getTeam().getName();
-//                            teamAway = game.getTeams().getAway().getTeam().getName();
-//                            detailedState = game.getStatus().getDetailedState();
-//                            venueName = game.getVenue().getName();
-//                            gameTime = getDateOrTime(game.getGameDate(), 2);
-//                            gameDate = getDateOrTime(game.getGameDate(), 1);
-//
-//                            @DrawableRes
-//                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
-//                            @DrawableRes
-//                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
-//
-//
-//                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, "", "", logo_team1, logo_team2);
-//                            alldata.add(listRow);
-//                            loadingBar.setVisibility(View.GONE);
-//
-//                        }
+                        for (Game game : gamesByDate) {
+                            teamHome = game.getTeams().getHome().getTeam().getName();
+                            teamAway = game.getTeams().getAway().getTeam().getName();
+                            detailedState = game.getStatus().getDetailedState();
+                            venueName = game.getVenue().getName();
+                            gameTime = getDateOrTime(game.getGameDate(), 2);
+                            gameDate = getDateOrTime(game.getGameDate(), 1);
+                            homeScore = String.valueOf(game.getTeams().getHome().getScore());
+                            awayScore = String.valueOf(game.getTeams().getAway().getScore());
+
+                            @DrawableRes
+                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                            @DrawableRes
+                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+
+
+                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
+                            alldata.add(listRow);
+
+                            loadingBar.setVisibility(View.GONE);
+
+                        }
 
                         MyCustomArrayAdapter adapter = new MyCustomArrayAdapter(getActivity(), alldata);
                         final ListView listview = (ListView) root.findViewById(R.id.listview);
                         listview.setAdapter(adapter);
+
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Toast.makeText(getActivity(), alldata.get(position).venueName+"", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), alldata.get(position).awayScore+"", Toast.LENGTH_SHORT).show();
                                 cardflip(view,root.getContext());
                             }
                         });
@@ -131,14 +141,29 @@ public class Today extends Fragment {
                                     float distance = v.getCameraDistance() * (scale + (scale / 3));
                                     v.setCameraDistance(distance * scale);
                                     v.setRotationY(-90);
+                                    v.findViewById(R.id.away_score).setVisibility(View.VISIBLE);
+                                    v.findViewById(R.id.home_score).setVisibility(View.VISIBLE);
+
                                     v.animate().withLayer()
                                             .rotationY(0)
                                             .setDuration(400)
                                             .start();
+                                    v.findViewById(R.id.away_score).animate().withLayer()
+                                            .rotationY(0)
+                                            .setDuration(400)
+                                            .start();
+                                    v.findViewById(R.id.home_score).animate().withLayer()
+                                            .rotationY(0)
+                                            .setDuration(400)
+                                            .start();
+
+
                                 }
                             }
+
                     ).start();
-        }
+
+    }
 
     private void doSomethingOnUi(Object response) {
         Handler uiThread = new Handler(Looper.getMainLooper());

@@ -27,6 +27,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
                     android:textColor="@color/table_view_default_text_color"
                     android:textSize="@dimen/text_size"
                     android:textStyle="bold"
@@ -35,8 +37,8 @@
 
         <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_gravity="bottom"
-                android:background="@color/header_line_color" />
+                android:background="@color/cell_background_color" />
     </FrameLayout>
 </LinearLayout>

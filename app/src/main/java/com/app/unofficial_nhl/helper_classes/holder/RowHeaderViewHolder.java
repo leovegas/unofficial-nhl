@@ -1,5 +1,6 @@
 package com.app.unofficial_nhl.helper_classes.holder;
 
+import android.view.Gravity;
 import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -14,9 +15,11 @@ import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 public class RowHeaderViewHolder extends AbstractViewHolder {
     public final TextView row_header_textview;
 
+
     public RowHeaderViewHolder(View p_jItemView) {
         super(p_jItemView);
         row_header_textview = p_jItemView.findViewById(R.id.row_header_textView);
+
     }
 
     @Override
@@ -44,5 +47,6 @@ public class RowHeaderViewHolder extends AbstractViewHolder {
                 nBackgroundColorId));
         row_header_textview.setTextColor(ContextCompat.getColor(row_header_textview.getContext(),
                 nForegroundColorId));
+
     }
 }
