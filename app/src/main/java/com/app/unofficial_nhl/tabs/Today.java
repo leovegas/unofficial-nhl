@@ -54,7 +54,7 @@ public class Today extends Fragment {
         NetworkService.getInstance()
                 .getJSONApi()
             //    .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis())))
-                .getSheduledGamesByDate("2021-03-13")
+                .getSheduledGamesByDate("2021-05-16")
                 .enqueue(new Callback<Teams>() {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
@@ -65,9 +65,9 @@ public class Today extends Fragment {
                         }
 
                         ArrayList<ListRow> alldata = new ArrayList<ListRow>();
-                        ArrayList<ListRow> alldata2 = new ArrayList<ListRow>();
 
                         System.out.println(gamesByDate.size());
+
                         for (Game game : gamesByDate) {
                             teamHome = game.getTeams().getHome().getTeam().getName();
                             teamAway = game.getTeams().getAway().getTeam().getName();
@@ -98,7 +98,7 @@ public class Today extends Fragment {
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Toast.makeText(getActivity(), alldata.get(position).awayScore+"", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), alldata.get(position).awayScore+"", Toast.LENGTH_SHORT).show();
                                 cardflip(view,root.getContext());
                             }
                         });
@@ -131,7 +131,8 @@ public class Today extends Fragment {
 
     public synchronized void cardflip (View v,Context context) {
 
-            v.animate().withLayer()
+        System.out.println(v.getTag());
+        v.animate().withLayer()
                     .rotationY(90)
                     .setDuration(400)
                     .withEndAction(

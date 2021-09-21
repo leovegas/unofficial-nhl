@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dip" android:background="@drawable/corners_views" android:id="@+id/newslistitem">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center">
+                <ImageView
+                        android:src="@drawable/arizona"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp" android:id="@+id/imageurl"
+                        android:layout_weight="1" app:srcCompat="@drawable/arizona" android:scaleType="centerInside"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center">
+                <TextView
+                        android:text="Xcel Energy Center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/source"
+                        android:layout_weight="1"
+                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"
+                        android:fontFamily="@font/rubik"/>
+                <TextView
+                        android:text="After missing the 2018 Winter Games, the best hockey players in the world will be able to participate in 2022 in Beijing."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/headline"
+                        android:layout_weight="1"
+                        android:textColor="#FFFFFF" android:textAlignment="viewStart" android:textSize="12sp"
+                        android:fontFamily="@font/rubik"/>
+                <TextView
+                        android:text="2018-01-03"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/gameDate"
+                        android:layout_weight="1"
+                        android:textColor="#FFFFFF" android:textAlignment="center" android:textSize="10sp"
+                        android:fontFamily="@font/rubik"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
