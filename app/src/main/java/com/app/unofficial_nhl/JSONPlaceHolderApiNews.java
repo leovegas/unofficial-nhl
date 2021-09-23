@@ -1,6 +1,7 @@
 package com.app.unofficial_nhl;
 
 import com.app.unofficial_nhl.pojos.news.News;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -17,7 +18,10 @@ public interface JSONPlaceHolderApiNews {
     Call<Teams> getPlayerInfoById(@Path("id") int id);
     @GET("api/v1/schedule")
     Call<Teams> getSheduledGamesByDate(@Query("date") String date);*/
-
-    @GET("/svc/search/v2/articlesearch.json?page=1&fq=news_desk%3A(%22Sports%22)&q=nhl&api-key=MFFsFjIVEfSSf7Uf19bPkwv4HDP66FX")
+    @GET("/svc/search/v2/articlesearch.json?q=nhl&api-key=")
     Call<News> getNews();
+
+    @GET("/svc/search/v2/articlesearch.json?q=nhl&api-key=")
+        // Call<News> getNews();
+    Observable<News> getNews2();
 }

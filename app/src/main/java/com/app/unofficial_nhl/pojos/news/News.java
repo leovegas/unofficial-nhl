@@ -1,18 +1,10 @@
 package com.app.unofficial_nhl.pojos.news;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class News {
 
-    @SerializedName("status")
-    @Expose
     private String status;
-    @SerializedName("copyright")
-    @Expose
     private String copyright;
-    @SerializedName("response")
-    @Expose
     private Response response;
 
     public String getStatus() {
@@ -39,4 +31,12 @@ public class News {
         this.response = response;
     }
 
+    @Override
+    public String toString() {
+        return "News{" +
+                "status='" + status + '\'' +
+                ", copyright='" + copyright + '\'' +
+                ", response=" + response +
+                '}';
+    }
 }

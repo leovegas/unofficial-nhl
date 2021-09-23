@@ -2,6 +2,7 @@ package com.app.unofficial_nhl;
 
 import com.app.unofficial_nhl.pojos.Roster;
 import com.app.unofficial_nhl.pojos.Teams;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -20,6 +21,8 @@ public interface JSONPlaceHolderApi {
     Call<Teams> getTeamStats(@Path("id") int id);
     @GET("/api/v1/people/{id}")
     Call<Teams> getPlayerInfoById(@Path("id") int id);
+    @GET("api/v1/schedule")
+    Observable<Teams> getSheduledGamesByDate2(@Query("date") String date);
     @GET("api/v1/schedule")
     Call<Teams> getSheduledGamesByDate(@Query("date") String date);
 }

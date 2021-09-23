@@ -53,7 +53,8 @@ public class Tomorrow extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis()+8640_0_000)))
+                //.getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis()+8640_0_000)))
+                .getSheduledGamesByDate("2021-05-21")
                 .enqueue(new Callback<Teams>() {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {

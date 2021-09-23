@@ -44,6 +44,7 @@ public class StaticData {
         aMap.put("Boston Bruins", R.drawable.boston_bruins_logo);
         aMap.put("Arizona Coyotes", R.drawable.arizona_coyotes_logo);
         aMap.put("Anaheim Ducks", R.drawable.anaheim_ducks_logo);
+        aMap.put("Seattle Kraken", R.drawable.seattle_kraken_logo);
         logosMap = Collections.unmodifiableMap(aMap);
     }
 

@@ -1,6 +1,7 @@
 package com.app.unofficial_nhl.helper_classes;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class MyCustomArrayAdapter extends ArrayAdapter<ListRow> {
 
         return convertView;
     }
+
 }
 
     //-------------------

@@ -54,7 +54,8 @@ public class Yesteday extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis()-8640_0_000)))
+               // .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis()-8640_0_000)))
+                .getSheduledGamesByDate("2021-05-19")
                 .enqueue(new Callback<Teams>() {
                     @Override
                     public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
@@ -87,9 +88,9 @@ public class Yesteday extends Fragment {
                             alldata.add(listRow);
                         }
 
-                        MyCustomArrayAdapter adapter = new MyCustomArrayAdapter(getActivity(), alldata);
-                        final ListView listview = (ListView) root.findViewById(R.id.listview);
-                        listview.setAdapter(adapter);
+//                        MyCustomArrayAdapter adapter = new MyCustomArrayAdapter(getActivity(), alldata);
+//                        final ListView listview = (ListView) root.findViewById(R.id.listview);
+//                        listview.setAdapter(adapter);
 
                         loadingBar.setVisibility(View.GONE);
 

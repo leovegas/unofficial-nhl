@@ -14,9 +14,8 @@ public class ListRow {
     public String datailedState;
     public String awayScore;
     public String homeScore;
-
-    Drawable lt1;
-    Drawable lt2;
+    public Drawable lt1;
+    public Drawable lt2;
 
     public ListRow(String team_1, String team_2, String venueName, String gameTime, String gameDate, String datailedState, String awayScore, String homeScore, Drawable lt1, Drawable lt2) {
         this.team_1 = team_1;
