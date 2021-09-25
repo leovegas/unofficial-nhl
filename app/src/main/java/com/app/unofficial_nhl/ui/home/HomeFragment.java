@@ -5,52 +5,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.tabs.Today;
 import com.app.unofficial_nhl.tabs.Tomorrow;
-import com.app.unofficial_nhl.tabs.Yesteday;
+import com.app.unofficial_nhl.tabs.Yesterday;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
 
     private HomeViewModel homeViewModel;
     private String[] titles = new String[]{"Yesterday", "Today", "Tomorrow"};
-
+    View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =  ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
-        });
+        root = inflater.inflate(R.layout.fragment_home, container, false);
         ViewPager2 vp = root.findViewById(R.id.view_pager);
         TabLayout tl = root.findViewById(R.id.tab_layout);
-
         vp.setUserInputEnabled(false);
-
-
 
         vp.setAdapter(new ViewPagerFragmentAdapter(this));
 
-        // attaching tab mediator
         new TabLayoutMediator(tl, vp,
                 (tab, position) -> tab.setText(titles[position])).attach();
-
-        tl.getTabAt(1).select();
-
-
+        Objects.requireNonNull(tl.getTabAt(1)).select();
         return root;
+
 
     }
     private class ViewPagerFragmentAdapter extends FragmentStateAdapter {
@@ -64,13 +53,14 @@ public class HomeFragment extends Fragment {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new Yesteday();
+                    return new Yesterday();
                 case 1:
                     return new Today();
                 case 2:
                     return new Tomorrow();
+                default: return new Today();
             }
-            return null;
+
         }
 
         @Override

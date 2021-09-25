@@ -10,18 +10,6 @@
         android:background="@color/background" app:layoutDescription="@xml/activity_main2_scene">
 
 
-    <fragment
-            android:id="@+id/nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:defaultNavHost="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/mobile_navigation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"/>
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
             android:layout_width="0dp"
@@ -35,7 +23,35 @@
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_nav_menu"/>
     <ImageView
+            android:scaleType="centerCrop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/arena" android:id="@+id/imageView"/>
+    <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/mobile_navigation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"/>
+    <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/corners"
+            android:id="@+id/searchView" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="4dp">
+        <TextView
+                android:text="NHL STATS INFO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textView13"
+                android:textSize="34sp" android:fontFamily="@font/rubik_bold"
+                android:textColor="#FF6500"
+        />
+    </SearchView>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

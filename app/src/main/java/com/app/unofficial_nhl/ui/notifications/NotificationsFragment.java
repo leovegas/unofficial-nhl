@@ -1,15 +1,10 @@
 package com.app.unofficial_nhl.ui.notifications;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,13 +19,7 @@ import com.app.unofficial_nhl.pojos.news.News;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +44,8 @@ public class NotificationsFragment extends Fragment {
         notificationsViewModel =
                 ViewModelProviders.of(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        ProgressBar loadingBar = root.findViewById(R.id.progressBar2);
+        loadingBar.setVisibility(View.VISIBLE);
 
         ArrayList<ListRowNews> data = new ArrayList<>();
         ArrayList<String> urls = new ArrayList<>();
@@ -100,6 +91,7 @@ public class NotificationsFragment extends Fragment {
 
                     @Override
                     public void onComplete() {
+                        loadingBar.setVisibility(View.GONE);
 
                     }
                 });

@@ -1,30 +1,26 @@
 package com.app.unofficial_nhl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import com.app.unofficial_nhl.pojos.Teams;
+import com.app.unofficial_nhl.ui.favorite.FavoriteFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import java.util.Map;
-import java.util.TreeMap;
+import org.jetbrains.annotations.NotNull;
 
 public class MainActivity2 extends AppCompatActivity {
-
-    private String[] titles = new String[]{"Yesteday", "Today", "Tomorrow"};
-
 
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -41,59 +37,58 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        BottomNavigationView bottomNav = findViewById(R.id.nav_view);
+
+/*            bottomNav.setOnNavigationItemSelectedListener(new
+                                                             BottomNavigationView.OnNavigationItemSelectedListener() {
+                                                                 @Override
+                                                                 public boolean onNavigationItemSelected(@NonNull MenuItem item)
+                                                                 {
+                                                                     switch (item.getItemId())
+                                                                     {
+                                                                         case R.id.navigation_home:
+                                                                             return NavigationUI.onNavDestinationSelected(item, navController);
+                                                                         case R.id.navigation_dashboard:
+                                                                             return NavigationUI.onNavDestinationSelected(item, navController);
+                                                                         case R.id.navigation_notifications:
+                                                                             return NavigationUI.onNavDestinationSelected(item, navController);
+                                                                         case R.id.navigation_favorites:
+                                                                             return NavigationUI.onNavDestinationSelected(item, navController);
+                                                                     }
+
+                                                                     return true;
+                                                                 }
+                                                             });*/
+
+            NavigationUI.setupWithNavController(bottomNav, navController);
+
+      //  BottomNavigationView navView = findViewById(R.id.nav_view);
+        System.out.println("max items +"+bottomNav.getMaxItemCount());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+       AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_favorites)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+       // NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupWithNavController(navView, navController);
 
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar != null)
-        {
+        if (actionBar != null) {
             setupActionBar();
             actionBar.hide();
 
         }
 
 
-
-        NetworkService.getInstance()
-                .getJSONApi()
-                .getPlayerInfoById(8477474)
-                .enqueue(new Callback<Teams>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
-                        Teams people = response.body();
-
-//                        System.out.println(people.getPeople().get(0).getFullName());
-//                        System.out.println(people.getPeople().get(0).getBirthCity());
-//                        System.out.println(people.getPeople().get(0).getBirthCountry());
-//                        System.out.println(people.getPeople().get(0).getLink());
-
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
-                        System.out.println("Error occurred while getting request!");
-                        t.printStackTrace();
-                    }
-
-                });
-
-
-
     }
-
-
-
 
 }

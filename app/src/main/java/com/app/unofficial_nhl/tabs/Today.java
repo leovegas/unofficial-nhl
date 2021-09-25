@@ -2,13 +2,17 @@ package com.app.unofficial_nhl.tabs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.*;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.*;
+import android.view.animation.AlphaAnimation;
 import android.widget.*;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -20,15 +24,28 @@ import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.ListRow;
 import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.Game;
+import com.app.unofficial_nhl.pojos.Teams;
 import com.app.unofficial_nhl.ui.home.CustomAdapterGames;
 import com.app.unofficial_nhl.ui.home.RecyclerTouchListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
+import java.lang.reflect.Type;
+import java.net.Proxy;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Today extends Fragment {
 
@@ -42,9 +59,16 @@ public class Today extends Fragment {
     String homeScore = "";
     String awayScore = "";
 
-    ListView listview;
     RecyclerView recyclerView;
     CustomAdapterGames recyclerAdapter;
+    ArrayList<ListRow> alldata = new ArrayList<ListRow>();
+    TextView nogames;
+
+/*    PublishSubject<String> status = PublishSubject.create();
+
+    public Observable<String> getStatusStream() {
+        return status;
+    }*/
 
     @Override
     public View onCreateView(
@@ -54,51 +78,66 @@ public class Today extends Fragment {
         View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
         SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
         ProgressBar loadingBar = root.findViewById(R.id.progressBar);
+        nogames = root.findViewById(R.id.nogames);
+        nogames.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
-        doSomethingOnUi2(getContext());
 
-        NetworkService.getInstance()
-                .getJSONApi()
-                .getSheduledGamesByDate2("2021-03-01")
+/*        Disposable disposable = Observable.create(3000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
-                .flatMapIterable(teams -> teams.getDates().get(0).getGames())
-                .toList()
-                .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
-                .retry(3)
-                .subscribe(new DisposableObserver<List<Game>>() {
+                .subscribe(on -> {
+                    Log.i("test","there");
+                });*/
 
-                    @Override
-                    public void onNext(List<Game> gamesByDate) {
+/*        getStatusStream().subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(status -> {
+                },Throwable::printStackTrace);*/
 
-                        ArrayList<ListRow> alldata = new ArrayList<ListRow>();
+            NetworkService.getInstance()
+                    .getJSONApi()
+                    .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis())))
+                    .subscribeOn(Schedulers.io())
+                    .flatMapIterable(teams -> teams.getDates().get(0).getGames())
+                    .toList()
+                    .toObservable()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .retry(2)
+                    .timeout(7000, TimeUnit.MILLISECONDS)
+                    .subscribe(new DisposableObserver<List<Game>>() {
 
-                        System.out.println(gamesByDate.size());
+                        @Override
+                        public void onNext(List<Game> gamesByDate) {
+                            Log.i("reading", "inToday");
+                            for (Game game : gamesByDate) {
+                                Teams teams = game.getTeams();
+                                teamHome = teams.getHome().getTeam().getName();
+                                teamAway = teams.getAway().getTeam().getName();
+                                detailedState = game.getStatus().getDetailedState();
+                                venueName = game.getVenue().getName();
+                                gameTime = getDateOrTime(game.getGameDate(), 2);
+                                gameDate = getDateOrTime(game.getGameDate(), 1);
+                                homeScore = String.valueOf(game.getTeams().getHome().getScore());
+                                awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
-                        for (Game game : gamesByDate) {
-                            System.out.println(game.getTeams().getHome().getTeam().getName());
-                            teamHome = game.getTeams().getHome().getTeam().getName();
-                            teamAway = game.getTeams().getAway().getTeam().getName();
-                            detailedState = game.getStatus().getDetailedState();
-                            venueName = game.getVenue().getName();
-                            gameTime = getDateOrTime(game.getGameDate(), 2);
-                            gameDate = getDateOrTime(game.getGameDate(), 1);
-                            homeScore = String.valueOf(game.getTeams().getHome().getScore());
-                            awayScore = String.valueOf(game.getTeams().getAway().getScore());
+                                @DrawableRes
+                                Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                                @DrawableRes
+                                Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
 
-                            @DrawableRes
-                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
-                            @DrawableRes
-                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+                                ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
+                                alldata.add(listRow);
 
-                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
-                            alldata.add(listRow);
+                            }
 
                             recyclerView = root.findViewById(R.id.listview);
                             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerAdapter = new CustomAdapterGames(getActivity(), alldata);
                             recyclerView.setAdapter(recyclerAdapter);
+                            AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1.0f);
+                            animation1.setDuration(1000);
+                            recyclerView.setAlpha(1f);
+                            recyclerView.startAnimation(animation1);
 
                             recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
                                 @Override
@@ -113,21 +152,19 @@ public class Today extends Fragment {
 
                                 }
                             }));
-
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
+                        @Override
+                        public void onError(Throwable e) {
+                            loadingBar.setVisibility(View.GONE);
+                            nogames.setVisibility(View.VISIBLE);
+                        }
 
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                        loadingBar.setVisibility(View.GONE);
-                    }
-                });
+                        @Override
+                        public void onComplete() {
+                            loadingBar.setVisibility(View.GONE);
+                        }
+                    });
 
 /*        NetworkService.getInstance()
                 .getJSONApi()
@@ -218,11 +255,29 @@ public class Today extends Fragment {
         return root;
     }
 
-    public synchronized void cardflip(View v, Context context) {
+    public void saveArrayList(ArrayList<Game> listArray){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(listArray);
+        editor.putString("TAG_LIST", json);  ///"TAG_LIST" is a key must same for getting data
+        editor.apply();
+    }
 
-        System.out.println(v.getTag());
+    public ArrayList<Game> getArrayList(){
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(getContext());
+        Gson gson = new Gson();
+        String json = prefs.getString("TAG_LIST", null);
+        Type listType = new TypeToken<ArrayList<Game>>() {}.getType();
+        ArrayList<Game> mSomeArraylist = gson.fromJson(json, listType);
+        return mSomeArraylist;
+    }
+
+
+    public synchronized void cardflip(View v, Context context) {
         v.animate().withLayer()
-                .rotationY(90)
+                .rotationX(90)
                 .setDuration(400)
                 .withEndAction(
                         new Runnable() {
@@ -231,20 +286,20 @@ public class Today extends Fragment {
                                 float scale = context.getResources().getDisplayMetrics().density;
                                 float distance = v.getCameraDistance() * (scale + (scale / 3));
                                 v.setCameraDistance(distance * scale);
-                                v.setRotationY(-90);
+                                v.setRotationX(-90);
                                 v.findViewById(R.id.away_score).setVisibility(View.VISIBLE);
                                 v.findViewById(R.id.home_score).setVisibility(View.VISIBLE);
 
                                 v.animate().withLayer()
-                                        .rotationY(0)
+                                        .rotationX(0)
                                         .setDuration(400)
                                         .start();
                                 v.findViewById(R.id.away_score).animate().withLayer()
-                                        .rotationY(0)
+                                        .rotationX(0)
                                         .setDuration(400)
                                         .start();
                                 v.findViewById(R.id.home_score).animate().withLayer()
-                                        .rotationY(0)
+                                        .rotationX(0)
                                         .setDuration(400)
                                         .start();
 
@@ -263,20 +318,6 @@ public class Today extends Fragment {
         uiThread.post(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.VISIBLE);
-                //Toast.makeText(getContext(), "Please wait... Loading", 5000).show();
-            }
-        });
-    }
-
-    private void doSomethingOnUi3(Context context) {
-        Handler uiThread = new Handler(Looper.getMainLooper());
-        ProgressBar progressBar = ((Activity) context).findViewById(R.id.progressBar);
-
-        uiThread.post(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.VISIBLE);
                 //Toast.makeText(getContext(), "Please wait... Loading", 5000).show();
             }
         });

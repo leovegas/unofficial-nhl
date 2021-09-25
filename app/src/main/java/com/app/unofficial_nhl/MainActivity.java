@@ -1,29 +1,18 @@
 package com.app.unofficial_nhl;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-import com.app.unofficial_nhl.pojos.Record;
-import com.app.unofficial_nhl.pojos.TeamRecord;
-import com.app.unofficial_nhl.pojos.Teams;
-import androidx.appcompat.app.AppCompatActivity;
 import com.app.unofficial_nhl.tabs.Today;
 import com.app.unofficial_nhl.tabs.Tomorrow;
-import com.app.unofficial_nhl.tabs.Yesteday;
+import com.app.unofficial_nhl.tabs.Yesterday;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new Yesteday();
+                    return new Yesterday();
                 case 1:
                     return new Today();
                 case 2:
                     return new Tomorrow();
             }
-            return new Yesteday();
+            return new Yesterday();
         }
 
         @Override

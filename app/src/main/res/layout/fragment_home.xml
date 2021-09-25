@@ -5,7 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.app.unofficial_nhl.ui.home.HomeFragment"
-        android:background="@android:color/transparent" app:layoutDescription="@xml/fragment_home_scene3">
+        android:background="@android:color/transparent" app:layoutDescription="@xml/fragment_home_scene3"
+        android:id="@+id/constr">
     <SearchView
             android:layout_width="match_parent"
             android:layout_height="40dp"

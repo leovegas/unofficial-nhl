@@ -35,7 +35,7 @@ public class DashboardFragment extends Fragment {
     private List<RowHeader> mRowHeaderList;
     private List<ColumnHeader> mColumnHeaderList;
     private List<List<Cell>> mCellList;
-    private                         Teams teams;
+    private Teams teams;
 
 
     private MyTableAdapter mTableAdapter;
@@ -51,8 +51,6 @@ public class DashboardFragment extends Fragment {
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner1);
         Spinner spinner2 = (Spinner) root.findViewById(R.id.spinner2);
         TableView mTableView = root.findViewById(R.id.content_container);
-
-
 
         mRowHeaderList = new ArrayList<RowHeader>();
         mColumnHeaderList = new ArrayList<ColumnHeader>();
