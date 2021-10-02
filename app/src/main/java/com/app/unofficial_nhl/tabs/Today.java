@@ -11,45 +11,53 @@ import android.graphics.drawable.Drawable;
 import android.os.*;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.*;
+import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.*;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.ListRow;
 import com.app.unofficial_nhl.helper_classes.StaticData;
-import com.app.unofficial_nhl.pojos.Game;
-import com.app.unofficial_nhl.pojos.Teams;
+import com.app.unofficial_nhl.pojos.*;
 import com.app.unofficial_nhl.ui.home.CustomAdapterGames;
+import com.app.unofficial_nhl.ui.home.HomeViewModel;
 import com.app.unofficial_nhl.ui.home.RecyclerTouchListener;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.PublishSubject;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.lang.reflect.Type;
-import java.net.Proxy;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Today extends Fragment {
 
     private ArrayList<Game> gamesByDate = new ArrayList<>();
+    Team team;
     String teamHome = "";
     String teamAway = "";
     String detailedState = "";
@@ -63,12 +71,121 @@ public class Today extends Fragment {
     CustomAdapterGames recyclerAdapter;
     ArrayList<ListRow> alldata = new ArrayList<ListRow>();
     TextView nogames;
+    ImageView preteam1logo, preteam2logo;
+    TextView preteam1name, preteam2name;
+    TextView preteamposition1, preteamposition2, preteamrecord1, preteamrecord2;
+    TextView prestarttime;
+    List<Integer> wlo = new ArrayList<>();
 
-/*    PublishSubject<String> status = PublishSubject.create();
+        /*    PublishSubject<String> status = PublishSubject.create();
 
     public Observable<String> getStatusStream() {
         return status;
     }*/
+
+    public void getTeamsRank(int id, TextView textView, int index) {
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getStandings()
+                .enqueue(new Callback<Teams>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
+                        Teams teams = response.body();
+                        if (teams != null) {
+                            List<Record> records = teams.getRecords();
+                            for (Record rec : records) {
+                                List<TeamRecord> teamRecords = rec.getTeamRecords();
+                                for (TeamRecord teamRecord : teamRecords) {
+                                    if (teamRecord.getTeam().getId() == id) {
+                                        int w = teamRecord.getLeagueRecord().getWins();
+                                        int l = teamRecord.getLeagueRecord().getLosses();
+                                        int o = teamRecord.getLeagueRecord().getOt();
+                                        wlo.add(w);
+                                        wlo.add(l);
+                                        wlo.add(o);
+
+                                        if (index==1) {
+                                            preteamrecord1.setText(String.format("%d-%d-%d", w, l, o));
+
+                                        }
+                                        if (index==2){
+                                            preteamrecord2.setText(String.format("%d-%d-%d", w, l, o));
+                                        }
+                                        if (wlo.size()==6) {
+                                            int w1 = Integer.parseInt(preteamrecord1.getText().toString().split("-")[0]);
+                                            int l1 = Integer.parseInt(preteamrecord1.getText().toString().split("-")[1]);
+                                            int o1 = Integer.parseInt(preteamrecord1.getText().toString().split("-")[2]);
+                                            int w2 = Integer.parseInt(preteamrecord2.getText().toString().split("-")[0]);
+                                            int l2 = Integer.parseInt(preteamrecord2.getText().toString().split("-")[1]);
+                                            int o2 = Integer.parseInt(preteamrecord2.getText().toString().split("-")[2]);
+                                            prediction((w1+l1+o1+50), w1+50, (w2 + l2 + o2+50), w2+50);
+                                            wlo.clear();
+                                        }
+                                        String rank = teamRecord.getConferenceRank();
+                                        if (!rank.equals("0")) {
+                                            textView.append(" " + rank + "");
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
+                        textView.append("");
+                        System.out.println("Error occurred while getting request!");
+                        t.printStackTrace();
+                    }
+                });
+
+    }
+
+    public void getTeamsInfo(int id, TextView textView, int index) {
+
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getTeamInfo(id)
+                .enqueue(new Callback<Teams>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
+                        Teams data = response.body();
+                        team = data.getTeams().get(0);
+                        textView.setText(team.getConference().getName());
+                        getTeamsRank(id, textView, index);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
+                        textView.append("");
+                        System.out.println("Error occurred while getting request!");
+                        t.printStackTrace();
+                    }
+                });
+    }
+
+    public void prediction(int gp1, int w1, int gp2, int w2) {
+        if (w1 != 0 && w2 != 0) {
+            double winprocent1 = (gp1 * 100) / w1;
+            double winprocent2 = (gp2 * 100) / w2;
+            double summ = winprocent1 + winprocent2;
+            double prediction1 = (winprocent1 * 100) / summ;
+            double prediction2 = (winprocent2 * 100) / summ;
+            PieChart pieChart;
+            pieChart = getActivity().findViewById(R.id.pieChart);
+            PieData pieData;
+            List<PieEntry> pieEntryList = new ArrayList<>();
+            pieEntryList.add(new PieEntry((float) prediction1, ""));
+            pieEntryList.add(new PieEntry((float) prediction2, ""));
+            PieDataSet pieDataSet = new PieDataSet(pieEntryList, "");
+            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+            pieData = new PieData(pieDataSet);
+            pieChart.setData(pieData);
+            pieChart.invalidate();
+        }
+
+    }
 
     @Override
     public View onCreateView(
@@ -78,9 +195,25 @@ public class Today extends Fragment {
         View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
         SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
         ProgressBar loadingBar = root.findViewById(R.id.progressBar);
+        preteam1logo = getActivity().findViewById(R.id.prelogo1);
+        preteam2logo = getActivity().findViewById(R.id.prelogo2);
+        preteam1name = getActivity().findViewById(R.id.preteam1name);
+        preteam2name = getActivity().findViewById(R.id.preteam2name);
+        preteamposition1 = getActivity().findViewById(R.id.preteamposition1);
+        preteamposition2 = getActivity().findViewById(R.id.preteamposition2);
+        preteamrecord1 = getActivity().findViewById(R.id.preteamrecord1);
+        preteamrecord2 = getActivity().findViewById(R.id.preteamrecord2);
+
+        prestarttime = getActivity().findViewById(R.id.prestarttime);
+
         nogames = root.findViewById(R.id.nogames);
+
         nogames.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
+
+        HomeViewModel homeViewModel =
+                ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+
 
 /*        Disposable disposable = Observable.create(3000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
@@ -93,78 +226,107 @@ public class Today extends Fragment {
                 .subscribe(status -> {
                 },Throwable::printStackTrace);*/
 
-            NetworkService.getInstance()
-                    .getJSONApi()
-                    .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis())))
-                    .subscribeOn(Schedulers.io())
-                    .flatMapIterable(teams -> teams.getDates().get(0).getGames())
-                    .toList()
-                    .toObservable()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .retry(2)
-                    .timeout(7000, TimeUnit.MILLISECONDS)
-                    .subscribe(new DisposableObserver<List<Game>>() {
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis())))
+                .subscribeOn(Schedulers.io())
+                .flatMapIterable(teams -> teams.getDates().get(0).getGames())
+                .toList()
+                .toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .retry(2)
+                .timeout(7000, TimeUnit.MILLISECONDS)
+                .subscribe(new DisposableObserver<List<Game>>() {
 
-                        @Override
-                        public void onNext(List<Game> gamesByDate) {
-                            Log.i("reading", "inToday");
-                            for (Game game : gamesByDate) {
-                                Teams teams = game.getTeams();
-                                teamHome = teams.getHome().getTeam().getName();
-                                teamAway = teams.getAway().getTeam().getName();
-                                detailedState = game.getStatus().getDetailedState();
-                                venueName = game.getVenue().getName();
-                                gameTime = getDateOrTime(game.getGameDate(), 2);
-                                gameDate = getDateOrTime(game.getGameDate(), 1);
-                                homeScore = String.valueOf(game.getTeams().getHome().getScore());
-                                awayScore = String.valueOf(game.getTeams().getAway().getScore());
+                    @Override
+                    public void onNext(List<Game> gamesByDate) {
+                        Log.i("reading", "inToday");
+                        for (Game game : gamesByDate) {
+                            Teams teams = game.getTeams();
+                            teamHome = teams.getHome().getTeam().getName();
+                            teamAway = teams.getAway().getTeam().getName();
+                            detailedState = game.getStatus().getDetailedState();
+                            venueName = game.getVenue().getName();
+                            gameTime = getDateOrTime(game.getGameDate(), 2);
+                            gameDate = getDateOrTime(game.getGameDate(), 1);
+                            homeScore = String.valueOf(game.getTeams().getHome().getScore());
+                            awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
-                                @DrawableRes
-                                Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
-                                @DrawableRes
-                                Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+                            @DrawableRes
+                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                            @DrawableRes
+                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
 
-                                ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
-                                alldata.add(listRow);
+                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
+                            alldata.add(listRow);
+
+                        }
+
+                        recyclerView = root.findViewById(R.id.listview);
+                        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerAdapter = new CustomAdapterGames(getActivity(), alldata);
+                        recyclerView.setAdapter(recyclerAdapter);
+                        AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1.0f);
+                        animation1.setDuration(1000);
+                        recyclerView.setAlpha(1f);
+                        recyclerView.startAnimation(animation1);
+
+                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+
+                            @Override
+                            public void onClick(View view, int position) {
+                                view.findViewById(R.id.home_score).setVisibility(View.GONE);
+                                view.findViewById(R.id.away_score).setVisibility(View.GONE);
+                                homeViewModel.fire();
+
+                                preteamrecord1.setText(String.format("%d-%d-%d", 0, 0, 0));
+                                preteamrecord2.setText(String.format("%d-%d-%d", 0, 0, 0));
+
+                                String home = gamesByDate.get(position).getTeams().getHome().getTeam().getName();
+                                String away = gamesByDate.get(position).getTeams().getAway().getTeam().getName();
+
+                                preteam1name.setText(home);
+                                preteam2name.setText(away);
+                                preteam1logo.setImageDrawable(resizeImage(StaticData.logosMap.get(home)));
+                                preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
+                                prestarttime.setText("NHL "+getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
+/*                                System.out.println("tt"+gamesByDate.get(position).getTeams().getAway().getScore());
+                                int wins1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getWins();
+                                int losses1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getLosses();
+                                int ot1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getOt();
+                                int wins2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getWins();
+                                int losses2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getLosses();
+                                int ot2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getOt();*/
+/*                                System.out.println(wins2 + "-" + losses2 + "-" + ot2);
+                                prediction((wins1 + losses1 + ot1+50), wins1+50, (wins2 + losses2 + ot2+50), wins2+50);
+                                preteamrecord1.setText(wins1 + "-" + losses1 + "-" + ot1);
+                                preteamrecord2.setText(wins2 + "-" + losses2 + "-" + ot2);*/
+                                getTeamsInfo(gamesByDate.get(position).getTeams().getHome().getTeam().getId(), preteamposition1, 1);
+                                getTeamsInfo(gamesByDate.get(position).getTeams().getAway().getTeam().getId(), preteamposition2, 2);
 
                             }
 
-                            recyclerView = root.findViewById(R.id.listview);
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                            recyclerView.setLayoutManager(layoutManager);
-                            recyclerAdapter = new CustomAdapterGames(getActivity(), alldata);
-                            recyclerView.setAdapter(recyclerAdapter);
-                            AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1.0f);
-                            animation1.setDuration(1000);
-                            recyclerView.setAlpha(1f);
-                            recyclerView.startAnimation(animation1);
+                            @Override
+                            public void onLongClick(View view, int position) {
+                                cardflip(view, root.getContext());
 
-                            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-                                @Override
-                                public void onClick(View view, int position) {
-                                    cardflip(view, root.getContext());
-                                }
+                            }
+                        }));
+                    }
 
-                                @Override
-                                public void onLongClick(View view, int position) {
-                                    view.findViewById(R.id.home_score).setVisibility(View.GONE);
-                                    view.findViewById(R.id.away_score).setVisibility(View.GONE);
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingBar.setVisibility(View.GONE);
+                        nogames.setVisibility(View.VISIBLE);
+                    }
 
-                                }
-                            }));
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            loadingBar.setVisibility(View.GONE);
-                            nogames.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            loadingBar.setVisibility(View.GONE);
-                        }
-                    });
+                    @Override
+                    public void onComplete() {
+                        loadingBar.setVisibility(View.GONE);
+                    }
+                });
 
 /*        NetworkService.getInstance()
                 .getJSONApi()
@@ -255,7 +417,8 @@ public class Today extends Fragment {
         return root;
     }
 
-    public void saveArrayList(ArrayList<Game> listArray){
+
+    public void saveArrayList(ArrayList<Game> listArray) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
@@ -264,12 +427,13 @@ public class Today extends Fragment {
         editor.apply();
     }
 
-    public ArrayList<Game> getArrayList(){
+    public ArrayList<Game> getArrayList() {
         SharedPreferences prefs =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
         Gson gson = new Gson();
         String json = prefs.getString("TAG_LIST", null);
-        Type listType = new TypeToken<ArrayList<Game>>() {}.getType();
+        Type listType = new TypeToken<ArrayList<Game>>() {
+        }.getType();
         ArrayList<Game> mSomeArraylist = gson.fromJson(json, listType);
         return mSomeArraylist;
     }
@@ -302,8 +466,6 @@ public class Today extends Fragment {
                                         .rotationX(0)
                                         .setDuration(400)
                                         .start();
-
-
                             }
                         }
 
@@ -414,6 +576,7 @@ public class Today extends Fragment {
         sdf.setTimeZone(TimeZone.getDefault());
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat sdfTextDate = new SimpleDateFormat("EEE MMM dd h:mma");
 
         Date date = new Date();
         try {
@@ -423,6 +586,8 @@ public class Today extends Fragment {
         }
         if (index == 1) return sdfDate.format(date);
         if (index == 2) return sdfTime.format(date);
+        if (index == 3) return sdfTextDate.format(date);
+
         return sdfDate.format(date);
     }
 

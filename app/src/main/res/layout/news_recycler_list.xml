@@ -16,8 +16,8 @@
                         android:src="@drawable/arizona"
                         android:layout_width="wrap_content"
                         android:layout_height="100dp" android:id="@+id/imageurl"
-                        android:layout_weight="1" app:srcCompat="@drawable/arizona" android:scaleType="centerInside"
-                        android:padding="5sp"/>
+                        android:layout_weight="1" app:srcCompat="@drawable/main_logo" android:scaleType="fitCenter"
+                        android:padding="1sp"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -29,7 +29,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/headline"
                         android:layout_weight="0.5"
-                        android:textColor="#FFFFFF" android:textAlignment="textStart" android:textSize="12sp"
+                        android:textColor="@color/textlesswhite" android:textAlignment="textStart"
+                        android:textSize="12sp"
                         android:fontFamily="@font/rubik" android:padding="5sp"/>
                 <LinearLayout
                         android:orientation="horizontal"

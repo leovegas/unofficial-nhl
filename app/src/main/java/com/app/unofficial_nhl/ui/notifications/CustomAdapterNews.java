@@ -69,6 +69,8 @@ public class CustomAdapterNews extends RecyclerView.Adapter<CustomAdapterNews.Vi
             source = (TextView) v.findViewById(R.id.source);
             image = (ImageView) v.findViewById(R.id.imageurl);
             pubDate = (TextView) v.findViewById(R.id.pubDate);
+            //article = (TextView) v.findViewById(R.id.article);
+
         }
 
         public TextView getHeadline() {
@@ -130,6 +132,7 @@ public class CustomAdapterNews extends RecyclerView.Adapter<CustomAdapterNews.Vi
         // with that element
         viewHolder.getHeadline().setText(myDataItem.headline);
         viewHolder.getSource().setText(myDataItem.source);
+    //    viewHolder.getArticle().setText(myDataItem.article);
         viewHolder.getPubDate().setText(myDataItem.date.substring(0, 10));
         DownloadImageTask downloadImageTask = new DownloadImageTask((ImageView) viewHolder.image);
         downloadImageTask.execute(myDataItem.image);

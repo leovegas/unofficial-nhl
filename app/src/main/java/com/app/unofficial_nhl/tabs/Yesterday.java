@@ -1,6 +1,7 @@
 package com.app.unofficial_nhl.tabs;
-import android.app.Activity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -19,23 +20,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.app.unofficial_nhl.FullscreenActivity;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.ListRow;
-import com.app.unofficial_nhl.helper_classes.MyCustomArrayAdapter;
 import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.Game;
 import com.app.unofficial_nhl.pojos.Teams;
 import com.app.unofficial_nhl.ui.home.CustomAdapterGames;
 import com.app.unofficial_nhl.ui.home.RecyclerTouchListener;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +39,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Yesterday extends Fragment {
+    public static final String EXTRA_MESSAGE = "com.app.unofficial_nhl.tabs.MESSAGE";
 
     private ArrayList<Game> gamesByDate = new ArrayList<>();
     String teamHome = "";
@@ -53,6 +50,10 @@ public class Yesterday extends Fragment {
     String gameDate = "";
     String homeScore = "";
     String awayScore = "";
+
+    ImageView preteam1logo, preteam2logo;
+    TextView preteam1name, preteam2name;
+    TextView preteamposition1, preteamposition2, preteamrecord1, preteamrecord2;
 
     RecyclerView recyclerView;
     CustomAdapterGames recyclerAdapter;
@@ -66,6 +67,14 @@ public class Yesterday extends Fragment {
         View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
         SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
         ProgressBar loadingBar = root.findViewById(R.id.progressBar);
+        preteam1logo = getActivity().findViewById(R.id.prelogo1);
+        preteam2logo = getActivity().findViewById(R.id.prelogo2);
+        preteam1name = getActivity().findViewById(R.id.preteam1name);
+        preteam2name = getActivity().findViewById(R.id.preteam2name);
+        preteamposition1 = getActivity().findViewById(R.id.preteamposition1);
+        preteamposition2 = getActivity().findViewById(R.id.preteamposition2);
+        preteamrecord1 = getActivity().findViewById(R.id.preteamrecord1);
+        preteamrecord2 = getActivity().findViewById(R.id.preteamrecord2);
         nogames = root.findViewById(R.id.nogames);
         nogames.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
@@ -130,7 +139,11 @@ public class Yesterday extends Fragment {
                         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
                             @Override
                             public void onClick(View view, int position) {
-                                cardflip(view, root.getContext());
+                                cardflip(view, root.getContext(), gamesByDate, position);
+
+
+
+                                // getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
                             }
 
                             @Override
@@ -158,8 +171,37 @@ public class Yesterday extends Fragment {
         return root;
     }
 
-    public synchronized void cardflip(View v, Context context) {
-        v.animate().withLayer()
+    public synchronized void cardflip(View v, Context context, List<Game> games, int position) {
+        String home = games.get(position).getTeams().getHome().getTeam().getName();
+        String away = games.get(position).getTeams().getAway().getTeam().getName();
+        int scorehome = games.get(position).getTeams().getHome().getScore();
+        int scoreaway = games.get(position).getTeams().getAway().getScore();
+        int wins1 = games.get(position).getTeams().getHome().getLeagueRecord().getWins();
+        int losses1 = games.get(position).getTeams().getHome().getLeagueRecord().getLosses();
+        int ot1 = games.get(position).getTeams().getHome().getLeagueRecord().getOt();
+        int wins2 = games.get(position).getTeams().getAway().getLeagueRecord().getWins();
+        int losses2 = games.get(position).getTeams().getAway().getLeagueRecord().getLosses();
+        int ot2 = games.get(position).getTeams().getAway().getLeagueRecord().getOt();
+        int homeid = games.get(position).getTeams().getHome().getTeam().getId();
+        int awayid = games.get(position).getTeams().getAway().getTeam().getId();
+        String feedid = games.get(position).getLink().replaceAll("\\D+","").substring(1);
+
+        int[] arrayMessage =new int[]{scorehome,scoreaway,wins1,losses1,ot1,wins2,losses2,ot2,homeid,awayid};
+        String[] teams = new String[]{home,away,feedid};
+
+        v.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                v.animate().withLayer()
+                        .alpha(1f).setDuration(100).start();
+                Intent intent = new Intent(getContext(), FullscreenActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, arrayMessage);
+                intent.putExtra("TEAMS", teams);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }).start();
+/*        v.animate().withLayer()
                 .rotationX(90)
                 .setDuration(400)
                 .withEndAction(
@@ -190,7 +232,7 @@ public class Yesterday extends Fragment {
                             }
                         }
 
-                ).start();
+                ).start();*/
 
     }
 

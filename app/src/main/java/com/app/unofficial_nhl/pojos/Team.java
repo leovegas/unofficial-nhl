@@ -54,6 +54,17 @@ public class Team {
     @Expose
     private boolean active;
 
+    @SerializedName("triCode")
+    @Expose
+    private String triCode;
+
+    public String getTriCode() {
+        return triCode;
+    }
+
+    public void setTriCode(String triCode) {
+        this.triCode = triCode;
+    }
     public int getId() {
         return id;
     }

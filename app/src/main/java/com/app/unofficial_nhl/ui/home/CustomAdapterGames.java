@@ -81,6 +81,7 @@ public class CustomAdapterGames extends RecyclerView.Adapter<CustomAdapterGames.
             gameTime = (TextView) v.findViewById(R.id.gameTime);
             homeScore = (TextView) v.findViewById(R.id.home_score);
             awayScore = (TextView) v.findViewById(R.id.away_score);
+
         }
 
         public TextView getTeam1() {

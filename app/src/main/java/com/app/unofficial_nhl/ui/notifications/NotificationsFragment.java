@@ -1,10 +1,13 @@
 package com.app.unofficial_nhl.ui.notifications;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.view.animation.AlphaAnimation;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,8 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.unofficial_nhl.NetworkServiceNews;
 import com.app.unofficial_nhl.R;
+import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.news.Doc;
 import com.app.unofficial_nhl.pojos.news.News;
+import com.app.unofficial_nhl.ui.home.RecyclerTouchListener;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -35,6 +40,7 @@ public class NotificationsFragment extends Fragment {
     String imageurl = "";
     String source = "";
     String date = "";
+    String weburl = "";
     RecyclerView recyclerView;
     CustomAdapterNews recyclerAdapter;
 
@@ -46,6 +52,9 @@ public class NotificationsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         ProgressBar loadingBar = root.findViewById(R.id.progressBar2);
         loadingBar.setVisibility(View.VISIBLE);
+
+        NotificationsViewModel notificationsViewModel =
+                ViewModelProviders.of(getActivity()).get(NotificationsViewModel.class);
 
         ArrayList<ListRowNews> data = new ArrayList<>();
         ArrayList<String> urls = new ArrayList<>();
@@ -70,6 +79,7 @@ public class NotificationsFragment extends Fragment {
                             source = doc.getSource();
                             date = doc.getPubDate();
                             imageurl = doc.getMultimedia().get(0).getUrl();
+                            weburl = doc.getWebUrl();
                             String imageFull = "https://www.nytimes.com/" + imageurl;
                             System.out.println(imageFull);
                             ListRowNews listRowNews = new ListRowNews(headline, article, source, imageFull, date);
@@ -81,6 +91,24 @@ public class NotificationsFragment extends Fragment {
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerAdapter = new CustomAdapterNews(getActivity(), data);
                         recyclerView.setAdapter(recyclerAdapter);
+                        AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1.0f);
+                        animation1.setDuration(1000);
+                        recyclerView.setAlpha(1f);
+                        recyclerView.startAnimation(animation1);
+                        notificationsViewModel.block();
+
+                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+                            @Override
+                            public void onClick(View view, int position) {
+                                toggleView(view,getContext(),data.get(position).article);
+
+                            }
+
+                            @Override
+                            public void onLongClick(View view, int position) {
+
+                            }
+                        }));
 
                     }
 
@@ -103,6 +131,32 @@ public class NotificationsFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    public synchronized void toggleView(View v, Context context, String text) {
+
+/*        v.animate().withLayer()
+                .rotationX(90)
+                .setDuration(400)
+                .withEndAction(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                float scale = context.getResources().getDisplayMetrics().density;
+                                float distance = v.getCameraDistance() * (scale + (scale / 3));
+                                v.setCameraDistance(distance * scale);
+                                v.setRotationX(-90);
+
+                                v.animate().withLayer()
+                                        .rotationX(0)
+                                        .setDuration(400)
+                                        .start();
+                            }
+                        }
+
+                ).start();*/
+
+
     }
 
 

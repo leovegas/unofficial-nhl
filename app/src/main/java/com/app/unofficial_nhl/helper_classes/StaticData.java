@@ -1,5 +1,6 @@
 package com.app.unofficial_nhl.helper_classes;
 
+import android.content.Context;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.pojos.Game;
 
@@ -46,6 +47,11 @@ public class StaticData {
         aMap.put("Anaheim Ducks", R.drawable.anaheim_ducks_logo);
         aMap.put("Seattle Kraken", R.drawable.seattle_kraken_logo);
         logosMap = Collections.unmodifiableMap(aMap);
+    }
+
+    public static int dpToPx(int dp, Context context) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 
 

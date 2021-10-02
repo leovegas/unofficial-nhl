@@ -6,9 +6,119 @@
         android:layout_width="match_parent"
         android:id="@+id/container"
         android:layout_height="match_parent"
-        tools:context="com.app.unofficial_nhl.MainActivity"
+        tools:context="com.app.unofficial_nhl.MainActivity2"
         android:background="@color/background" app:layoutDescription="@xml/activity_main2_scene">
 
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/frameLayout4"
+            android:background="@drawable/corners10" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="10dp" android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                    android:text="NHL JAN 23 5:00PM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/prestarttime"
+                    android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                    android:layout_gravity="center_horizontal" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/frameLayout" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                    tools:layout_editor_absoluteY="628dp" android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:gravity="center">
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:layout_weight="0.45">
+                        <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp" app:srcCompat="@drawable/boston_bruins_logo"
+                                android:id="@+id/prelogo1" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="Team1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:id="@+id/preteam1name"
+                                android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
+                                android:minLines="2" android:layout_gravity="center_horizontal" android:maxLines="2"
+                                android:textAlignment="center"/>
+                        <TextView
+                                android:text="Position1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:id="@+id/preteamposition1"
+                                android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                android:fontFamily="@font/rubik" android:textSize="12sp" android:padding="2sp"
+                                android:layout_gravity="center_horizontal"/>
+                        <TextView
+                                android:text="20-4-3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:id="@+id/preteamrecord1"
+                                android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                android:fontFamily="@font/rubik" android:padding="2sp"
+                                android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:gravity="top" android:layout_gravity="top"
+                            android:layout_marginTop="40dp">
+                        <TextView
+                                android:text="VS."
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="top" android:textColor="@color/textlesswhite"
+                                android:fontFamily="@font/rubik" android:textSize="14sp" android:padding="2sp"
+                                android:layout_gravity="bottom"/>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:layout_weight="0.45">
+                        <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp" app:srcCompat="@drawable/new_york_islanders_logo"
+                                android:id="@+id/prelogo2" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="Team2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:id="@+id/preteam2name"
+                                android:textColor="@color/textlesswhite"
+                                android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
+                                android:minLines="2" android:gravity="right|center_horizontal" android:maxLines="2"
+                                android:textAlignment="center"/>
+                        <TextView
+                                android:text="Position2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:id="@+id/preteamposition2"
+                                android:textColor="@color/textlesswhite"
+                                android:fontFamily="@font/rubik" android:textSize="12sp" android:padding="2sp"
+                                android:gravity="right"/>
+                        <TextView
+                                android:text="13-5-4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:id="@+id/preteamrecord2"
+                                android:textColor="@color/textlesswhite"
+                                android:fontFamily="@font/rubik" android:padding="2sp" android:gravity="right"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
@@ -16,16 +126,14 @@
             android:layout_height="wrap_content"
             app:itemTextColor="@drawable/bottom_nav_back"
             app:itemIconTint="@drawable/bottom_nav_back"
-            app:itemRippleColor="@color/colorPrimary"
+            app:itemRippleColor="@color/primaryapp"
             android:background="@color/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_nav_menu"/>
-    <ImageView
-            android:scaleType="centerCrop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@drawable/arena" android:id="@+id/imageView"/>
+
+
     <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -38,20 +146,33 @@
             app:navGraph="@navigation/mobile_navigation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"/>
-    <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/corners"
-            android:id="@+id/searchView" app:layout_constraintTop_toTopOf="parent"
+    <ImageView
+            android:layout_width="40dp"
+            android:layout_height="32dp" app:srcCompat="@drawable/ic_20383532201553169569"
+            android:id="@+id/imageView2"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="4dp">
+            app:layout_constraintEnd_toEndOf="parent" android:alpha="0.1"
+            app:layout_constraintTop_toBottomOf="@id/frameLayout7"
+    />
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/frameLayout7" android:minHeight="300dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/corners10"
+            app:layout_constraintTop_toBottomOf="@id/frameLayout4" android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" android:layout_marginTop="10dp">
+
+        <com.github.mikephil.charting.charts.PieChart
+                android:layout_width="match_parent"
+                android:layout_height="270dp"
+                android:id="@+id/pieChart" android:layout_gravity="center"/>
         <TextView
-                android:text="NHL STATS INFO"
+                android:text="Prediction"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/textView13"
-                android:textSize="34sp" android:fontFamily="@font/rubik_bold"
-                android:textColor="#FF6500"
-        />
-    </SearchView>
+                android:layout_height="wrap_content" android:id="@+id/textView11"
+                android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                android:layout_gravity="center_horizontal"/>
+    </FrameLayout>
+
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
