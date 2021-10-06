@@ -185,9 +185,10 @@ public class Yesterday extends Fragment {
         int homeid = games.get(position).getTeams().getHome().getTeam().getId();
         int awayid = games.get(position).getTeams().getAway().getTeam().getId();
         String feedid = games.get(position).getLink().replaceAll("\\D+","").substring(1);
+        String state = games.get(position).getStatus().getDetailedState();
 
         int[] arrayMessage =new int[]{scorehome,scoreaway,wins1,losses1,ot1,wins2,losses2,ot2,homeid,awayid};
-        String[] teams = new String[]{home,away,feedid};
+        String[] teams = new String[]{home,away,feedid, state};
 
         v.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
             @Override

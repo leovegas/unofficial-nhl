@@ -11,11 +11,21 @@
             android:roundIcon="@mipmap/ic_launcher2_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".TeamInfoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".PlayersActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
         <activity
                 android:name=".FullscreenActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
+        android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/title_activity_fullscreen"
-                android:theme="@style/FullscreenTheme">
+                android:theme="@style/MyMaterialTheme.Base">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>

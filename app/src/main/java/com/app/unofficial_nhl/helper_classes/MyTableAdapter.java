@@ -19,12 +19,21 @@ import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 public class MyTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader,
         Cell> {
 
+    private ColumnHeader first;
+
     private MyTableViewModel myTableViewModel;
+
+    public ColumnHeader getFirst() {
+        return first;
+    }
+
 
     public MyTableAdapter() {
         super();
         this.myTableViewModel = new MyTableViewModel();
+        this.first = this.getColumnHeaderItem(0);
     }
+
 
 
     @Override
@@ -45,15 +54,18 @@ public class MyTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader
     public void onBindCellViewHolder(@NonNull AbstractViewHolder holder, @Nullable  Cell cellItemModel, int columnPosition, int rowPosition) {
 
         Cell cell = (Cell) cellItemModel;
+//        CellViewHolder viewHolder = (CellViewHolder) holder;
+//
+//        viewHolder.setCellModel(cell, columnPosition);
+
         CellViewHolder viewHolder = (CellViewHolder) holder;
-
-        viewHolder.setCellModel(cell, columnPosition);
-
-
+        viewHolder.setCellModel(cellItemModel, columnPosition);
 
 //        // Get the holder to update cell item text
-//        CellViewHolder viewHolder = (CellViewHolder) holder;
-//        viewHolder.cell_textview.setText(cell.getData());
+        CellViewHolder holder1 = (CellViewHolder) holder;
+        holder1.cell_textview.setText(cell.getId());
+        if (columnPosition==1)
+        holder1.itemView.performClick();
 //
 //        // If your TableView should have auto resize for cells & columns.
 //        // Then you should consider the below lines. Otherwise, you can ignore them.
@@ -99,11 +111,17 @@ public class MyTableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader
         RowHeader rowHeaderModel = (RowHeader) rowHeaderItemModel;
 
         RowHeaderViewHolder rowHeaderViewHolder = (RowHeaderViewHolder) holder;
-        rowHeaderViewHolder.row_header_textview.setText(rowHeaderModel.getData());
+        rowHeaderViewHolder.row_header_textview.setText((CharSequence) rowHeaderModel.getContent());
     }
 
     @Override
     public View onCreateCornerView(ViewGroup parent) {
+        parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return LayoutInflater.from(parent.getContext()).inflate(R.layout.table_view_corner_layout, null, false);
     }
 

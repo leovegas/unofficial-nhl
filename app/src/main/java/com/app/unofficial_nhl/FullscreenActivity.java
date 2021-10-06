@@ -10,10 +10,8 @@ import android.os.Handler;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.*;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +42,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
 
     private ImageView preteam1logo, preteam2logo, iceField;
-    private TextView postteam1name, preteam2name, score1, score2;
+    private TextView postteam1name, preteam2name, score1, score2, gamestate;
     private TextView preteamposition1, preteamposition2, preteamrecord1, preteamrecord2;
     private FrameLayout iceLayout;
 
@@ -54,6 +52,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private List<String> periodsAndTime = new ArrayList<>();
     private List<String> scoredteams = new ArrayList<>();
     private List<Coordinates> gooalCoordinates = new ArrayList<>();
+    private List<String> starsOfGame = new ArrayList<>();
 
 
     /**
@@ -143,6 +142,7 @@ public class FullscreenActivity extends AppCompatActivity {
         preteamrecord2 = findViewById(R.id.preteamrecord2);
         score1 = findViewById(R.id.score1);
         score2 = findViewById(R.id.score2);
+        gamestate = findViewById(R.id.gamestate);
         iceLayout = (FrameLayout) findViewById(R.id.iceLayout);
         iceField = (ImageView) findViewById(R.id.icefield);
 
@@ -165,7 +165,6 @@ public class FullscreenActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
-
                     case R.id.navigation_dashboard: {
                         Intent intent = new Intent(getApplicationContext(), MainActivity2.class);
                         startActivity(intent);
@@ -184,14 +183,21 @@ public class FullscreenActivity extends AppCompatActivity {
                 return false;
             }
         });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        ActionBar actionBar = getSupportActionBar();
+//        ActionBar actionBar = getSupportActionBar();
+//
+//        if (actionBar != null) {
+//            setupActionBar();
+//
+//            //actionBar.hide();
+//
+//        }
 
-        if (actionBar != null) {
-            setupActionBar();
-            actionBar.hide();
 
-        }
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
@@ -204,6 +210,7 @@ public class FullscreenActivity extends AppCompatActivity {
         String home = teams[0];
         String away = teams[1];
         String feedid = teams[2];
+        String detailedState = teams[3];
 
         postteam1name.setText(home);
         preteam2name.setText(away);
@@ -211,6 +218,7 @@ public class FullscreenActivity extends AppCompatActivity {
         preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
         score1.setText(String.valueOf(arrayMessage[0]));
         score2.setText(String.valueOf(arrayMessage[1]));
+        gamestate.setText("Status " + detailedState);
         int wins1 = arrayMessage[2];
         int losses1 = arrayMessage[3];
         int ot1 = arrayMessage[4];
@@ -268,6 +276,7 @@ public class FullscreenActivity extends AppCompatActivity {
                                                     periodsAndTime.add(play.getAbout().getOrdinalNum() + " " + play.getAbout().getPeriodTime());
                                                     scoredteams.add(play.getTeam().getName());
                                                     gooalCoordinates.add(play.getCoordinates());
+                                                    //starsOfGame.add(play.getResult())
                                                 }
                                             }
                                         }
@@ -406,6 +415,11 @@ public class FullscreenActivity extends AppCompatActivity {
 
     /************************ Resize Bitmap *********************************/
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     public void drawGoals(List<Coordinates> coordinates, List<String> teams) {
         // Create layout parameters for ImageView
@@ -416,7 +430,7 @@ public class FullscreenActivity extends AppCompatActivity {
             Coordinates coord = coordinates.get(i);
             // Initialize a new ImageView widget
             ImageView iv = new ImageView(getApplicationContext());
-            iv.setTag("Goal number "+(i+1));
+            iv.setTag("Goal number " + (i + 1));
             iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -449,7 +463,7 @@ public class FullscreenActivity extends AppCompatActivity {
             float widthHalf = rectf.width() / 2 - 20; //4.87
             float heightHalf = rectf.height() / 2 - 130; //5.764
             double kx = widthHalf / 100;
-            double ky = heightHalf / 42.5;
+            double ky = heightHalf / 42.5 * -1;
             if (coord.getX() == null) {
                 iceLayout.removeView(iv);
             } else {

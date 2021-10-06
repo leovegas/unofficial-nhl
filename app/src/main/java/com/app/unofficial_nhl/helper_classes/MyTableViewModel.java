@@ -128,11 +128,11 @@ public class MyTableViewModel {
             List<Cell> list = new ArrayList<>();
 
             // The order should be same with column header list;
-            list.add(new Cell("1- + i, user.id"));          // "Id"
-            list.add(new Cell("2- + i, user.name"));        // "Name"
-            list.add(new Cell("3- + i, user.nickname"));    // "Nickname"
-            list.add(new Cell("4- + i, user.email"));       // "Email"
-            list.add(new Cell("5- + i, user.birthdate"));   // "BirthDay"
+            list.add(new Cell("1- + i, user.id",String.valueOf(i)));          // "Id"
+            list.add(new Cell("2- + i, user.name",String.valueOf(i)));        // "Name"
+            list.add(new Cell("3- + i, user.nickname",String.valueOf(i)));    // "Nickname"
+            list.add(new Cell("4- + i, user.email",String.valueOf(i)));       // "Email"
+            list.add(new Cell("5- + i, user.birthdate",String.valueOf(i)));   // "BirthDay"
 
 
             // Add
@@ -146,7 +146,7 @@ public class MyTableViewModel {
         List<RowHeader> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             // In this example, Row headers just shows the index of the TableView List.
-            list.add(new RowHeader(String.valueOf(i + 1)));
+            list.add(new RowHeader(String.valueOf(i),String.valueOf(i + 1)));
         }
         return list;
     }

@@ -51,7 +51,7 @@ public class CellViewHolder extends AbstractViewHolder {
                     .primaryapp));
         } else {
             cell_textview.setTextColor(ContextCompat.getColor(cell_textview.getContext(), R.color
-                    .primaryapp));
+                    .textlesswhite));
         }
     }
 

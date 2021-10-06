@@ -4,32 +4,20 @@
               android:layout_height="20dp"
               android:layout_gravity="top"
               android:baselineAligned="true"
-              android:orientation="horizontal">
+              android:orientation="horizontal" android:background="@drawable/bg_gradient_topbar">
 
-    <ImageView
-            android:id="@+id/share"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_weight=".14"
-            android:background="@color/background"
-            android:src="@drawable/abc_vector_test"/>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="0.9">
 
-    <ImageView
-            android:id="@+id/bright"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".14"
-            android:background="@color/background"
-            android:src="@drawable/logo"/>
-
-    <ImageView
-            android:id="@+id/rotate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".14"
-            android:background="@color/background"
-            android:src="@drawable/abc_vector_test"/>
+        <ImageView
+                android:id="@+id/share"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="0.1"
+                android:src="@drawable/abc_vector_test"/>
+    </FrameLayout>
 
 
 </LinearLayout>

@@ -10,6 +10,40 @@
 >
     <FrameLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="0.9" android:id="@+id/frameLayout6">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar3"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/background"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:background="@color/background"/>
+                <TextView
+                        android:id="@+id/title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ActionBar Title"/>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </FrameLayout>
+    <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/iceLayout"
             android:background="@drawable/corners10" android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                        android:layout_gravity="center_horizontal"/>
+                        android:layout_gravity="center_horizontal" android:id="@+id/gamestate"/>
             </FrameLayout>
             <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"

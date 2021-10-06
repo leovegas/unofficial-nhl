@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="3dp"
+>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cv"
+                android:background="@drawable/corners" app:cardBackgroundColor="#00FFFFFF">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:background="@drawable/corners_teams_list" android:layout_gravity="center">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp" android:id="@+id/reminder"
+                            android:scaleType="fitCenter"
+                            android:alpha="0.4"
+                            android:layout_weight="0.7"
+                            tools:srcCompat="@android:drawable/ic_popup_reminder" android:padding="2dp"
+                            app:srcCompat="@android:drawable/ic_popup_reminder"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:id="@+id/shortname"
+                            android:textSize="14sp"
+                            android:text="NYR"
+                            android:fontFamily="@font/rubik" android:textColor="#BEBCBABA"
+                            android:layout_weight="0.4"
+                            android:gravity="left" android:paddingStart="4dp"/>
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp" app:srcCompat="@drawable/test" android:id="@+id/logo"
+                            android:scaleType="center" tools:srcCompat="@drawable/boston_bruins_logo"
+                            android:alpha="0.4" android:layout_gravity="right"
+                            android:foreground="@drawable/corners_teams_list" android:layout_weight="0.4"
+                    />
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

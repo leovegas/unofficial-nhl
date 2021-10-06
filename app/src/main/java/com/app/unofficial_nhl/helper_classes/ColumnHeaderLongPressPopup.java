@@ -41,7 +41,6 @@ public class ColumnHeaderLongPressPopup extends PopupMenu implements PopupMenu
         // find the view holder
         m_iViewHolder = (ColumnHeaderViewHolder) m_iTableView.getColumnHeaderRecyclerView()
                 .findViewHolderForAdapterPosition(mXPosition);
-
         initialize();
     }
 
@@ -49,14 +48,15 @@ public class ColumnHeaderLongPressPopup extends PopupMenu implements PopupMenu
         createMenuItem();
         changeMenuItemVisibility();
 
+
         this.setOnMenuItemClickListener(this);
     }
 
     private void createMenuItem() {
         this.getMenu().add(Menu.NONE, ASCENDING, 0, mContext.getString(R.string.sort_ascending));
         this.getMenu().add(Menu.NONE, DESCENDING, 1, mContext.getString(R.string.sort_descending));
-        this.getMenu().add(Menu.NONE, ROW_HIDE, 2, mContext.getString(R.string.row_hide));
-        this.getMenu().add(Menu.NONE, ROW_SHOW, 3, mContext.getString(R.string.row_show));
+//        this.getMenu().add(Menu.NONE, ROW_HIDE, 2, mContext.getString(R.string.row_hide));
+//        this.getMenu().add(Menu.NONE, ROW_SHOW, 3, mContext.getString(R.string.row_show));
         // add new one ...
 
     }
@@ -74,14 +74,14 @@ public class ColumnHeaderLongPressPopup extends PopupMenu implements PopupMenu
             getMenu().getItem(0).setVisible(false);
         }
 
-        // Control whether 5. row is visible or not.
-        if (m_iTableView.isRowVisible(TEST_ROW_INDEX)) {
-            // Show row menu item will be invisible
-            getMenu().getItem(3).setVisible(false);
-        } else {
-            //  Hide row menu item will be invisible
-            getMenu().getItem(2).setVisible(false);
-        }
+//        // Control whether 5. row is visible or not.
+//        if (m_iTableView.isRowVisible(TEST_ROW_INDEX)) {
+//            // Show row menu item will be invisible
+//            getMenu().getItem(3).setVisible(false);
+//        } else {
+//            //  Hide row menu item will be invisible
+//            getMenu().getItem(2).setVisible(false);
+//        }
     }
 
 
@@ -96,16 +96,16 @@ public class ColumnHeaderLongPressPopup extends PopupMenu implements PopupMenu
             case DESCENDING:
                 m_iTableView.sortColumn(mXPosition, SortState.DESCENDING);
                 break;
-            case ROW_HIDE:
-                // Hide 5. row for testing process
-                // index starts from 0. That's why TEST_ROW_INDEX is 4.
-                m_iTableView.hideRow(TEST_ROW_INDEX);
-                break;
-            case ROW_SHOW:
-                // Show 5. row for testing process
-                // index starts from 0. That's why TEST_ROW_INDEX is 4.
-                m_iTableView.showRow(TEST_ROW_INDEX);
-                break;
+//            case ROW_HIDE:
+//                // Hide 5. row for testing process
+//                // index starts from 0. That's why TEST_ROW_INDEX is 4.
+//                m_iTableView.hideRow(TEST_ROW_INDEX);
+//                break;
+//            case ROW_SHOW:
+//                // Show 5. row for testing process
+//                // index starts from 0. That's why TEST_ROW_INDEX is 4.
+//                m_iTableView.showRow(TEST_ROW_INDEX);
+//                break;
         }
 
         // Recalculate of the width values of the columns

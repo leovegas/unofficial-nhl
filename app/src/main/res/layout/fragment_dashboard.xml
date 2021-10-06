@@ -5,30 +5,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.app.unofficial_nhl.ui.dashboard.DashboardFragment">
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="45dp"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="3dp" android:layout_marginEnd="3dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="60dp"
-            android:background="@drawable/corners_views" app:layout_constraintVertical_bias="1.0"
-            android:id="@+id/linearLayout">
-
-        <com.evrencoskun.tableview.TableView
-                android:id="@+id/content_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        />
-        <!--                app:column_header_height="@dimen/column_header_height"-->
-        <!--                app:row_header_width="@dimen/row_header_width"-->
-        <!--                app:selected_color="@color/selected_background_color"-->
-        <!--                app:shadow_color="@color/shadow_background_color"-->
-        <!--                app:unselected_color="@color/unselected_background_color"-->
-
-
-    </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:orientation="vertical"
                   app:layout_constraintTop_toTopOf="parent"
@@ -48,5 +24,33 @@
                     android:layout_height="wrap_content" android:id="@+id/spinner2" android:layout_weight="1"
                     android:contentDescription="Divisions"/>
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="45dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="3dp" android:layout_marginEnd="3dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="60dp"
+            android:background="@drawable/corners_views" app:layout_constraintVertical_bias="1.0"
+            android:id="@+id/linearLayout">
+
+        <com.evrencoskun.tableview.TableView
+                android:id="@+id/content_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:allow_click_inside_cell="true"
+                app:allow_click_inside_column_header="true"
+                app:allow_click_inside_row_header="true"
+                app:selected_color="@color/backgroundAlt1"
+                app:shadow_color="@color/backgroundAlt3"
+                app:unselected_color="@color/background"/>
+
+        <!--                        app:column_header_height="@dimen/column_header_height"-->
+        <!--                        app:row_header_width="@dimen/row_header_width"-->
+
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.app.unofficial_nhl.tabs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.app.unofficial_nhl.FullscreenActivity;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.ListRow;
@@ -55,6 +57,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Today extends Fragment {
+
+    public static final String EXTRA_MESSAGE = "com.app.unofficial_nhl.tabs.MESSAGE";
 
     private ArrayList<Game> gamesByDate = new ArrayList<>();
     Team team;
@@ -277,21 +281,54 @@ public class Today extends Fragment {
 
                             @Override
                             public void onClick(View view, int position) {
-                                view.findViewById(R.id.home_score).setVisibility(View.GONE);
-                                view.findViewById(R.id.away_score).setVisibility(View.GONE);
-                                homeViewModel.fire();
+                                if (gamesByDate.get(position).getStatus().getDetailedState().startsWith("In Progress")||gamesByDate.get(position).getStatus().getDetailedState().equals("Final")) {
+                                    String home = gamesByDate.get(position).getTeams().getHome().getTeam().getName();
+                                    String away = gamesByDate.get(position).getTeams().getAway().getTeam().getName();
+                                    int scorehome = gamesByDate.get(position).getTeams().getHome().getScore();
+                                    int scoreaway = gamesByDate.get(position).getTeams().getAway().getScore();
+                                    int wins1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getWins();
+                                    int losses1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getLosses();
+                                    int ot1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getOt();
+                                    int wins2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getWins();
+                                    int losses2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getLosses();
+                                    int ot2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getOt();
+                                    int homeid = gamesByDate.get(position).getTeams().getHome().getTeam().getId();
+                                    int awayid = gamesByDate.get(position).getTeams().getAway().getTeam().getId();
+                                    String feedid = gamesByDate.get(position).getLink().replaceAll("\\D+","").substring(1);
+                                    String state = gamesByDate.get(position).getStatus().getDetailedState();
 
-                                preteamrecord1.setText(String.format("%d-%d-%d", 0, 0, 0));
-                                preteamrecord2.setText(String.format("%d-%d-%d", 0, 0, 0));
+                                    int[] arrayMessage =new int[]{scorehome,scoreaway,wins1,losses1,ot1,wins2,losses2,ot2,homeid,awayid};
+                                    String[] teams = new String[]{home,away,feedid, state};
 
-                                String home = gamesByDate.get(position).getTeams().getHome().getTeam().getName();
-                                String away = gamesByDate.get(position).getTeams().getAway().getTeam().getName();
+                                    view.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            view.animate().withLayer()
+                                                    .alpha(1f).setDuration(100).start();
+                                            Intent intent = new Intent(getContext(), FullscreenActivity.class);
+                                            intent.putExtra(EXTRA_MESSAGE, arrayMessage);
+                                            intent.putExtra("TEAMS", teams);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
+                                    }).start();
 
-                                preteam1name.setText(home);
-                                preteam2name.setText(away);
-                                preteam1logo.setImageDrawable(resizeImage(StaticData.logosMap.get(home)));
-                                preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
-                                prestarttime.setText("NHL "+getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
+                                } else {
+                                    view.findViewById(R.id.home_score).setVisibility(View.GONE);
+                                    view.findViewById(R.id.away_score).setVisibility(View.GONE);
+                                    homeViewModel.fire();
+
+                                    preteamrecord1.setText(String.format("%d-%d-%d", 0, 0, 0));
+                                    preteamrecord2.setText(String.format("%d-%d-%d", 0, 0, 0));
+
+                                    String home = gamesByDate.get(position).getTeams().getHome().getTeam().getName();
+                                    String away = gamesByDate.get(position).getTeams().getAway().getTeam().getName();
+
+                                    preteam1name.setText(home);
+                                    preteam2name.setText(away);
+                                    preteam1logo.setImageDrawable(resizeImage(StaticData.logosMap.get(home)));
+                                    preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
+                                    prestarttime.setText("NHL "+getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
 /*                                System.out.println("tt"+gamesByDate.get(position).getTeams().getAway().getScore());
                                 int wins1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getWins();
                                 int losses1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getLosses();
@@ -303,8 +340,10 @@ public class Today extends Fragment {
                                 prediction((wins1 + losses1 + ot1+50), wins1+50, (wins2 + losses2 + ot2+50), wins2+50);
                                 preteamrecord1.setText(wins1 + "-" + losses1 + "-" + ot1);
                                 preteamrecord2.setText(wins2 + "-" + losses2 + "-" + ot2);*/
-                                getTeamsInfo(gamesByDate.get(position).getTeams().getHome().getTeam().getId(), preteamposition1, 1);
-                                getTeamsInfo(gamesByDate.get(position).getTeams().getAway().getTeam().getId(), preteamposition2, 2);
+                                    getTeamsInfo(gamesByDate.get(position).getTeams().getHome().getTeam().getId(), preteamposition1, 1);
+                                    getTeamsInfo(gamesByDate.get(position).getTeams().getAway().getTeam().getId(), preteamposition2, 2);
+                                }
+
 
                             }
 
