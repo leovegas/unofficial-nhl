@@ -95,7 +95,7 @@ public class Yesterday extends Fragment {
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .retry(2)
-                .timeout(7000, TimeUnit.MILLISECONDS)
+                .timeout(20000, TimeUnit.MILLISECONDS)
                 .subscribe(new DisposableObserver<List<Game>>() {
 
                     @Override
@@ -282,7 +282,7 @@ public class Yesterday extends Fragment {
     /************************ Resize Bitmap *********************************/
     public Drawable resizeImage(int imageResource) {// R.drawable.large_image
         // Get device dimensions
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
         double deviceWidth = display.getWidth();
 
         BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(

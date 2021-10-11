@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="fill_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="fill_parent"
              android:layout_height="wrap_content"
-             android:padding="6dip" android:background="@drawable/corners_views">
+             android:padding="6dip" android:background="@drawable/corners10" android:layout_marginBottom="3dp">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:orientation="vertical">
         <LinearLayout
@@ -17,7 +18,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="100dp" android:id="@+id/imageurl"
                         android:layout_weight="1" app:srcCompat="@drawable/main_logo" android:scaleType="fitCenter"
-                        android:padding="1sp"/>
+                        android:padding="1sp" tools:srcCompat="@drawable/main_logo"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"

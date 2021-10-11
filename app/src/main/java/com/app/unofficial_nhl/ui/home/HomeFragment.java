@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -24,6 +25,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private String[] titles = new String[]{"Yesterday", "Today", "Tomorrow"};
     View root;
+    private MotionLayout motionLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class HomeFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_home, container, false);
         ViewPager2 vp = root.findViewById(R.id.view_pager);
         TabLayout tl = root.findViewById(R.id.tab_layout);
+        motionLayout = (MotionLayout) getActivity().findViewById(R.id.container);
         vp.setUserInputEnabled(false);
 
         vp.setAdapter(new ViewPagerFragmentAdapter(this));

@@ -10,6 +10,7 @@
     <color name="textlesswhite">#BEFFFFFF</color>
     <color name="primaryapp">#FF6500</color>
     <color name="backgroundAlt3">#E5E5E5</color>
+    <color name="primaryapp70">#C3FF6500</color>
 
     <color name="cell_background_color">#858585</color>
     <color name="header_line_color">#0a0a0a</color>

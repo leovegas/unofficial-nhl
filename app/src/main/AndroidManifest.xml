@@ -3,6 +3,9 @@
           package="com.app.unofficial_nhl">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
             android:allowBackup="true"
@@ -11,7 +14,29 @@
             android:roundIcon="@mipmap/ic_launcher2_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".TeamInfoActivity">
+
+        <receiver
+                android:name="com.app.unofficial_nhl.alarms.DailyReceiver"
+                android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+                android:name="com.app.unofficial_nhl.alarms.WakeUpAlarmReceiver"
+                android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.HOME" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".TeamInfoActivity"
+                  android:configChanges="orientation|keyboardHidden|screenSize"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
@@ -25,7 +50,8 @@
                 android:name=".FullscreenActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/title_activity_fullscreen"
-                android:theme="@style/MyMaterialTheme.Base">
+                android:screenOrientation="portrait"
+                android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
@@ -48,9 +74,21 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".ui.video.FullScreenVideoActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:label="@string/title_activity_fullscreen"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+
         <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts"/>
     </application>
+
 
 </manifest>

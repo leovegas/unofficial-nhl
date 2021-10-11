@@ -1,0 +1,607 @@
+{    "editorial": {
+  "preview": {
+    "title": "Preview",
+    "topicList": "",
+    "items": []
+  },
+  "articles": {
+    "title": "Articles",
+    "topicList": "",
+    "items": []
+  },
+  "recap": {
+    "title": "Recap",
+    "topicList": "",
+    "items": [
+      {
+        "type": "article",
+        "state": "A",
+        "date": "2021-10-06T01:40:01-0400",
+        "id": "326577424",
+        "headline": "Coyotes 4, Kings 1",
+        "subhead": "",
+        "seoTitle": "Arizona Coyotes Los Angeles Kings preseason game recap",
+        "seoDescription": "Lawson Crouse had two goals and an assist for the Arizona Coyotes in a 4-1 preseason win against the Los Angeles Kings at Staples Center in Los Angeles on Tuesday.",
+        "seoKeywords": "Arizona Coyotes, Los Angeles Kings, preseason, game recap, NHL, hockey, news",
+        "slug": "arizona-coyotes-los-angeles-kings-preseason-game-recap",
+        "commenting": true,
+        "tagline": "",
+        "tokenData": {
+          "token-4EB2AA8260C0D1C956BB9": {
+            "tokenGUID": "token-4EB2AA8260C0D1C956BB9",
+            "type": "playerCard",
+            "id": "8478474",
+            "teamId": "53",
+            "position": "Left Wing",
+            "name": "Lawson Crouse",
+            "seoName": "lawson-crouse"
+          },
+          "token-D5C190FBC382B2A672192": {
+            "tokenGUID": "token-D5C190FBC382B2A672192",
+            "type": "video",
+            "videoId": "326621108",
+            "href": "https://www.nhl.com/video/c-9095368",
+            "tags": [
+              {
+                "@type": "shareable",
+                "@value": "Y",
+                "@displayName": "Y"
+              },
+              {
+                "@type": "secure",
+                "@value": "N",
+                "@displayName": "N"
+              },
+              {
+                "@type": "assetXrefId",
+                "@value": "2021-10-06T05:53:13.7876865",
+                "@displayName": "2021-10-06T05:53:13.7876865"
+              },
+              {
+                "@type": "closed_captions_location_ttml",
+                "@value": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979280/9e4b7f26-39d8-4932-ac7b-24acc92a0dca.ttml",
+                "@displayName": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979280/9e4b7f26-39d8-4932-ac7b-24acc92a0dca.ttml"
+              },
+              {
+                "@type": "mediaplaybackid",
+                "@value": "9095368",
+                "@displayName": "9095368"
+              },
+              {
+                "@type": "embeddable",
+                "@value": "Y",
+                "@displayName": "Y"
+              },
+              {
+                "@type": "gameId",
+                "@value": "2021010075",
+                "@displayName": "ARI at LAK - 10/05/2021 - 6:30:00 PM"
+              },
+              {
+                "@type": "closed_captions_location_vtt",
+                "@value": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979280/9e4b7f26-39d8-4932-ac7b-24acc92a0dca.vtt",
+                "@displayName": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979280/9e4b7f26-39d8-4932-ac7b-24acc92a0dca.vtt"
+              },
+              {
+                "@type": "teamFileCode",
+                "@value": "ARI",
+                "@displayName": "Arizona Coyotes"
+              },
+              {
+                "@type": "content",
+                "@value": "gameRecap",
+                "@displayName": "game recap"
+              },
+              {
+                "@type": "homeTeamId",
+                "@value": "26",
+                "@displayName": "26"
+              },
+              {
+                "@type": "mediaId",
+                "@value": "9095368",
+                "@displayName": "9095368"
+              },
+              {
+                "@type": "game_pk",
+                "@value": "2021010075",
+                "@displayName": "ARI at LAK - 10/05/2021 - 10:30:00 PM"
+              },
+              {
+                "@type": "altLanguage",
+                "@value": "fr",
+                "@displayName": "French"
+              },
+              {
+                "@type": "featurecontext",
+                "@value": "NHL.DEFAULT",
+                "@displayName": "NHL.DEFAULT"
+              },
+              {
+                "@type": "contentXrefId",
+                "@value": "2021-10-06T05:53:13.7876865",
+                "@displayName": "2021-10-06T05:53:13.7876865"
+              },
+              {
+                "@type": "startDate",
+                "@value": "2021-10-06T02:30:00Z",
+                "@displayName": "2021-10-06T02:30:00Z"
+              },
+              {
+                "@type": "awayTeamId",
+                "@value": "53",
+                "@displayName": "53"
+              },
+              {
+                "@type": "teamId",
+                "@value": "53",
+                "@displayName": "53"
+              },
+              {
+                "@type": "homeTeam",
+                "@value": "LAK",
+                "@displayName": "LAK"
+              },
+              {
+                "@type": "Language",
+                "@value": "eng",
+                "@displayName": "eng"
+              },
+              {
+                "@type": "contentXrefSystem",
+                "@value": "NHL-WSC",
+                "@displayName": "NHL-WSC"
+              },
+              {
+                "@type": "awayTeam",
+                "@value": "ARI",
+                "@displayName": "ARI"
+              },
+              {
+                "@type": "searchable",
+                "@value": "Y",
+                "@displayName": "Searchable: Y"
+              },
+              {
+                "@type": "language",
+                "@value": "en",
+                "@displayName": "English"
+              },
+              {
+                "@type": "calendarEventId",
+                "@value": "221-3003020",
+                "@displayName": "Arizona Coyotes vs. Los Angeles Kings"
+              },
+              {
+                "@type": "assetXrefSystem",
+                "@value": "NHL-WSC",
+                "@displayName": "NHL-WSC"
+              },
+              {
+                "@type": "content_group_id",
+                "@value": "53",
+                "@displayName": "private_53"
+              }
+            ],
+            "date": "2021-10-06T01:53:26-0400",
+            "headline": "Recap: ARI 4, LAK 1",
+            "duration": "05:05",
+            "blurb": "Crouse scores twice and earns an assist in 4-1 win",
+            "bigBlurb": "Lawson Crouse netted 2 goals and grabbed an assist, Carter Hutton stopped 38 of 39 shots, helping the Coyotes earn a 4-1 win over the Kings",
+            "mediaPlaybackId": "9095368",
+            "image": {
+              "cuts": {
+                "1136x640": {
+                  "aspectRatio": "16:9",
+                  "width": 1136,
+                  "height": 640,
+                  "src": "326620666/1136x640/cut.png"
+                },
+                "1024x576": {
+                  "aspectRatio": "16:9",
+                  "width": 1024,
+                  "height": 576,
+                  "src": "326620666/1024x576/cut.png"
+                },
+                "960x540": {
+                  "aspectRatio": "16:9",
+                  "width": 960,
+                  "height": 540,
+                  "src": "326620666/960x540/cut.png"
+                },
+                "768x432": {
+                  "aspectRatio": "16:9",
+                  "width": 768,
+                  "height": 432,
+                  "src": "326620666/768x432/cut.png"
+                },
+                "640x360": {
+                  "aspectRatio": "16:9",
+                  "width": 640,
+                  "height": 360,
+                  "src": "326620666/640x360/cut.png"
+                },
+                "568x320": {
+                  "aspectRatio": "16:9",
+                  "width": 568,
+                  "height": 320,
+                  "src": "326620666/568x320/cut.png"
+                },
+                "372x210": {
+                  "aspectRatio": "16:9",
+                  "width": 372,
+                  "height": 210,
+                  "src": "326620666/372x210/cut.png"
+                },
+                "320x180": {
+                  "aspectRatio": "16:9",
+                  "width": 320,
+                  "height": 180,
+                  "src": "326620666/320x180/cut.png"
+                },
+                "248x140": {
+                  "aspectRatio": "16:9",
+                  "width": 248,
+                  "height": 140,
+                  "src": "326620666/248x140/cut.png"
+                },
+                "124x70": {
+                  "aspectRatio": "16:9",
+                  "width": 124,
+                  "height": 70,
+                  "src": "326620666/124x70/cut.png"
+                }
+              }
+            },
+            "mediaURLS": {
+              "FLASH_192K_320X180": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979273/e58985ea-8e8c-4f0e-918a-216df3ec1919.mp4",
+              "FLASH_450K_384x216": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979274/ac58f8f6-242b-4faa-b673-18ffb4ccfa18.mp4",
+              "FLASH_1200K_640X360": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979276/b7ab7fbe-7a53-4040-a2f8-1368bf858db1.mp4",
+              "FLASH_1800K_896x504": "https://hlslive-wsczoominwestus.med.nhl.com/publish/3151256/3979277/a21a4f84-153e-43ce-b761-b303ba67bdf6.mp4",
+              "HTTP_CLOUD_MOBILE": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151256/MasterMobile.m3u8",
+              "HTTP_CLOUD_TABLET": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151256/MasterTablet.m3u8",
+              "HTTP_CLOUD_TABLET_60": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151256/MasterTablet60.m3u8",
+              "HTTP_CLOUD_WIRED": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151256/MasterWired.m3u8",
+              "HTTP_CLOUD_WIRED_60": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151256/MasterWired60.m3u8",
+              "HTTP_CLOUD_WIRED_WEB": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151256/MasterWiredWeb.m3u8"
+            }
+          },
+          "token-2794402A3BEA3A367DD84": {
+            "tokenGUID": "token-2794402A3BEA3A367DD84",
+            "type": "playerCard",
+            "id": "8479982",
+            "teamId": "53",
+            "position": "Defenseman",
+            "name": "Conor Timmins",
+            "seoName": "conor-timmins"
+          },
+          "token-71AB03FABA4C742E7CE8B": {
+            "tokenGUID": "token-71AB03FABA4C742E7CE8B",
+            "type": "playerCard",
+            "id": "8470626",
+            "teamId": "53",
+            "position": "Left Wing",
+            "name": "Loui Eriksson",
+            "seoName": "loui-eriksson"
+          },
+          "token-4B18F3C217D1F847B8FA9": {
+            "tokenGUID": "token-4B18F3C217D1F847B8FA9",
+            "type": "playerCard",
+            "id": "8475622",
+            "teamId": "53",
+            "position": "Goalie",
+            "name": "Carter Hutton",
+            "seoName": "carter-hutton"
+          },
+          "token-A447D3DC316D337DDEDA2": {
+            "tokenGUID": "token-A447D3DC316D337DDEDA2",
+            "type": "playerCard",
+            "id": "8480014",
+            "teamId": "26",
+            "position": "Center",
+            "name": "Gabriel Vilardi",
+            "seoName": "gabriel-vilardi"
+          },
+          "token-0ECF8F33721B9283667A8": {
+            "tokenGUID": "token-0ECF8F33721B9283667A8",
+            "type": "playerCard",
+            "id": "8471734",
+            "teamId": "26",
+            "position": "Goalie",
+            "name": "Jonathan Quick",
+            "seoName": "jonathan-quick"
+          },
+          "token-FA6BE68E549BD675F1BAE": {
+            "tokenGUID": "token-FA6BE68E549BD675F1BAE",
+            "type": "playerCard",
+            "id": "8478432",
+            "teamId": "53",
+            "position": "Right Wing",
+            "name": "Christian Fischer",
+            "seoName": "christian-fischer"
+          }
+        },
+        "contributor": {
+          "contributors": [],
+          "source": ""
+        },
+        "keywordsDisplay": [
+          {
+            "type": "language",
+            "value": "en",
+            "displayName": "English"
+          }
+        ],
+        "keywordsAll": [
+          {
+            "type": "teamId",
+            "value": "53",
+            "displayName": "Arizona Coyotes"
+          },
+          {
+            "type": "bodyWordCount",
+            "value": "115",
+            "displayName": "private_115"
+          },
+          {
+            "type": "primaryTag",
+            "value": "content|gameRecap",
+            "displayName": "game recap"
+          },
+          {
+            "type": "gameId",
+            "value": "2021010075",
+            "displayName": "ARI at LAK - 10/05/2021 - 6:30:00 PM"
+          },
+          {
+            "type": "bodyParagraphCount",
+            "value": "6",
+            "displayName": "private_6"
+          },
+          {
+            "type": "language",
+            "value": "en",
+            "displayName": "English"
+          },
+          {
+            "type": "teamId",
+            "value": "26",
+            "displayName": "Los Angeles Kings"
+          },
+          {
+            "type": "content",
+            "value": "gameRecap",
+            "displayName": "game recap"
+          },
+          {
+            "type": "teamFileCode",
+            "value": "ARI",
+            "displayName": "Arizona Coyotes"
+          },
+          {
+            "type": "previewWordCount",
+            "value": "30",
+            "displayName": "private_30"
+          },
+          {
+            "type": "teamFileCode",
+            "value": "LAK",
+            "displayName": "Los Angeles Kings"
+          },
+          {
+            "type": "previewParagraphCount",
+            "value": "1",
+            "displayName": "private_1"
+          }
+        ],
+        "approval": "",
+        "url": "/news/arizona-coyotes-los-angeles-kings-preseason-game-recap/c-326577424?game_pk=2021010075",
+        "dataURI": "/nhl/id/v1/326577424/details/web-v1.json",
+        "primaryKeyword": {
+          "type": "content",
+          "value": "gameRecap",
+          "displayName": "game recap"
+        },
+        "shareImage": "",
+        "media": {
+          "type": "video",
+          "id": "9095212",
+          "date": "2021-10-05T22:30:00-0400",
+          "title": "Crouse nets 2nd of the night",
+          "blurb": "ARI@LAK: Crouse buries a rebound on the power play",
+          "description": "Lawson Crouse finds a rebound and fires it into the back of the net for a power-play goal and his 2nd of the night, putting the Coyotes ahead",
+          "duration": "00:26",
+          "authFlow": false,
+          "mediaPlaybackId": "9095212",
+          "mediaState": "MEDIA_ARCHIVE",
+          "keywords": [
+            {
+              "type": "shareable",
+              "value": "Y",
+              "displayName": "Y"
+            },
+            {
+              "type": "embeddable",
+              "value": "Y",
+              "displayName": "Y"
+            },
+            {
+              "type": "content",
+              "value": "highlight",
+              "displayName": "highlight"
+            },
+            {
+              "type": "content",
+              "value": "realTimeHighlight",
+              "displayName": "Real-Time Highlight"
+            },
+            {
+              "type": "teamId",
+              "value": "53",
+              "displayName": "53"
+            },
+            {
+              "type": "statsEventId",
+              "value": "602",
+              "displayName": "602"
+            },
+            {
+              "type": "language",
+              "value": "en",
+              "displayName": "English"
+            }
+          ],
+          "image": {
+            "title": "",
+            "altText": "",
+            "cuts": {
+              "1136x640": {
+                "aspectRatio": "16:9",
+                "width": 1136,
+                "height": 640,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/1136x640/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/1136x640/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/1136x640/cut.jpg"
+              },
+              "1024x576": {
+                "aspectRatio": "16:9",
+                "width": 1024,
+                "height": 576,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/1024x576/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/1024x576/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/1024x576/cut.jpg"
+              },
+              "960x540": {
+                "aspectRatio": "16:9",
+                "width": 960,
+                "height": 540,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/960x540/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/960x540/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/960x540/cut.jpg"
+              },
+              "768x432": {
+                "aspectRatio": "16:9",
+                "width": 768,
+                "height": 432,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/768x432/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/768x432/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/768x432/cut.jpg"
+              },
+              "640x360": {
+                "aspectRatio": "16:9",
+                "width": 640,
+                "height": 360,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/640x360/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/640x360/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/640x360/cut.jpg"
+              },
+              "568x320": {
+                "aspectRatio": "16:9",
+                "width": 568,
+                "height": 320,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/568x320/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/1136x640/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/568x320/cut.jpg"
+              },
+              "372x210": {
+                "aspectRatio": "16:9",
+                "width": 372,
+                "height": 210,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/372x210/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/372x210/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/372x210/cut.jpg"
+              },
+              "320x180": {
+                "aspectRatio": "16:9",
+                "width": 320,
+                "height": 180,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/320x180/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/640x360/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/960x540/cut.jpg"
+              },
+              "248x140": {
+                "aspectRatio": "16:9",
+                "width": 248,
+                "height": 140,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/248x140/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/248x140/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/248x140/cut.jpg"
+              },
+              "124x70": {
+                "aspectRatio": "16:9",
+                "width": 124,
+                "height": 70,
+                "src": "https://cms.nhl.bamgrid.com/images/photos/326619334/124x70/cut.jpg",
+                "at2x": "https://cms.nhl.bamgrid.com/images/photos/326619334/248x140/cut.jpg",
+                "at3x": "https://cms.nhl.bamgrid.com/images/photos/326619334/372x210/cut.jpg"
+              }
+            }
+          },
+          "playbacks": [
+            {
+              "name": "FLASH_192K_320X180",
+              "width": "320",
+              "height": "180",
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/editor/8425a381-eedc-42dc-b1a1-c9e8757f309c.mp4"
+            },
+            {
+              "name": "FLASH_450K_384x216",
+              "width": null,
+              "height": null,
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/editor/b2e1e358-4e48-4f61-b1b2-33e7822d2de7.mp4"
+            },
+            {
+              "name": "FLASH_1200K_640X360",
+              "width": "640",
+              "height": "360",
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/editor/d2e88b8c-8393-4f19-a4ec-bad0e08cdbb9.mp4"
+            },
+            {
+              "name": "FLASH_1800K_896x504",
+              "width": null,
+              "height": null,
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/editor/8b2c969c-ae24-4150-a58a-6a8d5fc2be5e.mp4"
+            },
+            {
+              "name": "HTTP_CLOUD_MOBILE",
+              "width": "null",
+              "height": "null",
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151105/MasterMobile.m3u8"
+            },
+            {
+              "name": "HTTP_CLOUD_TABLET",
+              "width": "null",
+              "height": "null",
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151105/MasterTablet.m3u8"
+            },
+            {
+              "name": "HTTP_CLOUD_TABLET_60",
+              "width": null,
+              "height": null,
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151105/MasterTablet60.m3u8"
+            },
+            {
+              "name": "HTTP_CLOUD_WIRED",
+              "width": "null",
+              "height": "null",
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151105/MasterWired.m3u8"
+            },
+            {
+              "name": "HTTP_CLOUD_WIRED_60",
+              "width": null,
+              "height": null,
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151105/MasterWired60.m3u8"
+            },
+            {
+              "name": "HTTP_CLOUD_WIRED_WEB",
+              "width": null,
+              "height": null,
+              "url": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/3151105/MasterWiredWeb.m3u8"
+            }
+          ]
+        },
+        "preview": "<p><span class=\"token token-playerCard\" id=\"token-4EB2AA8260C0D1C956BB9\">Lawson Crouse</span> had two goals and an assist for the Arizona Coyotes in a 4-1 preseason win against the Los Angeles Kings at Staples Center in Los Angeles on Tuesday.</p>"
+      }
+    ]
+  }
+}}

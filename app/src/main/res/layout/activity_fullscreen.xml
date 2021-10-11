@@ -10,215 +10,252 @@
 >
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_weight="0.9" android:id="@+id/frameLayout6">
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar3"
+            android:layout_height="wrap_content" android:id="@+id/frameLayout10"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/corners10"
+            tools:layout_editor_absoluteY="235dp" android:layout_marginStart="10dp" android:layout_marginEnd="10dp">
+
+        <ImageButton
+                android:clickable="false"
+                android:layout_width="50dp"
+                android:layout_height="45dp" app:srcCompat="@drawable/playvideo"
+                android:id="@+id/imageButton" android:layout_gravity="center" android:scaleType="centerInside"
+                android:background="@android:color/transparent"/>
+    </FrameLayout>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/frameLayoutTop"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/background"
-                android:elevation="4dp"
-                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-
-            <LinearLayout
+                android:layout_height="match_parent">
+            <com.app.unofficial_nhl.helper_classes.ScrollingTextView
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="1">
+                    android:layout_height="20dp"
+                    android:background="@drawable/corners10"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="10dp" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="10dp"
+                    android:text="comments appear here..." android:fontFamily="@font/rubik"
+                    android:textColor="@color/textlesswhite" android:textSize="14sp" android:paddingStart="10dp"
+                    android:paddingEnd="10dp" android:layout_marginBottom="5dp"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/frameLayout2"
+                    android:background="@drawable/corners10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" app:layout_constraintHorizontal_bias="0.5"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar" android:paddingTop="5dp">
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:background="@color/background"/>
-                <TextView
-                        android:id="@+id/title"
-                        android:layout_width="0dp"
+                <FrameLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="ActionBar Title"/>
+                        android:id="@+id/frameLayout" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                        tools:layout_editor_absoluteY="628dp" android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp">
 
-            </LinearLayout>
-
-        </androidx.appcompat.widget.Toolbar>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:gravity="center">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:layout_weight="0.5">
+                            <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+                                <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp" app:srcCompat="@drawable/main_logo"
+                                        android:id="@+id/prelogo1" android:layout_gravity="center_horizontal"/>
+                                <TextView
+                                        android:text="0"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" android:id="@+id/score1"
+                                        android:textColor="@color/textlesswhite"
+                                        android:fontFamily="@font/rubik_bold" android:textSize="22sp"
+                                        android:padding="2sp"
+                                        android:minLines="2" android:layout_weight="1"
+                                        android:layout_gravity="center_vertical"
+                                        android:gravity="center"/>
+                            </LinearLayout>
+                            <TextView
+                                    android:text="Team1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/postteam1name"
+                                    android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
+                                    android:minLines="2" android:maxLines="2"/>
+                            <TextView
+                                    android:text="Position1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/preteamposition1"
+                                    android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik" android:textSize="12sp" android:padding="2sp"/>
+                            <TextView
+                                    android:text="0-0-0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/preteamrecord1"
+                                    android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik" android:padding="2sp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:layout_weight="0.5">
+                            <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+                                <TextView
+                                        android:text="0"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" android:id="@+id/score2"
+                                        android:textColor="@color/textlesswhite"
+                                        android:fontFamily="@font/rubik_bold" android:textSize="22sp"
+                                        android:padding="2sp"
+                                        android:minLines="2" android:layout_weight="1"
+                                        android:layout_gravity="center_vertical"
+                                        android:gravity="center"/>
+                                <ImageView
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp" app:srcCompat="@drawable/main_logo"
+                                        android:id="@+id/prelogo2" android:layout_gravity="center_horizontal"/>
+                            </LinearLayout>
+                            <TextView
+                                    android:text="Team2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/preteam2name"
+                                    android:gravity="right|center_horizontal" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
+                                    android:minLines="2" android:maxLines="2"/>
+                            <TextView
+                                    android:text="Position2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/preteamposition2"
+                                    android:gravity="right|center_horizontal" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik" android:textSize="12sp" android:padding="2sp"/>
+                            <TextView
+                                    android:text="0-0-0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/preteamrecord2"
+                                    android:gravity="right|center_horizontal" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik" android:padding="2sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+            </FrameLayout>
+        </LinearLayout>
     </FrameLayout>
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/iceLayout"
-            android:background="@drawable/corners10" android:layout_margin="10dp"
+            android:layout_height="wrap_content" android:id="@+id/frameLayoutMiddle"
+            android:background="@drawable/corners10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp" app:layout_constraintHorizontal_bias="0.5"
 
-            app:layout_constraintBottom_toTopOf="@id/nav_view"
-            android:layout_marginBottom="57dp">
-
-        <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp" app:srcCompat="@drawable/icefield"
-                    android:id="@+id/icefield"/>
-    </FrameLayout>
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/frameLayout3"
-            android:background="@drawable/corners10" android:layout_margin="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" app:layout_constraintHorizontal_bias="0.5"
-
-            app:layout_constraintBottom_toTopOf="@id/nav_view"
-            android:layout_marginBottom="57dp">
+            tools:layout_editor_absoluteY="240dp">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                <TextView
-                        android:text="Results"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                        android:layout_gravity="center_horizontal" android:id="@+id/gamestate"/>
-            </FrameLayout>
             <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:fillViewport="true" android:id="@+id/nestedScrollView"
+                    android:layout_height="match_parent" android:fillViewport="true"
+                    android:id="@+id/nestedScrollView"
                     android:layout_marginBottom="10dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
                               android:orientation="vertical">
-                    <androidx.recyclerview.widget.RecyclerView
-                            android:nestedScrollingEnabled="false"
-                            android:id="@+id/resultsRecyclerView"
+                    <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:overScrollMode="never" android:layout_marginBottom="0dp"/>
+                            android:layout_height="match_parent">
+
+                        <TextView
+                                android:text="Results"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                                android:layout_gravity="center_horizontal" android:id="@+id/gamestate"/>
+                    </FrameLayout>
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:nestedScrollingEnabled="true"
+                                android:id="@+id/resultsRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:overScrollMode="never"/>
+                    </FrameLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
     </FrameLayout>
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/frameLayout2"
-            android:background="@drawable/corners10" android:layout_margin="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp" android:visibility="visible">
+            android:layout_height="wrap_content" android:id="@+id/frameLayout6"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:outlineProvider="background"
+            android:padding="5dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <FrameLayout
+        <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/frameLayout" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteY="628dp" android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_height="match_parent">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" android:layout_weight="0.4" android:layout_marginBottom="0dp"
+                        android:layout_gravity="center" android:id="@+id/videoLayout">
 
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:gravity="center">
-                <LinearLayout
-                        android:orientation="vertical"
+                    <androidx.cardview.widget.CardView
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            app:cardCornerRadius="15dp"
+                            android:layout_height="match_parent" android:layout_weight="1"
+                            app:cardBackgroundColor="@color/background" android:scrollbarSize="0dp"
+                            app:cardElevation="0dp">
+                        <VideoView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" android:id="@+id/videoView"
+                        />
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+                <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:layout_weight="0.5">
-                    <LinearLayout
-                            android:orientation="horizontal"
+                        android:layout_height="270dp" android:id="@+id/iceLayout"
+                        android:background="@drawable/corners10"
+
+                        android:layout_weight="0.7">
+
+                    <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                        <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp" app:srcCompat="@drawable/boston_bruins_logo"
-                                android:id="@+id/prelogo1" android:layout_gravity="center_horizontal"/>
-                        <TextView
-                                android:text="0"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:id="@+id/score1"
-                                android:textColor="@color/textlesswhite"
-                                android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
-                                android:minLines="2" android:layout_weight="1"
-                                android:layout_gravity="center_vertical"
-                                android:gravity="center"/>
-                    </LinearLayout>
-                    <TextView
-                            android:text="Team1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/postteam1name"
-                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
-                            android:minLines="2" android:maxLines="2"/>
-                    <TextView
-                            android:text="Position1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/preteamposition1"
-                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik" android:textSize="12sp" android:padding="2sp"/>
-                    <TextView
-                            android:text="20-4-3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/preteamrecord1"
-                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik" android:padding="2sp"/>
-                </LinearLayout>
-                <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:layout_weight="0.5">
-                    <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                        <TextView
-                                android:text="0"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:id="@+id/score2"
-                                android:textColor="@color/textlesswhite"
-                                android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
-                                android:minLines="2" android:layout_weight="1"
-                                android:layout_gravity="center_vertical"
-                                android:gravity="center"/>
-                        <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp" app:srcCompat="@drawable/new_york_islanders_logo"
-                                android:id="@+id/prelogo2" android:layout_gravity="center_horizontal"/>
-                    </LinearLayout>
-                    <TextView
-                            android:text="Team2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/preteam2name"
-                            android:gravity="right|center_horizontal" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
-                            android:minLines="2" android:maxLines="2"/>
-                    <TextView
-                            android:text="Position2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/preteamposition2"
-                            android:gravity="right|center_horizontal" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik" android:textSize="12sp" android:padding="2sp"/>
-                    <TextView
-                            android:text="13-5-4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/preteamrecord2"
-                            android:gravity="right|center_horizontal" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik" android:padding="2sp"/>
-                </LinearLayout>
+                            android:layout_height="match_parent" app:srcCompat="@drawable/icefield"
+                            android:id="@+id/icefield"/>
+                </FrameLayout>
             </LinearLayout>
-        </FrameLayout>
+        </ScrollView>
+
+
     </FrameLayout>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemTextColor="@drawable/bottom_nav_back"
-            app:itemIconTint="@drawable/bottom_nav_back"
-            app:itemRippleColor="@color/primaryapp"
-            android:background="@color/background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:menu="@menu/bottom_nav_menu"
-            android:visibility="visible" app:layout_constraintHorizontal_bias="0.5"/>
 </androidx.constraintlayout.motion.widget.MotionLayout>

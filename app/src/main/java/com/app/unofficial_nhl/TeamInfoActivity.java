@@ -9,10 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
+import com.allyants.notifyme.NotifyMe;
 import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.Record;
 import com.app.unofficial_nhl.pojos.Team;
@@ -32,8 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class TeamInfoActivity extends AppCompatActivity {
 
@@ -52,7 +49,7 @@ public class TeamInfoActivity extends AppCompatActivity {
 
         if (actionBar != null) {
             setupActionBar();
-            actionBar.hide();
+            //actionBar.hide();
 
         }
         teamnameView = findViewById(R.id.teamName);
@@ -74,6 +71,8 @@ public class TeamInfoActivity extends AppCompatActivity {
 
         teamnameView.setText(teamname);
         teamlogoView.setImageDrawable(resizeImage(StaticData.logosMap.get(teamname)));
+
+
 
 
        /* viewPager.addOnLayoutChangeListener();
@@ -99,8 +98,36 @@ public class TeamInfoActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public static Date addDays(Date date, int s)
+    {
+        int now = Calendar.getInstance().get(Calendar.SECOND);
+        Calendar cal = Calendar.getInstance();
+        System.out.println("now!!!!" + now);
+        date.setTime(now+s);
+        cal.setTime(date);
+        System.out.println("time!!!!!!!!!!!!"+cal.getTime());
+        return cal.getTime();
+    }
+
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
         //actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
         ViewGroup v = (ViewGroup) LayoutInflater.from(this)

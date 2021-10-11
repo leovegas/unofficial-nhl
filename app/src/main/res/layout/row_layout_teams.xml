@@ -35,14 +35,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:id="@+id/shortname"
-                            android:textSize="14sp"
+                            android:textSize="15sp"
                             android:text="NYR"
                             android:fontFamily="@font/rubik" android:textColor="#BEBCBABA"
                             android:layout_weight="0.4"
                             android:gravity="left" android:paddingStart="4dp"/>
                     <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="20dp" app:srcCompat="@drawable/test" android:id="@+id/logo"
+                            android:layout_height="25dp" app:srcCompat="@drawable/test" android:id="@+id/logo"
                             android:scaleType="center" tools:srcCompat="@drawable/boston_bruins_logo"
                             android:alpha="0.4" android:layout_gravity="right"
                             android:foreground="@drawable/corners_teams_list" android:layout_weight="0.4"
@@ -50,5 +50,30 @@
                 </LinearLayout>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp" android:id="@+id/buttonsLayout"
+                android:background="@drawable/corners_teams_list">
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <ImageButton
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" app:srcCompat="@android:drawable/ic_dialog_info"
+                        android:id="@+id/teaminfo" android:layout_weight="1"
+                        android:scaleType="fitCenter" android:padding="3dp" android:layout_margin="5dp"
+                        android:background="@android:color/transparent"
+                        android:alpha="0.6"/>
+                <ImageButton
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" app:srcCompat="@android:drawable/ic_popup_reminder"
+                        android:id="@+id/alarm" android:layout_weight="1"
+                        android:scaleType="fitCenter" android:padding="3dp" android:layout_margin="5dp"
+                        android:background="@android:color/transparent"
+                        android:alpha="0.6"/>
+            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>

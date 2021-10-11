@@ -8,131 +8,188 @@
         tools:context="com.app.unofficial_nhl.TeamInfoActivity"
         android:background="@color/background">
 
-    <FrameLayout
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/tablayout"
-            android:layout_marginBottom="57dp" app:layout_constraintBottom_toTopOf="@+id/nav_view"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.0">
-
-        <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-        />
-    </FrameLayout>
-    <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="23dp"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
-            android:layout_marginTop="10dp" android:id="@+id/tablayout" android:background="@drawable/corners10"
-            android:layout_marginStart="10dp" android:layout_marginEnd="10dp" app:tabTextColor="@color/textlesswhite"
-            app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:tabIndicatorColor="@color/background" app:tabIndicatorGravity="center"
-            app:tabIndicator="@drawable/navbar_background" app:tabIndicatorFullWidth="true"
-            app:tabIndicatorHeight="20dp">
-
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stats"/>
-
-        <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Players"/>
-
-    </com.google.android.material.tabs.TabLayout>
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/frameLayout2"
-            android:background="@drawable/corners10" android:layout_margin="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp" android:visibility="visible">
-
+            android:layout_height="match_parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent">
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/frameLayout" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteY="628dp" android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_height="wrap_content" android:id="@+id/frameLayout2"
+                android:background="@drawable/corners10"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="0dp" android:visibility="visible" android:layout_weight="0">
 
             <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:gravity="center">
-                <LinearLayout
-                        android:orientation="vertical"
+                    android:layout_height="match_parent">
+                <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:layout_weight="0.5">
+                        android:layout_height="wrap_content"
+                        android:id="@+id/frameLayout" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                        tools:layout_editor_absoluteY="628dp" android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp" android:layout_weight="0.5">
+
                     <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content" android:gravity="center" android:layout_weight="0.5">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:layout_weight="0.5">
+                            <TextView
+                                    android:text="Team"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/teamName"
+                                    android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
+                                    android:minLines="2" android:maxLines="2" android:textAlignment="center"/>
+                            <TextView
+                                    android:text="Conference"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/confAndPos"
+                                    android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik" android:textSize="14sp" android:padding="2sp"
+                                    android:textAlignment="center"/>
+                            <TextView
+                                    android:text="Home Arena"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" android:id="@+id/homeArena"
+                                    android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                                    android:fontFamily="@font/rubik" android:padding="2sp" android:minLines="2"
+                                    android:textSize="14sp" android:textAlignment="center"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:layout_weight="0.5">
+                            <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="150dp" app:srcCompat="@drawable/logo_clean"
+                                    android:id="@+id/teamLogo" android:layout_gravity="center_horizontal"
+                                    android:scaleType="fitCenter" tools:srcCompat="@drawable/logo_clean"
+                                    android:layout_margin="5dp"/>
+                        </LinearLayout>
                     </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/frameLayoutyear" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="628dp" android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" android:layout_weight="0" android:background="@drawable/corners10"
+                android:layout_marginTop="5dp">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:paddingStart="60dp" android:paddingEnd="60dp"
+                    android:paddingTop="5dp" android:paddingBottom="5dp">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:layout_weight="0.5">
                     <TextView
-                            android:text="Team"
+                            android:text="City"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/teamName"
+                            android:layout_height="wrap_content"
                             android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
-                            android:minLines="2" android:maxLines="2"/>
+                            android:fontFamily="@font/rubik" android:padding="2sp" android:maxLines="1"
+                            android:textSize="12sp" android:layout_weight="0.5"/>
                     <TextView
-                            android:text="Home Arena"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/homeArena"
-                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik" android:padding="2sp" android:minLines="2"/>
-                    <TextView
-                            android:text="Position1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/confAndPos"
-                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
-                            android:fontFamily="@font/rubik" android:textSize="12sp" android:padding="2sp"/>
-                    <TextView
-                            android:text="Vancouver"
+                            android:text="....."
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/city"
                             android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
                             android:fontFamily="@font/rubik" android:padding="2sp" android:maxLines="1"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" android:layout_weight="0.5"
+                            android:textAlignment="viewEnd"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:layout_weight="0.5">
                     <TextView
-                            android:text="1970"
+                            android:text="First game"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                            android:fontFamily="@font/rubik" android:padding="2sp" android:maxLines="1"
+                            android:textSize="12sp" android:layout_weight="0.5"/>
+                    <TextView
+                            android:text="...."
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/firstYearOfPlay"
                             android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
                             android:fontFamily="@font/rubik" android:padding="2sp" android:maxLines="1"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" android:layout_weight="0.5"
+                            android:textAlignment="viewEnd"/>
                 </LinearLayout>
                 <LinearLayout
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:layout_weight="0.5">
-                    <ImageView
+                        android:layout_height="match_parent" android:layout_weight="0.5">
+                    <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="150dp" app:srcCompat="@drawable/boston_bruins_logo"
-                            android:id="@+id/teamLogo" android:layout_gravity="center_horizontal"
-                            android:scaleType="centerCrop"/>
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                            android:fontFamily="@font/rubik" android:padding="2sp" android:maxLines="1"
+                            android:textSize="12sp" android:text="Head coach" android:layout_weight="0.5"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/headcoach"
+                            android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
+                            android:fontFamily="@font/rubik" android:padding="2sp" android:maxLines="1"
+                            android:textSize="12sp" android:text="....." android:layout_weight="0.5"
+                            android:textAlignment="viewEnd"/>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
-    </FrameLayout>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemTextColor="@drawable/bottom_nav_back"
-            app:itemIconTint="@drawable/bottom_nav_back"
-            app:itemRippleColor="@color/primaryapp"
-            android:background="@color/background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:menu="@menu/bottom_nav_menu"
-            android:visibility="visible" app:layout_constraintHorizontal_bias="0.5"/>
+        <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="23dp"
+                android:layout_marginTop="5dp" android:id="@+id/tablayout" android:background="@drawable/corners10"
+                android:layout_marginStart="10dp" android:layout_marginEnd="10dp"
+                app:tabTextColor="@color/textlesswhite"
+                app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:tabIndicatorColor="@color/background" app:tabIndicatorGravity="center"
+                app:tabIndicator="@drawable/navbar_background" app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="20dp">
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stats"/>
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Players"/>
+
+        </com.google.android.material.tabs.TabLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp" android:layout_weight="0.9">
+
+            <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                              android:orientation="vertical">
+                    <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                    />
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

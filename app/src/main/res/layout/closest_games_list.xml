@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="fill_parent"
              android:layout_height="wrap_content"
-             android:padding="6dip" android:background="@drawable/corners_views" android:id="@+id/listitem">
+             android:padding="6dip" android:background="@drawable/corners10" android:id="@+id/listitem"
+             android:layout_marginBottom="3dp">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:orientation="vertical">
         <LinearLayout
@@ -23,7 +24,7 @@
                         android:layout_height="wrap_content" android:id="@+id/team_1"
                         android:layout_weight="1"
                         android:textColor="#BEFFFFFF" android:textAlignment="center"
-                        android:fontFamily="@font/rubik" android:textSize="17sp"/>
+                        android:fontFamily="@font/rubik" android:textSize="18sp"/>
                 <TextView
                         android:text="Home"
                         android:layout_width="match_parent"
@@ -96,7 +97,7 @@
                         android:layout_height="wrap_content" android:id="@+id/team_2"
                         android:layout_weight="1"
                         android:textColor="#BEFFFFFF" android:textAlignment="center"
-                        android:fontFamily="@font/rubik" android:textSize="17sp"/>
+                        android:fontFamily="@font/rubik" android:textSize="18sp"/>
                 <TextView
                         android:text="Away"
                         android:layout_width="match_parent"

@@ -15,7 +15,7 @@
             android:title="@string/title_notifications"/>
     <item
             android:id="@+id/navigation_favorites"
-            android:icon="@drawable/ic_favs"
+            android:icon="@drawable/ic_hockey"
             android:enabled="true"
             android:title="@string/favorite"/>
 </menu>

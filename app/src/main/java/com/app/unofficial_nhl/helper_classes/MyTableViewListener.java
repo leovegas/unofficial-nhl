@@ -42,15 +42,19 @@ public class MyTableViewListener implements ITableViewListener {
     @Override
     public void onColumnHeaderClicked(@NonNull RecyclerView.ViewHolder columnHeaderView, int
             column) {
-        if (columnHeaderView != null && columnHeaderView instanceof ColumnHeaderViewHolder) {
+        System.out.println("column" + column);
+        if (column!=2&&column!=7&&column!=4&&column!=6) {
+            if (columnHeaderView != null && columnHeaderView instanceof ColumnHeaderViewHolder) {
 
-            // Create Long Press Popup
-            ColumnHeaderLongPressPopup popup = new ColumnHeaderLongPressPopup(
-                    (ColumnHeaderViewHolder) columnHeaderView, mTableView);
+                // Create Long Press Popup
+                ColumnHeaderLongPressPopup popup = new ColumnHeaderLongPressPopup(
+                        (ColumnHeaderViewHolder) columnHeaderView, mTableView);
 
-            // Show
-            popup.show();
+                // Show
+                popup.show();
+            }
         }
+
         Log.d(LOG_TAG, "onColumnHeaderClicked has been clicked for " + column);
     }
 

@@ -236,7 +236,7 @@ public class Tomorrow extends Fragment {
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .retry(2)
-                .timeout(7000, TimeUnit.MILLISECONDS)
+                .timeout(20000, TimeUnit.MILLISECONDS)
                 .subscribe(new DisposableObserver<List<Game>>() {
 
                     @Override
@@ -285,13 +285,11 @@ public class Tomorrow extends Fragment {
                                 String home = gamesByDate.get(position).getTeams().getHome().getTeam().getName();
                                 String away = gamesByDate.get(position).getTeams().getAway().getTeam().getName();
 
-
                                 preteam1name.setText(home);
                                 preteam2name.setText(away);
                                 preteam1logo.setImageDrawable(resizeImage(StaticData.logosMap.get(home)));
                                 preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
                                 prestarttime.setText("NHL "+getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
-                                System.out.println();
                                 int wins1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getWins();
                                 int losses1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getLosses();
                                 int ot1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getOt();
@@ -308,7 +306,7 @@ public class Tomorrow extends Fragment {
 
                             @Override
                             public void onLongClick(View view, int position) {
-                                cardflip(view, root.getContext());
+                               // cardflip(view, root.getContext());
 
                             }
                         }));

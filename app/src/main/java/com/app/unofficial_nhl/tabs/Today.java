@@ -20,6 +20,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.*;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -80,6 +81,9 @@ public class Today extends Fragment {
     TextView preteamposition1, preteamposition2, preteamrecord1, preteamrecord2;
     TextView prestarttime;
     List<Integer> wlo = new ArrayList<>();
+    FrameLayout frameLayout4;
+    FrameLayout frameLayout7;
+
 
         /*    PublishSubject<String> status = PublishSubject.create();
 
@@ -207,13 +211,16 @@ public class Today extends Fragment {
         preteamposition2 = getActivity().findViewById(R.id.preteamposition2);
         preteamrecord1 = getActivity().findViewById(R.id.preteamrecord1);
         preteamrecord2 = getActivity().findViewById(R.id.preteamrecord2);
-
         prestarttime = getActivity().findViewById(R.id.prestarttime);
-
         nogames = root.findViewById(R.id.nogames);
+        frameLayout4 = getActivity().findViewById(R.id.frameLayout4);
+        frameLayout7 = getActivity().findViewById(R.id.frameLayout7);
 
         nogames.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
+        frameLayout4.setVisibility(View.VISIBLE);
+        frameLayout7.setVisibility(View.VISIBLE);
+
 
         HomeViewModel homeViewModel =
                 ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
@@ -232,14 +239,16 @@ public class Today extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis())))
+                .getSheduledGamesByDate2("2021-10-09")
+//                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis())))
+
                 .subscribeOn(Schedulers.io())
                 .flatMapIterable(teams -> teams.getDates().get(0).getGames())
                 .toList()
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .retry(2)
-                .timeout(7000, TimeUnit.MILLISECONDS)
+                .timeout(20000, TimeUnit.MILLISECONDS)
                 .subscribe(new DisposableObserver<List<Game>>() {
 
                     @Override
@@ -359,6 +368,10 @@ public class Today extends Fragment {
                     public void onError(Throwable e) {
                         loadingBar.setVisibility(View.GONE);
                         nogames.setVisibility(View.VISIBLE);
+                        frameLayout4.setVisibility(View.GONE);
+                        frameLayout7.setVisibility(View.GONE);
+
+
                     }
 
                     @Override

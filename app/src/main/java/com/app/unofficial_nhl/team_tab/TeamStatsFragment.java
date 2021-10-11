@@ -22,10 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.helper_classes.StaticData;
-import com.app.unofficial_nhl.pojos.Record;
-import com.app.unofficial_nhl.pojos.Team;
-import com.app.unofficial_nhl.pojos.TeamRecord;
-import com.app.unofficial_nhl.pojos.Teams;
+import com.app.unofficial_nhl.pojos.*;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -105,6 +102,8 @@ public class TeamStatsFragment extends Fragment {
 
         TextView textViewId = (TextView) getActivity().findViewById(R.id.teamName);
         int id = StaticData.teamToIdMap.get(textViewId.getText());
+
+        getCoach(id);
 
         NetworkService.getInstance()
                 .getJSONApi()
@@ -194,8 +193,10 @@ public class TeamStatsFragment extends Fragment {
 
     }
 
+
+
     private void setChart(double data) {
-        chart.animateY(3000, Easing.EaseInOutQuad);
+        chart.animateY(1000, Easing.EaseInOutQuad);
         Legend l = chart.getLegend();
         l.setEnabled(false);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -271,6 +272,29 @@ public class TeamStatsFragment extends Fragment {
             }
         });
 
+    }
+
+    public void getCoach(int teamid) {
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getCoach(teamid)
+                .enqueue(new Callback<TeamsCoach>() {
+
+                    @Override
+                    public void onResponse(Call<TeamsCoach> call, Response<TeamsCoach> response) {
+                        if (response.body() != null  && response.body().getTeams().get(0).getCoaches()!=null) {
+                            System.out.println(response.body().getTeams().get(0).getName());
+                            Coach coach = response.body().getTeams().get(0).getCoaches().get(0);
+                            TextView headcoach = getActivity().findViewById(R.id.headcoach);
+                            headcoach.setText(coach.getPerson().getFullName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TeamsCoach> call, Throwable t) {
+
+                    }
+                });
     }
 
 }

@@ -1,20 +1,33 @@
 package com.app.unofficial_nhl.helper_classes;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.service.notification.StatusBarNotification;
+import android.widget.Toast;
+import androidx.core.app.NotificationManagerCompat;
+import com.allyants.notifyme.NotifyMe;
+import com.app.unofficial_nhl.MainActivity2;
 import com.app.unofficial_nhl.R;
+import com.app.unofficial_nhl.alarms.DailyReceiver;
 import com.app.unofficial_nhl.pojos.Game;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class StaticData {
     public static Map<String, Integer> logosMap = null;
     public static Map<String, Integer> teamToIdMap = null;
 
     static {
-        Map<String,Integer> aMap = new HashMap<String, Integer>();
+        Map<String, Integer> aMap = new HashMap<String, Integer>();
         aMap.put("New Jersey Devils", R.drawable.new_jersey_devils_logo);
         aMap.put("New York Islanders", R.drawable.new_york_islanders_logo);
         aMap.put("New York Rangers", R.drawable.new_york_rangers_logo);
@@ -51,7 +64,7 @@ public class StaticData {
     }
 
     static {
-        Map<String,Integer> TeamToId = new HashMap<String, Integer>();
+        Map<String, Integer> TeamToId = new HashMap<String, Integer>();
         TeamToId.put("New Jersey Devils", 1);
         TeamToId.put("New York Islanders", 2);
         TeamToId.put("New York Rangers", 3);
@@ -92,7 +105,102 @@ public class StaticData {
         return Math.round((float) dp * density);
     }
 
+    public static String remind(Context context, String text, Calendar date) {
+        NotifyMe.Builder notifyMe = new NotifyMe.Builder(context);
+        notifyMe.title(text);
+        notifyMe.content("String content");
+        notifyMe.color(0, 0, 0, 100);//Color of notification header
+        notifyMe.led_color(0, 0, 0, 100);//Color of LED when
+        notifyMe.time(date);//The time to popup notification
+        notifyMe.delay(0);//Delay in ms
+        notifyMe.large_icon(R.drawable.main_logo);//Icon resource by ID
+        notifyMe.rrule("FREQ=MINUTELY;INTERVAL=5;COUNT=1");//RRULE for frequency of notification
+        notifyMe.addAction(new Intent(context, MainActivity2.class), "String text"); //The action will call the intent when pressed
+        notifyMe.build();
 
 
+        if (NotificationManagerCompat.from(context).getNotificationChannels().size() > 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationManagerCompat.from(context).getNotificationChannels().forEach(notificationChannel -> {
+                    System.out.println(notificationChannel.getId());
+                });
+                return NotificationManagerCompat.from(context).getNotificationChannels().get(NotificationManagerCompat.from(context).getNotificationChannels().size() - 1).getId();
+            }
+        }
+        System.out.println("NULL");
+        return null;
+    }
+
+    public static void removeNoti(Context context) {
+        NotificationManagerCompat.from(context).cancelAll();
+        System.out.println("Removed");
+        AlarmManager alarmManager =
+                (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,1,new Intent(),PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+    }
+
+    public static Map<Calendar,Integer> StrToCalendar(String strDate) {
+        Map<Calendar,Integer> map = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        Date date = null;
+        try {
+            date = sdf.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date != null && date.getTime() > new Date().getTime()) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            map.put(cal, new Random().nextInt(100000));
+            return map;
+        }
+        return null;
+    }
+
+    public static void setAlarm(Context context, Calendar calendar, int randomID, String teamname, String date) {
+
+        System.out.println(calendar.getTime().toString());
+        Intent myIntent = new Intent(context, DailyReceiver.class);
+        myIntent.putExtra("randomID",(Integer) randomID);
+        myIntent.putExtra("teamname",(String) teamname);
+        myIntent.putExtra("date",(String) date);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, randomID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        System.out.println("alarm set " + randomID);
+
+    }
+    public static void removeAlarm(Context context, Class<?> cls, int id, String teamname) {
+        // Disable a receiver
+        TinyDB tinyDB = new TinyDB(context);
+/*
+        ComponentName receiver = new ComponentName(context, DailyReceiver.class);
+        PackageManager pm = context.getPackageManager();
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+*/
+
+        ArrayList<Integer> list = tinyDB.getListInt(teamname+"1");
+
+        for (Integer integer : list) {
+            Intent intent1 = new Intent(context, DailyReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                    integer, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(pendingIntent);
+            pendingIntent.cancel();
+            System.out.println("alarm unset "+id + " al id "+ integer);
+        }
+        list = new ArrayList<>();
+        tinyDB.putListInt(teamname+"1",list);
+
+
+
+
+    }
 
 }
