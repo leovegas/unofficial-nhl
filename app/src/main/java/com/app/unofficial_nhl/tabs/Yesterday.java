@@ -88,13 +88,13 @@ public class Yesterday extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis()-8640_0_000)))
+                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis() - 8640_0_000)))
                 .subscribeOn(Schedulers.io())
                 .flatMapIterable(teams -> teams.getDates().get(0).getGames())
                 .toList()
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
-                .retry(2)
+                .retry(4)
                 .timeout(20000, TimeUnit.MILLISECONDS)
                 .subscribe(new DisposableObserver<List<Game>>() {
 
@@ -111,15 +111,15 @@ public class Yesterday extends Fragment {
                             teamAway = teams.getAway().getTeam().getName();
                             detailedState = game.getStatus().getDetailedState();
                             venueName = game.getVenue().getName();
-                            gameTime = getDateOrTime(game.getGameDate(), 2);
-                            gameDate = getDateOrTime(game.getGameDate(), 1);
+                            gameTime = StaticData.getDateOrTime(game.getGameDate(), 2);
+                            gameDate = StaticData.getDateOrTime(game.getGameDate(), 1);
                             homeScore = String.valueOf(game.getTeams().getHome().getScore());
                             awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
                             @DrawableRes
-                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()),getActivity());
                             @DrawableRes
-                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity());
 
                             ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
                             alldata.add(listRow);
@@ -141,8 +141,6 @@ public class Yesterday extends Fragment {
                             public void onClick(View view, int position) {
                                 cardflip(view, root.getContext(), gamesByDate, position);
 
-
-
                                 // getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
                             }
 
@@ -150,7 +148,7 @@ public class Yesterday extends Fragment {
                             public void onLongClick(View view, int position) {
                                 view.findViewById(R.id.home_score).setVisibility(View.GONE);
                                 view.findViewById(R.id.away_score).setVisibility(View.GONE);
-
+                                cardflipOnly(view, root.getContext());
                             }
                         }));
                     }
@@ -171,6 +169,40 @@ public class Yesterday extends Fragment {
         return root;
     }
 
+    public synchronized void cardflipOnly(View v, Context context) {
+        v.animate().withLayer()
+                .rotationX(90)
+                .setDuration(400)
+                .withEndAction(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                float scale = context.getResources().getDisplayMetrics().density;
+                                float distance = v.getCameraDistance() * (scale + (scale / 3));
+                                v.setCameraDistance(distance * scale);
+                                v.setRotationX(-90);
+                                v.findViewById(R.id.away_score).setVisibility(View.VISIBLE);
+                                v.findViewById(R.id.home_score).setVisibility(View.VISIBLE);
+
+                                v.animate().withLayer()
+                                        .rotationX(0)
+                                        .setDuration(400)
+                                        .start();
+                                v.findViewById(R.id.away_score).animate().withLayer()
+                                        .rotationX(0)
+                                        .setDuration(400)
+                                        .start();
+                                v.findViewById(R.id.home_score).animate().withLayer()
+                                        .rotationX(0)
+                                        .setDuration(400)
+                                        .start();
+                            }
+                        }
+
+                ).start();
+
+    }
+
     public synchronized void cardflip(View v, Context context, List<Game> games, int position) {
         String home = games.get(position).getTeams().getHome().getTeam().getName();
         String away = games.get(position).getTeams().getAway().getTeam().getName();
@@ -184,11 +216,11 @@ public class Yesterday extends Fragment {
         int ot2 = games.get(position).getTeams().getAway().getLeagueRecord().getOt();
         int homeid = games.get(position).getTeams().getHome().getTeam().getId();
         int awayid = games.get(position).getTeams().getAway().getTeam().getId();
-        String feedid = games.get(position).getLink().replaceAll("\\D+","").substring(1);
+        String feedid = games.get(position).getLink().replaceAll("\\D+", "").substring(1);
         String state = games.get(position).getStatus().getDetailedState();
 
-        int[] arrayMessage =new int[]{scorehome,scoreaway,wins1,losses1,ot1,wins2,losses2,ot2,homeid,awayid};
-        String[] teams = new String[]{home,away,feedid, state};
+        int[] arrayMessage = new int[]{scorehome, scoreaway, wins1, losses1, ot1, wins2, losses2, ot2, homeid, awayid};
+        String[] teams = new String[]{home, away, feedid, state};
 
         v.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
             @Override
@@ -279,68 +311,6 @@ public class Yesterday extends Fragment {
         asyncHandler.post(runnable);
     }
 
-    /************************ Resize Bitmap *********************************/
-    public Drawable resizeImage(int imageResource) {// R.drawable.large_image
-        // Get device dimensions
-        Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
-        double deviceWidth = display.getWidth();
-
-        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(
-                imageResource);
-        double imageHeight = bd.getBitmap().getHeight();
-        double imageWidth = bd.getBitmap().getWidth();
-
-        double ratio = deviceWidth / imageWidth;
-        int newImageHeight = (int) (imageHeight * ratio);
-
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageResource);
-        Drawable drawable = new BitmapDrawable(this.getResources(),
-                getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
-
-        return drawable;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-                matrix, false);
-
-        return resizedBitmap;
-    }
-
-    /************************ Resize Bitmap *********************************/
-
-
-    public String getDateOrTime(String stringTime, int index) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        sdf.setTimeZone(TimeZone.getDefault());
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
-
-        Date date = new Date();
-        try {
-            date = sdf.parse(stringTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (index == 1) return sdfDate.format(date);
-        if (index == 2) return sdfTime.format(date);
-        return sdfDate.format(date);
-    }
-
 
     private static class StableArrayAdapter extends ArrayAdapter<String> {
 
@@ -367,168 +337,6 @@ public class Yesterday extends Fragment {
 
 
     }
+}
 
-
-    /*private ArrayList<Game> gamesByDate = new ArrayList<>();
-    String teamHome = "";
-    String teamAway = "";
-    String detailedState = "";
-    String venueName = "";
-    String gameTime = "";
-    String gameDate = "";
-    String homeScore = "";
-    String awayScore = "";
-
-    @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
-        SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
-        ProgressBar loadingBar = root.findViewById(R.id.progressBar);
-        loadingBar.setVisibility(View.VISIBLE);
-
-        NetworkService.getInstance()
-                .getJSONApi()
-               // .getSheduledGamesByDate(sdfDateToday.format(new Date(System.currentTimeMillis()-8640_0_000)))
-                .getSheduledGamesByDate("2021-05-19")
-                .enqueue(new Callback<Teams>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Teams> call, @NonNull Response<Teams> response) {
-                        Teams data = response.body();
-                        if (!data.getDates().isEmpty()) {
-                            gamesByDate.addAll(data.getDates().get(0).getGames());
-                        }
-
-                        ArrayList<ListRow> alldata = new ArrayList<ListRow>();
-
-                        System.out.println(gamesByDate.size());
-                        for (Game game : gamesByDate) {
-                            teamHome = game.getTeams().getHome().getTeam().getName();
-                            teamAway = game.getTeams().getAway().getTeam().getName();
-                            detailedState = game.getStatus().getDetailedState();
-                            venueName = game.getVenue().getName();
-                            gameTime = getDateOrTime(game.getGameDate(), 2);
-                            gameDate = getDateOrTime(game.getGameDate(), 1);
-                            homeScore = String.valueOf(game.getTeams().getHome().getScore());
-                            awayScore = String.valueOf(game.getTeams().getAway().getScore());
-
-
-                            @DrawableRes
-                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
-                            @DrawableRes
-                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
-
-
-                            ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
-                            alldata.add(listRow);
-                        }
-
-//                        MyCustomArrayAdapter adapter = new MyCustomArrayAdapter(getActivity(), alldata);
-//                        final ListView listview = (ListView) root.findViewById(R.id.listview);
-//                        listview.setAdapter(adapter);
-
-                        loadingBar.setVisibility(View.GONE);
-
-
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<Teams> call, @NonNull Throwable t) {
-                        System.out.println("Error occurred while getting request!");
-                        t.printStackTrace();
-                    }
-
-                });
-        // Inflate the layout for this fragment
-        return root;
-    }
-
-    *//************************ Resize Bitmap *********************************//*
-    public Drawable resizeImage(int imageResource) {// R.drawable.large_image
-        // Get device dimensions
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        double deviceWidth = display.getWidth();
-
-        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(
-                imageResource);
-        double imageHeight = bd.getBitmap().getHeight();
-        double imageWidth = bd.getBitmap().getWidth();
-
-        double ratio = deviceWidth / imageWidth;
-        int newImageHeight = (int) (imageHeight * ratio);
-
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageResource);
-        Drawable drawable = new BitmapDrawable(this.getResources(),
-                getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
-
-        return drawable;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-                matrix, false);
-
-        return resizedBitmap;
-    }
-
-    public String getDateOrTime(String stringTime, int index) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        sdf.setTimeZone(TimeZone.getDefault());
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
-
-        Date date = new Date();
-        try {
-            date = sdf.parse(stringTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (index == 1) return sdfDate.format(date);
-        if (index == 2) return sdfTime.format(date);
-        return sdfDate.format(date);
-    }
-
-
-    private static class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-
-    }*/
-    }
 

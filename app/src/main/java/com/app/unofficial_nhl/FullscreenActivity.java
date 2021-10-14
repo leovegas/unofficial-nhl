@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.IntFunction;
+import java.util.function.IntUnaryOperator;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -207,10 +209,16 @@ public class FullscreenActivity extends AppCompatActivity {
             System.out.println("yes not empty");
             ArrayList<String> s = tinyDB.getListString("teams");
             teams = new String[s.size()];
-            Arrays.setAll(teams, s::get);
+            for (int i = 0, sSize = s.size(); i < sSize; i++) {
+                String el = s.get(i);
+                teams[i] = el;
+            }
             ArrayList<Integer> x = tinyDB.getListInt("arrayMessage");
             arrayMessage = new int[x.size()];
-            Arrays.setAll(arrayMessage, x::get);
+            for (int i = 0, sSize = x.size(); i < sSize; i++) {
+                int el = x.get(i);
+                arrayMessage[i] = el;
+            }
             tinyDB.remove("teams");
             tinyDB.remove("arrayMessage");
         } else {
@@ -283,8 +291,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
         postteam1name.setText(home);
         preteam2name.setText(away);
-        preteam1logo.setImageDrawable(resizeImage(StaticData.logosMap.get(home)));
-        preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
+        preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home),this));
+        preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away),this));
         score1.setText(String.valueOf(arrayMessage[0]));
         score2.setText(String.valueOf(arrayMessage[1]));
         gamestate.setText("Status " + detailedState);
@@ -299,9 +307,27 @@ public class FullscreenActivity extends AppCompatActivity {
         getTeamsInfo(arrayMessage[8], preteamposition1);
         getTeamsInfo(arrayMessage[9], preteamposition2);
 
+        preteam1logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TeamInfoActivity.class);
+                intent.putExtra("TEAMNAME", home);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        preteam2logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TeamInfoActivity.class);
+                intent.putExtra("TEAMNAME", away);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
         getEventContent(feedid);
-
-
 
         NetworkService.getInstance()
                 .getJSONApi()
@@ -374,17 +400,6 @@ public class FullscreenActivity extends AppCompatActivity {
 
     }
 
-    private void setupToolbar() {
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back_arrow);
-        this.getSupportActionBar().setTitle(getString(R.string.app_name));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "back pressed", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -460,48 +475,6 @@ public class FullscreenActivity extends AppCompatActivity {
                 });
     }
 
-    public Drawable resizeImage(int imageResource) {// R.drawable.large_image
-        // Get device dimensions
-        Display display = getWindowManager().getDefaultDisplay();
-        double deviceWidth = display.getWidth();
-
-        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(
-                imageResource);
-        double imageHeight = bd.getBitmap().getHeight();
-        double imageWidth = bd.getBitmap().getWidth();
-
-        double ratio = deviceWidth / imageWidth;
-        int newImageHeight = (int) (imageHeight * ratio);
-
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageResource);
-        Drawable drawable = new BitmapDrawable(this.getResources(),
-                getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
-
-        return drawable;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-                matrix, false);
-
-        return resizedBitmap;
-    }
-
-    /************************ Resize Bitmap *********************************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -533,7 +506,7 @@ public class FullscreenActivity extends AppCompatActivity {
             });
 
             // Set an image for ImageView
-            iv.setImageDrawable(resizeImage(StaticData.logosMap.get(teams.get(i))));
+            iv.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(teams.get(i)),this));
 
             // Add layout parameters to ImageView
             iv.setLayoutParams(lp);
@@ -607,7 +580,6 @@ public class FullscreenActivity extends AppCompatActivity {
                                     public void onNext(List<Epg> value) {
                                         if (value.size() >= 3 && value.get(3).getItems().size() >= 1 && value.get(3).getItems().get(0).getPlaybacks().size() >= 1) {
                                             int size = value.get(3).getItems().get(0).getPlaybacks().size();
-                                            System.out.println(size);
                                             recap = value.get(3).getItems().get(0).getPlaybacks().get(size - 1).getUrl();
                                             initializeVideo(recap);
                                         }
@@ -617,7 +589,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onError(Throwable e) {
-                                        videoView.setBackground(resizeImage(R.drawable.background));
+                                        videoView.setBackground(StaticData.resizeImage(R.drawable.background,getParent()));
 
                                     }
 

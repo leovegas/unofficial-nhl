@@ -348,7 +348,8 @@
                                     android:layout_height="wrap_content"
                                     style="@style/Base.Widget.MaterialComponents.TextView"
                                     android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"/>
+                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"
+                                    android:id="@+id/streakField"/>
                             <TextView
                                     android:text="0"
                                     android:layout_width="match_parent"

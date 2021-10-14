@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -25,6 +26,7 @@ import com.app.unofficial_nhl.helper_classes.TinyDB;
 import com.app.unofficial_nhl.pojos.Teams;
 import com.app.unofficial_nhl.ui.cardview.CardViewAdapterTeams;
 import com.app.unofficial_nhl.ui.home.RecyclerTouchListener;
+import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,10 +69,13 @@ public class FavoriteFragment extends Fragment {
         TinyDB tinydb = new TinyDB(getContext());
         tinydb.putInt("RECORDS_NOW", 0);
 
+
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
 
             @Override
             public void onClick(View v, int position) {
+                System.out.println(recyclerView.getAdapter().getItemCount());
+                System.out.println("POSITION " + position);
                 buttonsLayout = (FrameLayout) v.findViewById(R.id.buttonsLayout);
                 info = (ImageButton) v.findViewById(R.id.teaminfo);
                 info.setOnClickListener(new View.OnClickListener() {
@@ -100,18 +105,18 @@ public class FavoriteFragment extends Fragment {
                         v.performClick();
                         ArrayList<Integer> teamsids = new ArrayList<>();
                         ImageView reminder = (ImageView) v.findViewById(R.id.reminder);
-                        reminder.setBackgroundColor(Color.RED);
+                        reminder.setVisibility(View.VISIBLE);
                         String team = teams.get(position);
                         int teamid = StaticData.teamToIdMap.get(team);
                         if (tinydb.getInt(team) == 0) {
                             tinydb.putInt(team, StaticData.teamToIdMap.get(team));
 
-                            reminder.setBackgroundColor(Color.RED);
+                            reminder.setVisibility(View.VISIBLE);
                             getAllGamesForTeam(teamid, team);
                             Toast.makeText(getContext(), "Alarm enabled", 1000).show();
                         } else {
                             tinydb.remove(team);
-                            reminder.setBackgroundColor(Color.TRANSPARENT);
+                            reminder.setVisibility(View.INVISIBLE);
 
                             StaticData.removeAlarm(getContext(), DailyReceiver.class, teamid, team);
                             Toast.makeText(getContext(), "Alarm disabled", 1000).show();
@@ -156,18 +161,18 @@ public class FavoriteFragment extends Fragment {
             public void onLongClick(View view, int position) {
                 ArrayList<Integer> teamsids = new ArrayList<>();
                 ImageView reminder = (ImageView) view.findViewById(R.id.reminder);
-                reminder.setBackgroundColor(Color.RED);
+                reminder.setVisibility(View.VISIBLE);
                 String team = teams.get(position);
                 int teamid = StaticData.teamToIdMap.get(team);
                 if (tinydb.getInt(team) == 0) {
                     tinydb.putInt(team, StaticData.teamToIdMap.get(team));
 
-                    reminder.setBackgroundColor(Color.RED);
+                    reminder.setVisibility(View.VISIBLE);
                     getAllGamesForTeam(teamid, team);
                     Toast.makeText(getContext(), "Alarm enabled", 1000).show();
                 } else {
                     tinydb.remove(team);
-                    reminder.setBackgroundColor(Color.TRANSPARENT);
+                    reminder.setVisibility(View.INVISIBLE);
 
                     StaticData.removeAlarm(getContext(), DailyReceiver.class, teamid, team);
                     Toast.makeText(getContext(), "Alarm disabled", 1000).show();
@@ -219,18 +224,19 @@ public class FavoriteFragment extends Fragment {
                         datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:50:00Z"));
                         datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:51:00Z"));
                         datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:52:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:53:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:54:00Z"));*/
+                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:53:00Z"));*/
 
 
                         if (!datemap.isEmpty()) {
-                            datemap.forEach((k, v) -> {
-                                System.out.println("now!!! " + Calendar.getInstance().getTime().toString());
+                            for (Map.Entry<Calendar, Integer> entry : datemap.entrySet()) {
+                                Calendar k = entry.getKey();
+                                Integer v = entry.getValue();
                                 StaticData.setAlarm(getContext(), k, v, teamname, k.getTime().toString());
                                 notesIDs.add(v);
-                            });
+                            }
 
                             tinydb.putListInt(teamname + "1", notesIDs);
+                            System.out.println(tinydb.getListInt(teamname + "1").size());
                         }
 
                     }

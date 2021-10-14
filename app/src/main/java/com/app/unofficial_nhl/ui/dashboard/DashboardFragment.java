@@ -200,7 +200,7 @@ public class DashboardFragment extends Fragment {
         List<ColumnHeader> list = new ArrayList<>();
 
         // Create Column Headers
-        list.add(new ColumnHeader("Rank"));
+        list.add(new ColumnHeader("League rank"));
         list.add(new ColumnHeader("Record"));
         list.add(new ColumnHeader("Wins"));
         list.add(new ColumnHeader("GS/GA"));
@@ -321,7 +321,11 @@ public class DashboardFragment extends Fragment {
                 listBuf.add(new Cell(t.getGoalsScored() + "/" + t.getGoalsAgainst(), String.valueOf(t.getGoalsScored())));   // "BirthDay"
                 listBuf.add(new Cell(t.getPoints() + "", Integer.parseInt(t.getPoints()+"")));      // "Gender"
                 listBuf.add(new Cell(t.getGamesPlayed() + "", String.valueOf(t.getGamesPlayed())));         // "Age"
-                listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));         // "Job"
+                if (t.getStreak() != null) {
+                    listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));
+                } else {
+                    listBuf.add(new Cell("-", "-"));
+                }
                 listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
                 listBuf.add(new Cell(t.getConferenceRank(),Integer.parseInt(t.getConferenceRank()))); // "CreatedAt"
                 listBuf.add(new Cell(t.getWildCardRank(), Integer.parseInt(t.getWildCardRank())));    // "Address"
@@ -356,8 +360,11 @@ public class DashboardFragment extends Fragment {
                 listBuf.add(new Cell(t.getGoalsScored() + "/" + t.getGoalsAgainst(), String.valueOf(t.getGoalsScored())));   // "BirthDay"
                 listBuf.add(new Cell(t.getPoints() + "", Integer.parseInt(t.getPoints()+"")));      // "Gender"
                 listBuf.add(new Cell(t.getGamesPlayed() + "", String.valueOf(t.getGamesPlayed())));         // "Age"
-                listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));         // "Job"
-                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
+                if (t.getStreak() != null) {
+                    listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));
+                } else {
+                    listBuf.add(new Cell("-", "-"));
+                }                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
                 listBuf.add(new Cell(t.getConferenceRank(),Integer.parseInt(t.getConferenceRank()))); // "CreatedAt"
                 listBuf.add(new Cell(t.getWildCardRank(), Integer.parseInt(t.getWildCardRank())));    // "Address"
                 listBuf.add(new Cell(t.getPpLeagueRank(), Integer.parseInt(t.getPpLeagueRank())));    // "Address"
@@ -390,8 +397,11 @@ public class DashboardFragment extends Fragment {
                 listBuf.add(new Cell(t.getGoalsScored() + "/" + t.getGoalsAgainst(), String.valueOf(t.getGoalsScored())));   // "BirthDay"
                 listBuf.add(new Cell(t.getPoints() + "", Integer.parseInt(t.getPoints()+"")));      // "Gender"
                 listBuf.add(new Cell(t.getGamesPlayed() + "", String.valueOf(t.getGamesPlayed())));         // "Age"
-                listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));         // "Job"
-                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
+                if (t.getStreak() != null) {
+                    listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));
+                } else {
+                    listBuf.add(new Cell("-", "-"));
+                }                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
                 listBuf.add(new Cell(t.getConferenceRank(),Integer.parseInt(t.getConferenceRank()))); // "CreatedAt"
                 listBuf.add(new Cell(t.getWildCardRank(), Integer.parseInt(t.getWildCardRank())));    // "Address"
                 listBuf.add(new Cell(t.getPpLeagueRank(), Integer.parseInt(t.getPpLeagueRank())));    // "Address"
@@ -424,8 +434,11 @@ public class DashboardFragment extends Fragment {
                 listBuf.add(new Cell(t.getGoalsScored() + "/" + t.getGoalsAgainst(), String.valueOf(t.getGoalsScored())));   // "BirthDay"
                 listBuf.add(new Cell(t.getPoints() + "", Integer.parseInt(t.getPoints()+"")));      // "Gender"
                 listBuf.add(new Cell(t.getGamesPlayed() + "", String.valueOf(t.getGamesPlayed())));         // "Age"
-                listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));         // "Job"
-                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
+                if (t.getStreak() != null) {
+                    listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));
+                } else {
+                    listBuf.add(new Cell("-", "-"));
+                }                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
                 listBuf.add(new Cell(t.getConferenceRank(),Integer.parseInt(t.getConferenceRank()))); // "CreatedAt"
                 listBuf.add(new Cell(t.getWildCardRank(), Integer.parseInt(t.getWildCardRank())));    // "Address"
                 listBuf.add(new Cell(t.getPpLeagueRank(), Integer.parseInt(t.getPpLeagueRank())));    // "Address"
@@ -458,8 +471,11 @@ public class DashboardFragment extends Fragment {
                 listBuf.add(new Cell(t.getGoalsScored() + "/" + t.getGoalsAgainst(), String.valueOf(t.getGoalsScored())));   // "BirthDay"
                 listBuf.add(new Cell(t.getPoints() + "", Integer.parseInt(t.getPoints()+"")));      // "Gender"
                 listBuf.add(new Cell(t.getGamesPlayed() + "", String.valueOf(t.getGamesPlayed())));         // "Age"
-                listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));         // "Job"
-                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
+                if (t.getStreak() != null) {
+                    listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));
+                } else {
+                    listBuf.add(new Cell("-", "-"));
+                }                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
                 listBuf.add(new Cell(t.getConferenceRank(),Integer.parseInt(t.getConferenceRank()))); // "CreatedAt"
                 listBuf.add(new Cell(t.getWildCardRank(), Integer.parseInt(t.getWildCardRank())));    // "Address"
                 listBuf.add(new Cell(t.getPpLeagueRank(), Integer.parseInt(t.getPpLeagueRank())));    // "Address"

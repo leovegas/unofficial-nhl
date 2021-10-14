@@ -42,7 +42,7 @@ public class TeamStatsFragment extends Fragment {
     PieChart chart;
     PieData pieData;
     List<PieEntry> pieEntryList = new ArrayList<>();
-    private TextView confAndPos, homeArena, pointsV, leagueRankV, gamesPlayedV, goalsScoredV, goalsAgainstV, streakV,winsV,lossesV,otV;
+    private TextView confAndPos, homeArena, pointsV, leagueRankV, gamesPlayedV, goalsScoredV, goalsAgainstV, streakV,winsV,lossesV,otV,streakField;
     private TextView city, firstYear, site;
     ProgressBar progressBarWins;
     ProgressBar progressBarLosses;
@@ -70,6 +70,8 @@ public class TeamStatsFragment extends Fragment {
         goalsScoredV = getView().findViewById(R.id.goalsScored);
         goalsAgainstV = getView().findViewById(R.id.goalsAgainst);
         streakV = getView().findViewById(R.id.streak);
+        streakField = getView().findViewById(R.id.streakField);
+
         winsV = getView().findViewById(R.id.wins);
         lossesV = getView().findViewById(R.id.losses);
         otV = getView().findViewById(R.id.ot);
@@ -142,7 +144,14 @@ public class TeamStatsFragment extends Fragment {
                                                         int gamesPlayed = teamRecord.getGamesPlayed();
                                                         int goalsScored = teamRecord.getGoalsScored();
                                                         int goalsAgainst = teamRecord.getGoalsAgainst();
-                                                        String streak = teamRecord.getStreak().getStreakCode();
+                                                        if (teamRecord.getStreak()!=null) {
+                                                            String streak = teamRecord.getStreak().getStreakCode();
+                                                            streakV.setText(streak);
+                                                        } else {
+                                                            streakField.setText("PP rank");
+                                                            String pprank = teamRecord.getPpLeagueRank();
+                                                            streakV.setText(pprank);
+                                                        }
                                                         setProgressAnimate(progressBarWins,w,w+l+ot);
                                                         setProgressAnimate(progressBarLosses,l,w+l+ot);
                                                         setProgressAnimate(progressBarOt,ot,w+l+ot);
@@ -152,7 +161,6 @@ public class TeamStatsFragment extends Fragment {
                                                         gamesPlayedV.setText(gamesPlayed+"");
                                                         goalsScoredV.setText(goalsScored+"");
                                                         goalsAgainstV.setText(goalsAgainst+"");
-                                                        streakV.setText(streak);
                                                         winsV.setText(w+"");
                                                         lossesV.setText(l+"");
                                                         otV.setText(ot+"");

@@ -1,11 +1,9 @@
 package com.app.unofficial_nhl;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.app.unofficial_nhl.pojos.*;
@@ -23,17 +21,17 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayersActivity extends AppCompatActivity {
+public class GoaliePlayersActivity extends AppCompatActivity {
 
-    private TextView playerName, playerNumber, birthDay, currentAge, birthCity, birthCountry, height, weight;
-    private TextView shootsCatches, goals, assists, shots, games, timeOnIce, pim, hits, WinningGoals, overTimeGoals;
-    private TextView blocked, plusMinus, points, shifts, timeOnIcePerGame;
-    private PieChart chartGoalsP, chartPointsP;
+    private TextView playerName, playerNumber, birthDay, currentAge, birthCity, birthCountry, height, weight, shootsCatches;
+    private TextView wins, losses, ot, shutouts, timeOnIce, saves, ppsaves, goalsagainstgame;
+    private TextView games_goalie, shotsAgainst, goalsAgainst, powerPlaySavePercentage, evenStrengthSavePercentage, gamesStarted;
+    private PieChart chartSave, chartWins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_players);
+        setContentView(R.layout.activity_goalie_players);
         playerName = findViewById(R.id.playerName);
         playerNumber = findViewById(R.id.playerNumber);
         birthDay = findViewById(R.id.birthDay);
@@ -44,22 +42,22 @@ public class PlayersActivity extends AppCompatActivity {
         weight = findViewById(R.id.weight);
         shootsCatches = findViewById(R.id.shootsCatches);
 
-        goals = findViewById(R.id.goals);
-        assists = findViewById(R.id.assists);
-        shots = findViewById(R.id.shots);
-        games = findViewById(R.id.games);
+        wins = findViewById(R.id.wins);
+        losses = findViewById(R.id.losses);
+        ot = findViewById(R.id.ot);
+        shutouts = findViewById(R.id.shutouts);
         timeOnIce = findViewById(R.id.timeOnIce);
-        pim = findViewById(R.id.pim);
-        hits = findViewById(R.id.hits);
-        WinningGoals = findViewById(R.id.WinningGoals);
-        overTimeGoals = findViewById(R.id.overTimeGoals);
-        blocked = findViewById(R.id.blocked);
-        plusMinus = findViewById(R.id.plusMinus);
-        points = findViewById(R.id.points);
-        shifts = findViewById(R.id.shifts);
-        timeOnIcePerGame = findViewById(R.id.timeOnIcePerGame);
-        chartGoalsP = findViewById(R.id.chartGoalsP);
-        chartPointsP = findViewById(R.id.chartPointsP);
+        saves = findViewById(R.id.saves);
+        ppsaves = findViewById(R.id.ppsaves);
+        goalsagainstgame = findViewById(R.id.goalsagainstgame);
+        games_goalie = findViewById(R.id.games_goalie);
+        shotsAgainst = findViewById(R.id.shotsAgainst);
+        goalsAgainst = findViewById(R.id.goalsAgainst);
+        powerPlaySavePercentage = findViewById(R.id.powerPlaySavePercentage);
+        evenStrengthSavePercentage = findViewById(R.id.evenStrengthSavePercentage);
+        gamesStarted = findViewById(R.id.gamesStarted);
+        chartSave = findViewById(R.id.chartSave);
+        chartWins = findViewById(R.id.chartWins);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -71,7 +69,7 @@ public class PlayersActivity extends AppCompatActivity {
         }
 
         int playerid = getIntent().getIntExtra("playerid",0);
-        String teamgoals = getIntent().getStringExtra("teamgoals");
+        String role = getIntent().getStringExtra("role");
 
         if (playerid!=0) {
             NetworkService.getInstance()
@@ -124,34 +122,36 @@ public class PlayersActivity extends AppCompatActivity {
                                     if (splits != null && splits.size() > 0) {
                                         Stat__1 stat__1 = splits.get(0).getStat();
                                         if (stat__1 != null) {
-                                            goals.setText(stat__1.getGoals() + "");
-                                            assists.setText(stat__1.getAssists() + "");
-                                            shots.setText(stat__1.getShots() + "");
-                                            games.setText(stat__1.getGames() + "");
+                                            wins.setText(stat__1.getWins() + "");
+                                            losses.setText(stat__1.getLosses() + "");
+                                            ot.setText(stat__1.getOt() + "");
+                                            shutouts.setText(stat__1.getShutouts() + "");
                                             timeOnIce.setText(stat__1.getTimeOnIce());
-                                            pim.setText(stat__1.getPim() + "");
-                                            hits.setText(stat__1.getHits() + "");
-                                            WinningGoals.setText(stat__1.getGameWinningGoals() + "");
-                                            overTimeGoals.setText(stat__1.getOverTimeGoals() + "");
-                                            blocked.setText(stat__1.getBlocked() + "");
-                                            plusMinus.setText(stat__1.getPlusMinus() + "");
-                                            points.setText(stat__1.getPoints() + "");
-                                            shifts.setText(stat__1.getShifts() + "");
-                                            timeOnIcePerGame.setText(stat__1.getEvenTimeOnIcePerGame() + "");
-                                            double procentGoals;
-                                            double procentPoints;
+                                            saves.setText(stat__1.getSaves() + "");
+                                            ppsaves.setText(stat__1.getPowerPlaySaves() + "");
+                                            goalsagainstgame.setText(stat__1.getGoalsAgainst() + "");
+                                            games_goalie.setText(stat__1.getGames() + "");
+                                            shotsAgainst.setText(stat__1.getShotsAgainst() + "");
+                                            goalsAgainst.setText(stat__1.getShotsAgainst()+"");
+                                            powerPlaySavePercentage.setText(stat__1.getPowerPlaySavePercentage() + "");
+                                            evenStrengthSavePercentage.setText(stat__1.getEvenStrengthSavePercentage() + "");
+                                            gamesStarted.setText(stat__1.getGamesStarted() + "");
+
+                                            double saveProcent = 0;
+                                            double winsProcent;
+
 
                                             try {
-                                                procentGoals = (100 * stat__1.getGoals()) / stat__1.getShots();
-                                                procentPoints = (100 * stat__1.getGoals()) / Integer.parseInt(teamgoals);
+                                                saveProcent = stat__1.getSavePercentage();
+                                                winsProcent = (100 * (stat__1.getWins()+stat__1.getShutouts())) / stat__1.getGames();
 
                                             } catch (ArithmeticException e) {
                                                 System.out.println(e.getMessage());
-                                                procentGoals = 0;
-                                                procentPoints = 0;
+                                                saveProcent = 0;
+                                                winsProcent = 0;
                                             }
-                                            setChart(procentGoals / 100, chartGoalsP);
-                                            setChart(procentPoints / 100, chartPointsP);
+                                            setChart(saveProcent, chartSave);
+                                            setChart(winsProcent / 100, chartWins);
 
 
                                         }
@@ -159,7 +159,6 @@ public class PlayersActivity extends AppCompatActivity {
                                         //TODO
                                     }
                                 }
-
                             }
                         }
 
@@ -169,10 +168,6 @@ public class PlayersActivity extends AppCompatActivity {
                         }
                     });
         }
-
-
-
-
     }
 
 
@@ -198,9 +193,9 @@ public class PlayersActivity extends AppCompatActivity {
         chart.setHoleColor(Color.TRANSPARENT);
         chart.setEntryLabelColor(Color.TRANSPARENT);
         chart.setDrawCenterText(true);
-        chart.setCenterTextSize(16);
+        chart.setCenterTextSize(12);
         chart.setCenterTextColor(Color.WHITE);
-        chart.setCenterText((int) (data * 100) + "%");
+        chart.setCenterText(String.valueOf(((double) Math.round((data) * 1000d) / 1000d)));
         Description description = new Description();
         description.setText("");
         chart.setDescription(description);

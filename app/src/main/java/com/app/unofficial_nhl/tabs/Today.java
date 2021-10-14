@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.unofficial_nhl.FullscreenActivity;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
+import com.app.unofficial_nhl.TeamInfoActivity;
 import com.app.unofficial_nhl.helper_classes.ListRow;
 import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.*;
@@ -63,6 +64,7 @@ public class Today extends Fragment {
 
     private ArrayList<Game> gamesByDate = new ArrayList<>();
     Team team;
+    Display display;
     String teamHome = "";
     String teamAway = "";
     String detailedState = "";
@@ -221,6 +223,7 @@ public class Today extends Fragment {
         frameLayout4.setVisibility(View.VISIBLE);
         frameLayout7.setVisibility(View.VISIBLE);
 
+        display = getActivity().getWindowManager().getDefaultDisplay();
 
         HomeViewModel homeViewModel =
                 ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
@@ -239,9 +242,7 @@ public class Today extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate2("2021-10-09")
-//                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis())))
-
+                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis())))
                 .subscribeOn(Schedulers.io())
                 .flatMapIterable(teams -> teams.getDates().get(0).getGames())
                 .toList()
@@ -260,15 +261,15 @@ public class Today extends Fragment {
                             teamAway = teams.getAway().getTeam().getName();
                             detailedState = game.getStatus().getDetailedState();
                             venueName = game.getVenue().getName();
-                            gameTime = getDateOrTime(game.getGameDate(), 2);
-                            gameDate = getDateOrTime(game.getGameDate(), 1);
+                            gameTime = StaticData.getDateOrTime(game.getGameDate(), 2);
+                            gameDate = StaticData.getDateOrTime(game.getGameDate(), 1);
                             homeScore = String.valueOf(game.getTeams().getHome().getScore());
                             awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
                             @DrawableRes
-                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()),getActivity());
                             @DrawableRes
-                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity());
 
                             ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
                             alldata.add(listRow);
@@ -335,25 +336,31 @@ public class Today extends Fragment {
 
                                     preteam1name.setText(home);
                                     preteam2name.setText(away);
-                                    preteam1logo.setImageDrawable(resizeImage(StaticData.logosMap.get(home)));
-                                    preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
-                                    prestarttime.setText("NHL "+getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
-/*                                System.out.println("tt"+gamesByDate.get(position).getTeams().getAway().getScore());
-                                int wins1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getWins();
-                                int losses1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getLosses();
-                                int ot1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getOt();
-                                int wins2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getWins();
-                                int losses2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getLosses();
-                                int ot2 = gamesByDate.get(position).getTeams().getAway().getLeagueRecord().getOt();*/
-/*                                System.out.println(wins2 + "-" + losses2 + "-" + ot2);
-                                prediction((wins1 + losses1 + ot1+50), wins1+50, (wins2 + losses2 + ot2+50), wins2+50);
-                                preteamrecord1.setText(wins1 + "-" + losses1 + "-" + ot1);
-                                preteamrecord2.setText(wins2 + "-" + losses2 + "-" + ot2);*/
+                                    preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home),getActivity()));
+                                    preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away),getActivity()));
+                                    prestarttime.setText("NHL "+StaticData.getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
                                     getTeamsInfo(gamesByDate.get(position).getTeams().getHome().getTeam().getId(), preteamposition1, 1);
                                     getTeamsInfo(gamesByDate.get(position).getTeams().getAway().getTeam().getId(), preteamposition2, 2);
+                                    preteam1logo.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getContext(), TeamInfoActivity.class);
+                                            intent.putExtra("TEAMNAME", home);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                                    preteam2logo.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getContext(), TeamInfoActivity.class);
+                                            intent.putExtra("TEAMNAME", away);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
+                                    });
                                 }
-
-
                             }
 
                             @Override
@@ -469,16 +476,6 @@ public class Today extends Fragment {
         return root;
     }
 
-
-    public void saveArrayList(ArrayList<Game> listArray) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(listArray);
-        editor.putString("TAG_LIST", json);  ///"TAG_LIST" is a key must same for getting data
-        editor.apply();
-    }
-
     public ArrayList<Game> getArrayList() {
         SharedPreferences prefs =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -579,56 +576,19 @@ public class Today extends Fragment {
     }
 
     /************************ Resize Bitmap *********************************/
-    public Drawable resizeImage(int imageResource) {// R.drawable.large_image
-        // Get device dimensions
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        double deviceWidth = display.getWidth();
 
-        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(
-                imageResource);
-        double imageHeight = bd.getBitmap().getHeight();
-        double imageWidth = bd.getBitmap().getWidth();
 
-        double ratio = deviceWidth / imageWidth;
-        int newImageHeight = (int) (imageHeight * ratio);
-
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageResource);
-        Drawable drawable = new BitmapDrawable(this.getResources(),
-                getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
-
-        return drawable;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-                matrix, false);
-
-        return resizedBitmap;
-    }
 
     /************************ Resize Bitmap *********************************/
 
 
-    public String getDateOrTime(String stringTime, int index) {
+/*    public String getDateOrTime(String stringTime, int index) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        sdf.setTimeZone(TimeZone.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
         SimpleDateFormat sdfTextDate = new SimpleDateFormat("EEE MMM dd h:mma");
+
 
         Date date = new Date();
         try {
@@ -636,12 +596,14 @@ public class Today extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        sdf.setTimeZone(TimeZone.getDefault());
+
         if (index == 1) return sdfDate.format(date);
         if (index == 2) return sdfTime.format(date);
         if (index == 3) return sdfTextDate.format(date);
 
         return sdfDate.format(date);
-    }
+    }*/
 
 
     private static class StableArrayAdapter extends ArrayAdapter<String> {

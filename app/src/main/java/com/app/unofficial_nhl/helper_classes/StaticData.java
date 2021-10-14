@@ -1,15 +1,18 @@
 package com.app.unofficial_nhl.helper_classes;
 
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.*;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
+import android.view.Display;
 import android.widget.Toast;
 import androidx.core.app.NotificationManagerCompat;
 import com.allyants.notifyme.NotifyMe;
@@ -105,39 +108,27 @@ public class StaticData {
         return Math.round((float) dp * density);
     }
 
-    public static String remind(Context context, String text, Calendar date) {
-        NotifyMe.Builder notifyMe = new NotifyMe.Builder(context);
-        notifyMe.title(text);
-        notifyMe.content("String content");
-        notifyMe.color(0, 0, 0, 100);//Color of notification header
-        notifyMe.led_color(0, 0, 0, 100);//Color of LED when
-        notifyMe.time(date);//The time to popup notification
-        notifyMe.delay(0);//Delay in ms
-        notifyMe.large_icon(R.drawable.main_logo);//Icon resource by ID
-        notifyMe.rrule("FREQ=MINUTELY;INTERVAL=5;COUNT=1");//RRULE for frequency of notification
-        notifyMe.addAction(new Intent(context, MainActivity2.class), "String text"); //The action will call the intent when pressed
-        notifyMe.build();
+    public static String getDateOrTime(String stringTime, int index) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat sdfTextDate = new SimpleDateFormat("EEE MMM dd h:mma");
 
 
-        if (NotificationManagerCompat.from(context).getNotificationChannels().size() > 0) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationManagerCompat.from(context).getNotificationChannels().forEach(notificationChannel -> {
-                    System.out.println(notificationChannel.getId());
-                });
-                return NotificationManagerCompat.from(context).getNotificationChannels().get(NotificationManagerCompat.from(context).getNotificationChannels().size() - 1).getId();
-            }
+        Date date = new Date();
+        try {
+            date = sdf.parse(stringTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        System.out.println("NULL");
-        return null;
-    }
+        sdf.setTimeZone(TimeZone.getDefault());
 
-    public static void removeNoti(Context context) {
-        NotificationManagerCompat.from(context).cancelAll();
-        System.out.println("Removed");
-        AlarmManager alarmManager =
-                (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,1,new Intent(),PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.cancel(pendingIntent);
+        if (index == 1) return sdfDate.format(date);
+        if (index == 2) return sdfTime.format(date);
+        if (index == 3) return sdfTextDate.format(date);
+
+        return sdfDate.format(date);
     }
 
     public static Map<Calendar,Integer> StrToCalendar(String strDate) {
@@ -169,7 +160,7 @@ public class StaticData {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, randomID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-(3600 * 1000), pendingIntent);
         System.out.println("alarm set " + randomID);
 
     }
@@ -201,6 +192,48 @@ public class StaticData {
 
 
 
+    }
+    public static Drawable resizeImage(int imageResource, Activity activity) {// R.drawable.large_image
+        // Get device dimensions
+        Display display = activity.getWindowManager().getDefaultDisplay();
+
+        double deviceWidth = display.getWidth();
+
+        BitmapDrawable bd = (BitmapDrawable) activity.getResources().getDrawable(
+                imageResource);
+        double imageHeight = bd.getBitmap().getHeight();
+        double imageWidth = bd.getBitmap().getWidth();
+
+        double ratio = deviceWidth / imageWidth;
+        int newImageHeight = (int) (imageHeight * ratio);
+
+        Bitmap bMap = BitmapFactory.decodeResource(activity.getResources(), imageResource);
+        Drawable drawable = new BitmapDrawable(activity.getResources(),
+                getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
+
+        return drawable;
+    }
+
+
+    public static Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        // create a matrix for the manipulation
+        Matrix matrix = new Matrix();
+
+        // resize the bit map
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // recreate the new Bitmap
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
+                matrix, false);
+
+        return resizedBitmap;
     }
 
 }

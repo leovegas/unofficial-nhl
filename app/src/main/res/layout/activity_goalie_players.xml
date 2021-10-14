@@ -15,6 +15,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="190dp" android:background="@drawable/corners10"
                 android:layout_marginStart="10dp" android:layout_marginEnd="10dp" android:layout_marginBottom="5dp">
+
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -211,7 +212,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="goals"
+                                android:text="wins"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -220,7 +221,7 @@
                         <TextView
                                 android:text="00"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:id="@+id/goals"
+                                android:layout_height="wrap_content" android:id="@+id/wins"
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
@@ -237,7 +238,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="assists"
+                                android:text="losses"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -246,7 +247,7 @@
                         <TextView
                                 android:text="00"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:id="@+id/assists"
+                                android:layout_height="wrap_content" android:id="@+id/losses"
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
@@ -263,7 +264,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="shots"
+                                android:text="ot"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -272,7 +273,7 @@
                         <TextView
                                 android:text="00"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:id="@+id/shots"
+                                android:layout_height="wrap_content" android:id="@+id/ot"
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
@@ -290,7 +291,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="points"
+                                android:text="shutouts"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -299,7 +300,7 @@
                         <TextView
                                 android:text="00"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:id="@+id/points"
+                                android:layout_height="wrap_content" android:id="@+id/shutouts"
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
@@ -326,7 +327,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="percentage of goals scored"
+                                android:text="save percentage"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -335,7 +336,7 @@
                         <com.github.mikephil.charting.charts.PieChart
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/chartGoalsP" android:layout_gravity="center" android:layout_weight="0.5"/>
+                                android:id="@+id/chartSave" android:layout_gravity="center" android:layout_weight="0.5"/>
                     </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
@@ -347,7 +348,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="team goals percentage"
+                                android:text="wins %"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -356,7 +357,7 @@
                         <com.github.mikephil.charting.charts.PieChart
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/chartPointsP" android:layout_gravity="center" android:layout_weight="0.5"/>
+                                android:id="@+id/chartWins" android:layout_gravity="center" android:layout_weight="0.5"/>
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
@@ -415,7 +416,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="penalty minutes"
+                                        android:text="saves"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -425,7 +426,7 @@
                                 <TextView
                                         android:text="000"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/pim"
+                                        android:layout_height="wrap_content" android:id="@+id/saves"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -444,7 +445,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="hits"
+                                        android:text="pp saves"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -454,7 +455,7 @@
                                 <TextView
                                         android:text="00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/hits"
+                                        android:layout_height="wrap_content" android:id="@+id/ppsaves"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -473,7 +474,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="winning goals"
+                                        android:text="goal against game"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -483,7 +484,7 @@
                                 <TextView
                                         android:text="00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/WinningGoals"
+                                        android:layout_height="wrap_content" android:id="@+id/goalsagainstgame"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -502,7 +503,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="overtime goals"
+                                        android:text="games"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -512,7 +513,7 @@
                                 <TextView
                                         android:text="00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/overTimeGoals"
+                                        android:layout_height="wrap_content" android:id="@+id/games_goalie"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -536,7 +537,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="blocked"
+                                        android:text="shots against"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -546,7 +547,7 @@
                                 <TextView
                                         android:text="00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/blocked"
+                                        android:layout_height="wrap_content" android:id="@+id/shotsAgainst"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -565,7 +566,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="plus minus"
+                                        android:text="goals against"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -575,7 +576,7 @@
                                 <TextView
                                         android:text="00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/plusMinus"
+                                        android:layout_height="wrap_content" android:id="@+id/goalsAgainst"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -594,7 +595,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="shifts"
+                                        android:text="pp save %"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -604,7 +605,7 @@
                                 <TextView
                                         android:text="00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/shifts"
+                                        android:layout_height="wrap_content" android:id="@+id/powerPlaySavePercentage"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -623,7 +624,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="games"
+                                        android:text="even save %"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -633,7 +634,7 @@
                                 <TextView
                                         android:text="00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/games"
+                                        android:layout_height="wrap_content" android:id="@+id/evenStrengthSavePercentage"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"
@@ -652,7 +653,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" android:layout_gravity="center">
                                 <TextView
-                                        android:text="timeOnIceGame"
+                                        android:text="games started"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:textAlignment="viewEnd" android:fontFamily="@font/rubik"
@@ -662,7 +663,7 @@
                                 <TextView
                                         android:text="00:00"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" android:id="@+id/timeOnIcePerGame"
+                                        android:layout_height="wrap_content" android:id="@+id/gamesStarted"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
                                         android:layout_weight="0.8" android:alpha="1" android:gravity="center"

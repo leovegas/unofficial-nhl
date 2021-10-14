@@ -165,6 +165,6 @@
                     motion:layout_constraintTop_toTopOf="@+id/frameLayoutTop"
                     motion:layout_constraintHorizontal_bias="0.5" motion:layout_constraintEnd_toEndOf="parent"
                     android:layout_width="match_parent" motion:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="10dp" android:id="@+id/frameLayout10"/>
+                    android:layout_marginStart="10dp" android:id="@+id/frameLayout10" android:alpha="0"/>
     </ConstraintSet>
 </MotionScene>

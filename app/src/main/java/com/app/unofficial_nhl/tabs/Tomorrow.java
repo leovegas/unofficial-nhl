@@ -3,6 +3,7 @@ package com.app.unofficial_nhl.tabs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.unofficial_nhl.NetworkService;
 import com.app.unofficial_nhl.R;
+import com.app.unofficial_nhl.TeamInfoActivity;
 import com.app.unofficial_nhl.helper_classes.ListRow;
 import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.*;
@@ -248,15 +250,15 @@ public class Tomorrow extends Fragment {
                             teamAway = teams.getAway().getTeam().getName();
                             detailedState = game.getStatus().getDetailedState();
                             venueName = game.getVenue().getName();
-                            gameTime = getDateOrTime(game.getGameDate(), 2);
-                            gameDate = getDateOrTime(game.getGameDate(), 1);
+                            gameTime = StaticData.getDateOrTime(game.getGameDate(), 2);
+                            gameDate = StaticData.getDateOrTime(game.getGameDate(), 1);
                             homeScore = String.valueOf(game.getTeams().getHome().getScore());
                             awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
                             @DrawableRes
-                            Drawable logo_team1 = resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()));
+                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()),getActivity());
                             @DrawableRes
-                            Drawable logo_team2 = resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()));
+                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity());
 
                             ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
                             alldata.add(listRow);
@@ -287,9 +289,9 @@ public class Tomorrow extends Fragment {
 
                                 preteam1name.setText(home);
                                 preteam2name.setText(away);
-                                preteam1logo.setImageDrawable(resizeImage(StaticData.logosMap.get(home)));
-                                preteam2logo.setImageDrawable(resizeImage(StaticData.logosMap.get(away)));
-                                prestarttime.setText("NHL "+getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
+                                preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home),getActivity()));
+                                preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away),getActivity()));
+                                prestarttime.setText("NHL "+StaticData.getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
                                 int wins1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getWins();
                                 int losses1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getLosses();
                                 int ot1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getOt();
@@ -302,11 +304,31 @@ public class Tomorrow extends Fragment {
                                 getTeamsInfo(gamesByDate.get(position).getTeams().getHome().getTeam().getId(), preteamposition1,1);
                                 getTeamsInfo(gamesByDate.get(position).getTeams().getAway().getTeam().getId(), preteamposition2,2);
 
+                                preteam1logo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getContext(), TeamInfoActivity.class);
+                                        intent.putExtra("TEAMNAME", home);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                preteam2logo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getContext(), TeamInfoActivity.class);
+                                        intent.putExtra("TEAMNAME", away);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                });
+
                             }
 
                             @Override
                             public void onLongClick(View view, int position) {
-                               // cardflip(view, root.getContext());
+                                //cardflip(view, root.getContext());
 
                             }
                         }));
@@ -522,70 +544,7 @@ public class Tomorrow extends Fragment {
         asyncHandler.post(runnable);
     }
 
-    /************************ Resize Bitmap *********************************/
-    public Drawable resizeImage(int imageResource) {// R.drawable.large_image
-        // Get device dimensions
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        double deviceWidth = display.getWidth();
 
-        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(
-                imageResource);
-        double imageHeight = bd.getBitmap().getHeight();
-        double imageWidth = bd.getBitmap().getWidth();
-
-        double ratio = deviceWidth / imageWidth;
-        int newImageHeight = (int) (imageHeight * ratio);
-
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageResource);
-        Drawable drawable = new BitmapDrawable(this.getResources(),
-                getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
-
-        return drawable;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-                matrix, false);
-
-        return resizedBitmap;
-    }
-
-    /************************ Resize Bitmap *********************************/
-
-
-    public String getDateOrTime(String stringTime, int index) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        sdf.setTimeZone(TimeZone.getDefault());
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
-        SimpleDateFormat sdfTextDate = new SimpleDateFormat("EEE MMM dd h:mma");
-
-        Date date = new Date();
-        try {
-            date = sdf.parse(stringTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (index == 1) return sdfDate.format(date);
-        if (index == 2) return sdfTime.format(date);
-        if (index == 3) return sdfTextDate.format(date);
-
-        return sdfDate.format(date);
-    }
 
 
     private static class StableArrayAdapter extends ArrayAdapter<String> {

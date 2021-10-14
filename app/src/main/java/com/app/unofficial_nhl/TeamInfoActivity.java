@@ -116,7 +116,6 @@ public class TeamInfoActivity extends AppCompatActivity {
     {
         int now = Calendar.getInstance().get(Calendar.SECOND);
         Calendar cal = Calendar.getInstance();
-        System.out.println("now!!!!" + now);
         date.setTime(now+s);
         cal.setTime(date);
         System.out.println("time!!!!!!!!!!!!"+cal.getTime());

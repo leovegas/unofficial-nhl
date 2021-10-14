@@ -62,7 +62,7 @@ public class DailyReceiver extends BroadcastReceiver {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel nc = new NotificationChannel(randomID+"", "my_channel", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel nc = new NotificationChannel(randomID+"", "games", NotificationManager.IMPORTANCE_HIGH);
             nc.enableLights(true);
             mNotificationManager.createNotificationChannel(nc);
         }

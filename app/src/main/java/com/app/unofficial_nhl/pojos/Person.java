@@ -59,6 +59,21 @@ public class Person {
     @SerializedName("primaryPosition")
     @Expose
     private PrimaryPosition primaryPosition;
+    @SerializedName("currentAge")
+    @Expose
+    private int currentAge;
+
+
+    public int getCurrentAge() {
+        return currentAge;
+    }
+
+    public void setCurrentAge(int currentAge) {
+        this.currentAge = currentAge;
+    }
+
+
+
 
     public int getId() {
         return id;

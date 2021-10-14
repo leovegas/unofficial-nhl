@@ -51,8 +51,8 @@ public class CardViewAdapterPlayers extends RecyclerView.Adapter<CardViewAdapter
         holder.player_name.setText(playerNames.get(position));
         holder.position_text.setText(playerPositionNames.get(position));
         holder.jersey_number.setText(playerJerseyNumbers.get(position));
+        holder.cv.setTag(ids.get(position));
 
-        System.out.println(playerPositionTypes.get(position));
         switch (playerPositionTypes.get(position)) {
             case "Forward": holder.position_logo.setImageResource(R.drawable.forward); return;
             case "Defenseman": holder.position_logo.setImageResource(R.drawable.defenceman); return;
