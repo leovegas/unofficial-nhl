@@ -61,6 +61,7 @@ public class Tomorrow extends Fragment {
 
     private ArrayList<Game> gamesByDate = new ArrayList<>();
     Team team;
+    long time;
     String teamHome = "";
     String teamAway = "";
     String detailedState = "";
@@ -79,6 +80,14 @@ public class Tomorrow extends Fragment {
     TextView preteamposition1, preteamposition2, preteamrecord1, preteamrecord2;
     TextView prestarttime;
     List<Integer> wlo = new ArrayList<>();
+    Display display;
+
+    public Tomorrow(long time) {
+        this.time = time;
+    }
+
+    public Tomorrow() {
+    }
 
 /*    PublishSubject<String> status = PublishSubject.create();
 
@@ -197,7 +206,9 @@ public class Tomorrow extends Fragment {
             Bundle savedInstanceState
     ) {
         View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
-        SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
+        if (Build.VERSION.SDK_INT >= 26) {
+            display = getContext().getDisplay();
+        }else display = getActivity().getWindowManager().getDefaultDisplay();        SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
         ProgressBar loadingBar = root.findViewById(R.id.progressBar);
         preteam1logo = getActivity().findViewById(R.id.prelogo1);
         preteam2logo = getActivity().findViewById(R.id.prelogo2);
@@ -231,7 +242,7 @@ public class Tomorrow extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis()+8640_0_000)))
+                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis()+time)))
                 .subscribeOn(Schedulers.io())
                 .flatMapIterable(teams -> teams.getDates().get(0).getGames())
                 .toList()
@@ -256,9 +267,9 @@ public class Tomorrow extends Fragment {
                             awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
                             @DrawableRes
-                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()),getActivity());
+                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()),getActivity(),display);
                             @DrawableRes
-                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity());
+                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity(),display);
 
                             ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
                             alldata.add(listRow);
@@ -289,8 +300,8 @@ public class Tomorrow extends Fragment {
 
                                 preteam1name.setText(home);
                                 preteam2name.setText(away);
-                                preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home),getActivity()));
-                                preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away),getActivity()));
+                                preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home),getActivity(),display));
+                                preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away),getActivity(),display));
                                 prestarttime.setText("NHL "+StaticData.getDateOrTime(gamesByDate.get(position).getGameDate(),3).toUpperCase());
                                 int wins1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getWins();
                                 int losses1 = gamesByDate.get(position).getTeams().getHome().getLeagueRecord().getLosses();
@@ -336,8 +347,15 @@ public class Tomorrow extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingBar.setVisibility(View.GONE);
-                        nogames.setVisibility(View.VISIBLE);
+
+                        Handler uiThread = new Handler(Looper.getMainLooper());
+                        uiThread.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadingBar.setVisibility(View.GONE);
+                                nogames.setVisibility(View.VISIBLE);
+                            }
+                        });
                     }
 
                     @Override

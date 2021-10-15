@@ -134,12 +134,16 @@ public class StaticData {
     public static Map<Calendar,Integer> StrToCalendar(String strDate) {
         Map<Calendar,Integer> map = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         Date date = null;
         try {
             date = sdf.parse(strDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        sdf.setTimeZone(TimeZone.getDefault());
+
         if (date != null && date.getTime() > new Date().getTime()) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -193,9 +197,8 @@ public class StaticData {
 
 
     }
-    public static Drawable resizeImage(int imageResource, Activity activity) {// R.drawable.large_image
+    public static Drawable resizeImage(int imageResource, Activity activity, Display display) {// R.drawable.large_image
         // Get device dimensions
-        Display display = activity.getWindowManager().getDefaultDisplay();
 
         double deviceWidth = display.getWidth();
 

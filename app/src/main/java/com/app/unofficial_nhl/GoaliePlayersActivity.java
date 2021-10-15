@@ -129,10 +129,10 @@ public class GoaliePlayersActivity extends AppCompatActivity {
                                             timeOnIce.setText(stat__1.getTimeOnIce());
                                             saves.setText(stat__1.getSaves() + "");
                                             ppsaves.setText(stat__1.getPowerPlaySaves() + "");
-                                            goalsagainstgame.setText(stat__1.getGoalsAgainst() + "");
+                                            goalsagainstgame.setText(stat__1.getGoalAgainstAverage() + "");
                                             games_goalie.setText(stat__1.getGames() + "");
                                             shotsAgainst.setText(stat__1.getShotsAgainst() + "");
-                                            goalsAgainst.setText(stat__1.getShotsAgainst()+"");
+                                            goalsAgainst.setText(stat__1.getGoalsAgainst()+"");
                                             powerPlaySavePercentage.setText(stat__1.getPowerPlaySavePercentage() + "");
                                             evenStrengthSavePercentage.setText(stat__1.getEvenStrengthSavePercentage() + "");
                                             gamesStarted.setText(stat__1.getGamesStarted() + "");
@@ -154,12 +154,15 @@ public class GoaliePlayersActivity extends AppCompatActivity {
                                             setChart(winsProcent / 100, chartWins);
 
 
-                                        }
-                                    } else {
-                                        //TODO
-                                    }
+
+                                    }else System.out.println("stat__1==null");
+                                } else {
+                                    //TODO
+                                    System.out.println("splits==null");
                                 }
-                            }
+                            }else System.out.println("stats == null");
+
+                        } else System.out.println("stat==null");
                         }
 
                         @Override

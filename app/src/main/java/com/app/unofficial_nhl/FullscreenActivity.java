@@ -1,6 +1,8 @@
 package com.app.unofficial_nhl;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.transition.Explode;
@@ -53,7 +56,10 @@ public class FullscreenActivity extends AppCompatActivity {
     private ImageView preteam1logo, preteam2logo, iceField;
     private TextView postteam1name, preteam2name, score1, score2, gamestate;
     private TextView preteamposition1, preteamposition2, preteamrecord1, preteamrecord2;
-    private FrameLayout iceLayout,frameLayout2, videoLayout;
+    private TextView card_goals_home, card_goals_away, card_shots_home, card_shots_away, card_penalties_home, card_penalties_away, card_pp_opportunities_home;
+    private TextView card_pp_opportunities_away, card_pp_goals_home, card_faceoff_wins_home, card_pp_goals_away, card_faceoff_wins_away, card_blocked_home;
+    private TextView card_blocked_away, card_hits_home, card_hits_away, stars;
+    private FrameLayout iceLayout, frameLayout2, videoLayout;
     private Toolbar toolbar;
     private ScrollingTextView scrollingTextView;
     private VideoView videoView;
@@ -69,6 +75,10 @@ public class FullscreenActivity extends AppCompatActivity {
     private List<String> starsOfGame = new ArrayList<>();
     private MotionLayout motionLayout;
     private TinyDB tinyDB;
+    Display display;
+    private FrameLayout frameLayoutBehind;
+    private int gameid;
+
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -147,7 +157,7 @@ public class FullscreenActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_search:
                 return true;
-                default:
+            default:
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -157,6 +167,9 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
         tinyDB = new TinyDB(getApplicationContext());
+        if (Build.VERSION.SDK_INT >= 26) {
+            display = getDisplay();
+        } else display = getWindowManager().getDefaultDisplay();
 
         preteam1logo = findViewById(R.id.prelogo1);
         preteam2logo = findViewById(R.id.prelogo2);
@@ -175,6 +188,44 @@ public class FullscreenActivity extends AppCompatActivity {
         frameLayout2 = (FrameLayout) findViewById(R.id.frameLayout2);
         videoLayout = (FrameLayout) findViewById(R.id.videoLayout);
         motionLayout = (MotionLayout) findViewById(R.id.frameLayout5);
+        frameLayoutBehind = (FrameLayout) findViewById(R.id.frameLayoutBehind);
+
+        card_goals_home = findViewById(R.id.card_goals_home);
+        card_goals_away = findViewById(R.id.card_goals_away);
+        card_shots_home = findViewById(R.id.card_shots_home);
+        card_shots_away = findViewById(R.id.card_shots_away);
+        card_penalties_home = findViewById(R.id.card_penalties_home);
+        card_penalties_away = findViewById(R.id.card_penalties_away);
+        card_pp_opportunities_home = findViewById(R.id.card_pp_opportunities_home);
+        card_pp_opportunities_away = findViewById(R.id.card_pp_opportunities_away);
+        card_pp_goals_home = findViewById(R.id.card_pp_goals_home);
+        card_faceoff_wins_home = findViewById(R.id.card_faceoff_wins_home);
+        card_pp_goals_away = findViewById(R.id.card_pp_goals_away);
+        card_faceoff_wins_away = findViewById(R.id.card_faceoff_wins_away);
+        card_blocked_home = findViewById(R.id.card_blocked_home);
+        card_blocked_away = findViewById(R.id.card_blocked_away);
+        card_hits_home = findViewById(R.id.card_hits_home);
+        card_hits_away = findViewById(R.id.card_hits_away);
+        stars = findViewById(R.id.stars);
+
+        frameLayout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(gameid);
+                if (gameid != 0) {
+                    getGameStats(gameid);
+                }
+                cardflip(v, getApplicationContext(), false);
+            }
+        });
+        frameLayoutBehind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardflip(v, getApplicationContext(), true);
+            }
+        });
+
+
         motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
             @Override
             public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
@@ -183,6 +234,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 if (actionBar != null) {
                     actionBar.show();
                 }
+
             }
 
             @Override
@@ -192,10 +244,11 @@ public class FullscreenActivity extends AppCompatActivity {
 
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int i) {
-                if (videoView!=null)
-                {
+                if (videoView != null) {
                     videoView.start();
                 }
+                getGameStats(gameid);
+                cardflip(frameLayout2, getApplicationContext(), false);
 
             }
 
@@ -267,7 +320,6 @@ public class FullscreenActivity extends AppCompatActivity {
         setupToolbar();*/
 
 
-
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -291,8 +343,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
         postteam1name.setText(home);
         preteam2name.setText(away);
-        preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home),this));
-        preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away),this));
+        preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home), this, display));
+        preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away), this, display));
         score1.setText(String.valueOf(arrayMessage[0]));
         score2.setText(String.valueOf(arrayMessage[1]));
         gamestate.setText("Status " + detailedState);
@@ -306,6 +358,7 @@ public class FullscreenActivity extends AppCompatActivity {
         preteamrecord2.setText(wins2 + "-" + losses2 + "-" + ot2);
         getTeamsInfo(arrayMessage[8], preteamposition1);
         getTeamsInfo(arrayMessage[9], preteamposition2);
+        gameid = arrayMessage[10];
 
         preteam1logo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,6 +398,7 @@ public class FullscreenActivity extends AppCompatActivity {
                         Log.i("reading", "inTommorow");
                         scoringPlays.addAll(gamesByDate);
 
+
                     }
 
                     @Override
@@ -374,7 +428,6 @@ public class FullscreenActivity extends AppCompatActivity {
                                                     periodsAndTime.add(play.getAbout().getOrdinalNum() + " " + play.getAbout().getPeriodTime());
                                                     scoredteams.add(play.getTeam().getName());
                                                     gooalCoordinates.add(play.getCoordinates());
-                                                    //starsOfGame.add(play.getResult())
                                                 }
                                             }
                                         }
@@ -391,11 +444,40 @@ public class FullscreenActivity extends AppCompatActivity {
                                     public void onComplete() {
                                         dispose();
                                         drawGoals(gooalCoordinates, scoredteams);
+                                        NetworkService.getInstance()
+                                                .getJSONApi()
+                                                .getLiveData(feedid)
+                                                .subscribeOn(Schedulers.io())
+                                                .map(gameResult -> gameResult.getLiveData().getDecisions())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(new DisposableObserver<Decisions>() {
+
+                                                    @Override
+                                                    public void onNext(Decisions value) {
+                                                        String sb = value.getFirstStar().getFullName() +
+                                                                ". " +
+                                                                value.getSecondStar().getFullName() +
+                                                                ". " +
+                                                                value.getThirdStar().getFullName() +
+                                                                ". ";
+                                                        stars.setText(sb);
+                                                    }
+
+                                                    @Override
+                                                    public void onError(Throwable e) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onComplete() {
+                                                        dispose();
+                                                    }
+                                                });
+
                                     }
                                 });
                     }
                 });
-
 
 
     }
@@ -482,6 +564,7 @@ public class FullscreenActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -506,7 +589,7 @@ public class FullscreenActivity extends AppCompatActivity {
             });
 
             // Set an image for ImageView
-            iv.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(teams.get(i)),this));
+            iv.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(teams.get(i)), this, display));
 
             // Add layout parameters to ImageView
             iv.setLayoutParams(lp);
@@ -589,7 +672,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onError(Throwable e) {
-                                        videoView.setBackground(StaticData.resizeImage(R.drawable.background,getParent()));
+                                        videoView.setBackground(StaticData.resizeImage(R.color.background, getParent(), display));
 
                                     }
 
@@ -674,6 +757,106 @@ public class FullscreenActivity extends AppCompatActivity {
 
         videoView.requestFocus();
         //videoView.start();
+    }
+
+    public synchronized void cardflip(View v, Context context, boolean isopen) {
+        if (!isopen) {
+            ValueAnimator anim = ValueAnimator.ofInt(frameLayoutBehind.getMeasuredHeight(), StaticData.dpToPx(250, context));
+            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = frameLayoutBehind.getLayoutParams();
+                    layoutParams.height = val;
+                    frameLayoutBehind.setLayoutParams(layoutParams);
+                }
+            });
+            anim.setDuration(400);
+            anim.start();
+
+            ValueAnimator anim2 = ValueAnimator.ofInt(frameLayout2.getMeasuredHeight(), StaticData.dpToPx(0, context));
+            anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = frameLayout2.getLayoutParams();
+                    layoutParams.height = val;
+                    frameLayout2.setLayoutParams(layoutParams);
+                }
+            });
+            anim2.setDuration(400);
+            anim2.start();
+
+        } else {
+            ValueAnimator anim = ValueAnimator.ofInt(frameLayout2.getMeasuredHeight(), StaticData.dpToPx(250, context));
+            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = frameLayout2.getLayoutParams();
+                    layoutParams.height = val;
+                    frameLayout2.setLayoutParams(layoutParams);
+                }
+            });
+            anim.setDuration(400);
+            anim.start();
+            ValueAnimator anim2 = ValueAnimator.ofInt(frameLayoutBehind.getMeasuredHeight(), StaticData.dpToPx(0, context));
+            anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = frameLayoutBehind.getLayoutParams();
+                    layoutParams.height = val;
+                    frameLayoutBehind.setLayoutParams(layoutParams);
+                }
+            });
+            anim2.setDuration(400);
+            anim2.start();
+        }
+
+    }
+
+    public void getGameStats(int gameid) {
+
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getGameStats(gameid)
+                .enqueue(new Callback<GameStats>() {
+                    @Override
+                    public void onResponse(@NonNull Call<GameStats> call, @NonNull Response<GameStats> response) {
+                        GameStats data1 = response.body();
+                        if (data1 != null) {
+                            Teams data = data1.getTeams();
+                            if (data != null) {
+                                if (data.getHome() != null) {
+                                    card_goals_home.setText(String.valueOf((data.getHome().getTeamStats().getTeamSkaterStats().getGoals())));
+                                    card_shots_home.setText(String.valueOf((data.getHome().getTeamStats().getTeamSkaterStats().getShots())));
+                                    card_penalties_home.setText(String.valueOf((data.getHome().getTeamStats().getTeamSkaterStats().getPim())));
+                                    card_pp_opportunities_home.setText(String.valueOf((data.getHome().getTeamStats().getTeamSkaterStats().getPowerPlayOpportunities().intValue())));
+                                    card_pp_goals_home.setText(String.valueOf((data.getHome().getTeamStats().getTeamSkaterStats().getPowerPlayGoals().intValue())));
+                                    card_faceoff_wins_home.setText(data.getHome().getTeamStats().getTeamSkaterStats().getFaceOffWinPercentage() + "%");
+                                    card_blocked_home.setText(String.valueOf((data.getHome().getTeamStats().getTeamSkaterStats().getBlocked())));
+                                    card_hits_home.setText(String.valueOf((data.getHome().getTeamStats().getTeamSkaterStats().getHits())));
+
+                                    card_goals_away.setText(String.valueOf((data.getAway().getTeamStats().getTeamSkaterStats().getGoals())));
+                                    card_shots_away.setText(String.valueOf((data.getAway().getTeamStats().getTeamSkaterStats().getShots())));
+                                    card_penalties_away.setText(String.valueOf((data.getAway().getTeamStats().getTeamSkaterStats().getPim())));
+                                    card_pp_opportunities_away.setText(String.valueOf((data.getAway().getTeamStats().getTeamSkaterStats().getPowerPlayOpportunities().intValue())));
+                                    card_pp_goals_away.setText(String.valueOf((data.getAway().getTeamStats().getTeamSkaterStats().getPowerPlayGoals().intValue())));
+                                    card_faceoff_wins_away.setText(data.getAway().getTeamStats().getTeamSkaterStats().getFaceOffWinPercentage() + "%");
+                                    card_blocked_away.setText(String.valueOf((data.getAway().getTeamStats().getTeamSkaterStats().getBlocked())));
+                                    card_hits_away.setText(String.valueOf((data.getAway().getTeamStats().getTeamSkaterStats().getHits())));
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<GameStats> call, @NonNull Throwable t) {
+                        System.out.println("Error occurred while getting request!");
+                        t.printStackTrace();
+                    }
+                });
     }
 
 

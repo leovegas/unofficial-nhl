@@ -41,8 +41,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp" app:srcCompat="@drawable/test" android:id="@+id/logo"
                         android:scaleType="centerInside" tools:srcCompat="@drawable/boston_bruins_logo"
-                        android:alpha="1" android:layout_gravity="right"
-                        android:layout_weight="0.5"
+                        android:alpha="0.5" android:layout_gravity="right"
+                        android:layout_weight="0.7"
                         android:visibility="visible"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -59,16 +59,16 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp" app:srcCompat="@android:drawable/ic_dialog_info"
                         android:id="@+id/teaminfo" android:layout_weight="1"
-                        android:scaleType="fitCenter" android:padding="3dp" android:layout_margin="5dp"
-                        android:background="@android:color/transparent"
-                        android:alpha="0.6"/>
+                        android:scaleType="fitCenter" android:padding="3dp"
+                        android:background="@drawable/corners_radius_4_200"
+                        android:alpha="0.6" android:layout_marginStart="20dp" android:layout_marginEnd="20dp"/>
                 <ImageButton
                         android:layout_width="30dp"
                         android:layout_height="30dp" app:srcCompat="@android:drawable/ic_popup_reminder"
                         android:id="@+id/alarm" android:layout_weight="1"
-                        android:scaleType="fitCenter" android:padding="3dp" android:layout_margin="5dp"
-                        android:background="@android:color/transparent"
-                        android:alpha="0.6"/>
+                        android:scaleType="fitCenter" android:padding="3dp"
+                        android:background="@drawable/corners_radius_4_200"
+                        android:alpha="0.6" android:layout_marginStart="20dp" android:layout_marginEnd="20dp"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

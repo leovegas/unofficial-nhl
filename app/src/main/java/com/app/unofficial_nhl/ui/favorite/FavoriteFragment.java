@@ -74,8 +74,7 @@ public class FavoriteFragment extends Fragment {
 
             @Override
             public void onClick(View v, int position) {
-                System.out.println(recyclerView.getAdapter().getItemCount());
-                System.out.println("POSITION " + position);
+
                 buttonsLayout = (FrameLayout) v.findViewById(R.id.buttonsLayout);
                 info = (ImageButton) v.findViewById(R.id.teaminfo);
                 info.setOnClickListener(new View.OnClickListener() {
@@ -103,23 +102,31 @@ public class FavoriteFragment extends Fragment {
                     @Override
                     public void onClick(View valarm) {
                         v.performClick();
+                        int count = 0;
+                        for (String name : StaticData.teamToIdMap.keySet()) {
+                            if (tinydb.getInt(name) != 0) count++;
+                        }
+
                         ArrayList<Integer> teamsids = new ArrayList<>();
                         ImageView reminder = (ImageView) v.findViewById(R.id.reminder);
-                        reminder.setVisibility(View.VISIBLE);
+                        //reminder.setVisibility(View.VISIBLE);
                         String team = teams.get(position);
                         int teamid = StaticData.teamToIdMap.get(team);
-                        if (tinydb.getInt(team) == 0) {
-                            tinydb.putInt(team, StaticData.teamToIdMap.get(team));
 
-                            reminder.setVisibility(View.VISIBLE);
-                            getAllGamesForTeam(teamid, team);
-                            Toast.makeText(getContext(), "Alarm enabled", 1000).show();
+                        if (tinydb.getInt(team) == 0) {
+                            if (count<=5) {
+                                tinydb.putInt(team, StaticData.teamToIdMap.get(team));
+
+                                reminder.setVisibility(View.VISIBLE);
+                                getAllGamesForTeam(teamid, team);
+                                Toast.makeText(getContext(), "Reminder is enabled", 1000).show();
+                            }
                         } else {
                             tinydb.remove(team);
                             reminder.setVisibility(View.INVISIBLE);
 
                             StaticData.removeAlarm(getContext(), DailyReceiver.class, teamid, team);
-                            Toast.makeText(getContext(), "Alarm disabled", 1000).show();
+                            Toast.makeText(getContext(), "Reminder is disabled", 1000).show();
                         }
                     }
                 });
@@ -140,7 +147,7 @@ public class FavoriteFragment extends Fragment {
                     anim.start();
                     open = false;
                 } else {
-                    ValueAnimator anim = ValueAnimator.ofInt(buttonsLayout.getMeasuredHeight(), 120);
+                    ValueAnimator anim = ValueAnimator.ofInt(buttonsLayout.getMeasuredHeight(), 100);
                     anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
@@ -159,7 +166,7 @@ public class FavoriteFragment extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                ArrayList<Integer> teamsids = new ArrayList<>();
+/*                ArrayList<Integer> teamsids = new ArrayList<>();
                 ImageView reminder = (ImageView) view.findViewById(R.id.reminder);
                 reminder.setVisibility(View.VISIBLE);
                 String team = teams.get(position);
@@ -176,7 +183,7 @@ public class FavoriteFragment extends Fragment {
 
                     StaticData.removeAlarm(getContext(), DailyReceiver.class, teamid, team);
                     Toast.makeText(getContext(), "Alarm disabled", 1000).show();
-                }
+                }*/
 
             }
         }));
@@ -213,19 +220,10 @@ public class FavoriteFragment extends Fragment {
                                 datemap.putAll(map);
                             }
                         }
-/*
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:43:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:44:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:45:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:46:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:47:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:48:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:49:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:50:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:51:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:52:00Z"));
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-10T19:53:00Z"));*/
 
+/*
+                        datemap.putAll(StaticData.StrToCalendar("2021-10-15T22:57:00Z"));
+*/
 
                         if (!datemap.isEmpty()) {
                             for (Map.Entry<Calendar, Integer> entry : datemap.entrySet()) {

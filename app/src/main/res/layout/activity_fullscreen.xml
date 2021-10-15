@@ -31,7 +31,7 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
             <com.app.unofficial_nhl.helper_classes.ScrollingTextView
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -48,6 +48,295 @@
                     android:text="comments appear here..." android:fontFamily="@font/rubik"
                     android:textColor="@color/textlesswhite" android:textSize="14sp" android:paddingStart="10dp"
                     android:paddingEnd="10dp" android:layout_marginBottom="5dp"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" android:id="@+id/frameLayoutBehind"
+                    android:background="@drawable/corners10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" app:layout_constraintHorizontal_bias="0.5"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar" android:paddingTop="20dp"
+                    android:foregroundTint="#16FFFFFF" android:foreground="@drawable/card_top"
+                    android:paddingBottom="10dp">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp" app:srcCompat="@android:drawable/btn_star"
+                                android:id="@+id/imageView3" android:layout_weight="0.5" android:paddingStart="10dp"
+                                android:layout_gravity="center"/>
+                        <TextView
+                                android:id="@+id/stars"
+                                android:text="Goals"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                                android:layout_gravity="center|center_horizontal" android:layout_weight="0.5"
+                                android:textAlignment="center" android:textSize="12sp"/>
+                        <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp" app:srcCompat="@android:drawable/btn_star"
+                                android:id="@+id/imageView2" android:layout_weight="0.5"
+                                android:paddingEnd="10dp" android:layout_gravity="center"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp" android:id="@+id/view4" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    >
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_goals_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="goals"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_goals_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="300dp"
+                            android:layout_height="1dp" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    >
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_shots_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="shots"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_shots_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="300dp"
+                            android:layout_height="1dp" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_penalties_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="penalties min"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_penalties_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="300dp"
+                            android:layout_height="1dp" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    >
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_pp_opportunities_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="PP opportunities"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_pp_opportunities_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="300dp"
+                            android:layout_height="1dp" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    >
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_pp_goals_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="PP goals"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_pp_goals_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="300dp"
+                            android:layout_height="1dp" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    >
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_faceoff_wins_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="faceOff wins"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_faceoff_wins_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="300dp"
+                            android:layout_height="1dp" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    >
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_blocked_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="blocked"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_blocked_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+                    <View
+                            android:layout_width="300dp"
+                            android:layout_height="1dp" android:id="@+id/view3" android:foreground="@drawable/line"
+                            android:foregroundTint="#3BFFFFFF" android:layout_gravity="center"/>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    >
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_hits_home"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                        <TextView
+                                android:text="hits"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:alpha="0.7" android:layout_gravity="center"/>
+                        <TextView
+                                android:text="0"
+                                android:layout_width="25dp"
+                                android:layout_height="wrap_content" android:id="@+id/card_hits_away"
+                                android:layout_weight="1" android:fontFamily="@font/rubik"
+                                android:textColor="@color/textlesswhite" android:textAlignment="center"
+                                android:textSize="16sp" android:paddingTop="1sp" android:paddingBottom="1sp"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </FrameLayout>
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="250dp" android:id="@+id/frameLayout2"
@@ -68,6 +357,18 @@
                         tools:layout_editor_absoluteY="628dp" android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp">
 
+                    <ImageButton
+                            android:clickable="false"
+                            android:layout_width="50dp"
+                            android:layout_height="45dp" app:srcCompat="@drawable/stats_icon"
+                            android:id="@+id/imageButton5" android:layout_gravity="bottom|center"
+                            android:scaleType="centerInside"
+                            android:background="@android:color/transparent" android:alpha="0.7"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                            android:layout_gravity="center_horizontal" android:id="@+id/gamestate" android:text="..."/>
                     <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
@@ -188,11 +489,12 @@
                             android:layout_height="match_parent">
 
                         <TextView
-                                android:text="Results"
+                                android:id="@+id/stars2"
+                                android:text="Goals"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                android:layout_gravity="center_horizontal" android:id="@+id/gamestate"/>
+                                android:layout_gravity="center_horizontal"/>
                     </FrameLayout>
                     <FrameLayout
                             android:layout_width="match_parent"
@@ -223,7 +525,7 @@
         <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
                           android:orientation="vertical">
                 <FrameLayout
                         android:layout_width="match_parent"

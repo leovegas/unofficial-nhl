@@ -16,6 +16,7 @@
         <OnSwipe motion:touchAnchorId="@+id/frameLayoutMiddle"/>
         <OnClick motion:targetId="@+id/frameLayoutMiddle"/>
         <OnClick motion:targetId="@+id/frameLayout10"/>
+        <OnClick motion:targetId="@+id/frameLayoutTop"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -80,7 +81,7 @@
                     android:id="@+id/frameLayoutMiddle"
                     android:layout_marginTop="5dp" motion:layout_constraintTop_toBottomOf="@id/frameLayout10"/>
         <Constraint android:id="@+id/frameLayout10" motion:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_width="match_parent" android:layout_height="0dp"
                     motion:layout_constraintHorizontal_bias="0.5" motion:layout_constraintStart_toStartOf="parent"
                     motion:layout_constraintTop_toBottomOf="@id/frameLayoutTop" motion:layout_editor_absoluteY="235dp"/>
         <Constraint motion:layout_constraintEnd_toEndOf="parent" android:layout_width="match_parent"
@@ -126,12 +127,12 @@
                     motion:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="5dp"/>
         <Constraint android:id="@+id/frameLayout6" motion:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="match_parent" android:layout_height="460dp"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_marginStart="5dp" motion:layout_constraintHorizontal_bias="0.5"
                     motion:layout_constraintStart_toStartOf="parent" android:visibility="visible"
                     motion:layout_constraintTop_toBottomOf="@id/frameLayoutTop"
-                    motion:layout_editor_absoluteY="235dp"/>
+        />
         <Constraint motion:layout_constraintEnd_toEndOf="parent" android:layout_width="match_parent"
                     android:layout_height="20dp" android:layout_marginEnd="10dp" android:layout_marginStart="10dp"
                     motion:layout_constraintTop_toTopOf="parent" motion:layout_constraintHorizontal_bias="0.5"
@@ -150,15 +151,16 @@
                     motion:layout_editor_absoluteY="629dp" motion:layout_constraintBottom_toTopOf="@id/frameLayout6"
                     android:layout_marginBottom="100dp" android:alpha="0"/>
         <Constraint android:id="@+id/frameLayoutTop" motion:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="match_parent" android:layout_height="100dp"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     motion:layout_constraintHorizontal_bias="0.5" motion:layout_constraintTop_toTopOf="parent"
-                    motion:layout_constraintStart_toStartOf="parent" android:alpha="0"/>
+                    motion:layout_constraintStart_toStartOf="parent" android:alpha="1"
+                    motion:layout_constraintBottom_toTopOf="@+id/frameLayoutMiddle"/>
         <Constraint android:id="@+id/frameLayoutTop" motion:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="match_parent" android:layout_height="120dp"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     motion:layout_constraintHorizontal_bias="0.5" motion:layout_constraintTop_toTopOf="parent"
                     motion:layout_constraintStart_toStartOf="parent"/>
         <Constraint android:id="@+id/frameLayoutTop" motion:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="match_parent" android:layout_height="130dp"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
                     motion:layout_constraintHorizontal_bias="0.5" motion:layout_constraintTop_toTopOf="parent"
                     motion:layout_constraintStart_toStartOf="parent"/>
         <Constraint android:layout_marginEnd="10dp" android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.app.unofficial_nhl.tabs;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -50,6 +51,8 @@ public class Yesterday extends Fragment {
     String gameDate = "";
     String homeScore = "";
     String awayScore = "";
+    Display display;
+    long time;
 
     ImageView preteam1logo, preteam2logo;
     TextView preteam1name, preteam2name;
@@ -59,12 +62,23 @@ public class Yesterday extends Fragment {
     CustomAdapterGames recyclerAdapter;
     TextView nogames;
 
+    public Yesterday(long time) {
+        this.time = time;
+    }
+
+    public Yesterday() {
+    }
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
+        if (Build.VERSION.SDK_INT >= 26) {
+              display = getActivity().getDisplay();
+        }else display = getActivity().getWindowManager().getDefaultDisplay();
+
         SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
         ProgressBar loadingBar = root.findViewById(R.id.progressBar);
         preteam1logo = getActivity().findViewById(R.id.prelogo1);
@@ -88,7 +102,7 @@ public class Yesterday extends Fragment {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis() - 8640_0_000)))
+                .getSheduledGamesByDate2(sdfDateToday.format(new Date(System.currentTimeMillis() - time)))
                 .subscribeOn(Schedulers.io())
                 .flatMapIterable(teams -> teams.getDates().get(0).getGames())
                 .toList()
@@ -117,9 +131,9 @@ public class Yesterday extends Fragment {
                             awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
                             @DrawableRes
-                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()),getActivity());
+                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()), getActivity(),display);
                             @DrawableRes
-                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity());
+                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity(),display);
 
                             ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
                             alldata.add(listRow);
@@ -155,8 +169,15 @@ public class Yesterday extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingBar.setVisibility(View.GONE);
-                        nogames.setVisibility(View.VISIBLE);
+                        Handler uiThread = new Handler(Looper.getMainLooper());
+
+                        uiThread.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadingBar.setVisibility(View.GONE);
+                                nogames.setVisibility(View.VISIBLE);
+                            }
+                        });
                     }
 
                     @Override
@@ -218,8 +239,9 @@ public class Yesterday extends Fragment {
         int awayid = games.get(position).getTeams().getAway().getTeam().getId();
         String feedid = games.get(position).getLink().replaceAll("\\D+", "").substring(1);
         String state = games.get(position).getStatus().getDetailedState();
+        int gameid = games.get(position).getGamePk();
 
-        int[] arrayMessage = new int[]{scorehome, scoreaway, wins1, losses1, ot1, wins2, losses2, ot2, homeid, awayid};
+        int[] arrayMessage = new int[]{scorehome, scoreaway, wins1, losses1, ot1, wins2, losses2, ot2, homeid, awayid, gameid};
         String[] teams = new String[]{home, away, feedid, state};
 
         v.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {

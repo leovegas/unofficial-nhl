@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.app.unofficial_nhl.PlayersActivity" android:background="@color/background">
+        tools:context="com.app.unofficial_nhl.PlayersActivity" android:background="@color/background"
+>
 
     <LinearLayout
             android:orientation="vertical"
@@ -14,7 +15,8 @@
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="190dp" android:background="@drawable/corners10"
-                android:layout_marginStart="10dp" android:layout_marginEnd="10dp" android:layout_marginBottom="5dp">
+                android:layout_marginStart="10dp" android:layout_marginEnd="10dp" android:layout_marginBottom="5dp"
+                android:foregroundTint="#19FFFFFF" android:foreground="@drawable/playerside">
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -31,7 +33,7 @@
                             android:textColor="@color/textlesswhite" android:textSize="24sp"
                             android:layout_weight="0.90"/>
                     <TextView
-                            android:text="Player Name"
+                            android:text="Players Name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/playerName" android:padding="5dp"
                             android:textAlignment="viewStart" android:fontFamily="@font/rubik_bold"
@@ -55,7 +57,7 @@
                                 android:textColor="@color/textlesswhite" android:textSize="12sp"
                                 android:layout_weight="1" android:alpha="0.5"/>
                         <TextView
-                                android:text="1991-10-30"
+                                android:text="date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/birthDay"
                                 android:padding="2dp"
@@ -76,7 +78,7 @@
                                 android:textColor="@color/textlesswhite" android:textSize="12sp"
                                 android:layout_weight="1" android:alpha="0.5"/>
                         <TextView
-                                android:text="29"
+                                android:text="0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/currentAge"
                                 android:padding="2dp"
@@ -139,7 +141,7 @@
                                 android:textColor="@color/textlesswhite" android:textSize="12sp"
                                 android:layout_weight="1" android:alpha="0.5"/>
                         <TextView
-                                android:text="6'0'"
+                                android:text="0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/height"
                                 android:padding="2dp"
@@ -195,8 +197,9 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center"
-                android:layout_marginStart="5dp" android:layout_marginEnd="5dp">
+                android:layout_height="90dp" android:layout_gravity="center" android:gravity="center"
+                android:foreground="@drawable/news_list" android:foregroundTint="#1DFFFFFF" android:paddingStart="10dp"
+                android:paddingEnd="10dp">
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -204,7 +207,8 @@
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp" android:layout_weight="0.5"
-                        android:background="@drawable/corners10" android:padding="5dp" android:layout_margin="5dp">
+                        android:background="@drawable/corners_radius_4_200" android:padding="5dp"
+                        android:layout_margin="5dp">
 
                     <LinearLayout
                             android:orientation="vertical"
@@ -218,7 +222,7 @@
                                 android:textColor="@color/textlesswhite" android:textSize="12sp"
                                 android:layout_weight="1" android:alpha="0.5"/>
                         <TextView
-                                android:text="00"
+                                android:text="0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/goals"
                                 android:padding="5dp"
@@ -230,7 +234,8 @@
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp" android:layout_weight="0.5"
-                        android:background="@drawable/corners10" android:padding="5dp" android:layout_margin="5dp">
+                        android:background="@drawable/corners_radius_4_200" android:padding="5dp"
+                        android:layout_margin="5dp">
 
                     <LinearLayout
                             android:orientation="vertical"
@@ -244,7 +249,7 @@
                                 android:textColor="@color/textlesswhite" android:textSize="12sp"
                                 android:layout_weight="1" android:alpha="0.5"/>
                         <TextView
-                                android:text="00"
+                                android:text="0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/assists"
                                 android:padding="5dp"
@@ -256,7 +261,8 @@
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp" android:layout_weight="0.5"
-                        android:background="@drawable/corners10" android:padding="5dp" android:layout_margin="5dp">
+                        android:background="@drawable/corners_radius_4_200" android:padding="5dp"
+                        android:layout_margin="5dp">
 
                     <LinearLayout
                             android:orientation="vertical"
@@ -270,7 +276,7 @@
                                 android:textColor="@color/textlesswhite" android:textSize="12sp"
                                 android:layout_weight="1" android:alpha="0.5"/>
                         <TextView
-                                android:text="00"
+                                android:text="0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/shots"
                                 android:padding="5dp"
@@ -282,7 +288,8 @@
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_weight="0.5"
-                        android:background="@drawable/corners10" android:padding="5dp" android:layout_margin="5dp"
+                        android:background="@drawable/corners_radius_4_200" android:padding="5dp"
+                        android:layout_margin="5dp"
                         android:layout_height="60dp">
 
                     <LinearLayout
@@ -297,7 +304,7 @@
                                 android:textColor="@color/textlesswhite" android:textSize="12sp"
                                 android:layout_weight="1" android:alpha="0.5"/>
                         <TextView
-                                android:text="00"
+                                android:text="0"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/points"
                                 android:padding="5dp"
@@ -319,14 +326,16 @@
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp" android:layout_weight="0.5"
-                        android:background="@drawable/corners10" android:padding="5dp" android:layout_margin="5dp">
+                        android:background="@drawable/corners10" android:padding="5dp" android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp" android:layout_marginTop="5dp" android:layout_marginEnd="2.5dp"
+                        android:layout_marginRight="2.5dp" android:layout_marginBottom="5dp">
 
                     <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="percentage of goals scored"
+                                android:text="goals scored %"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -335,19 +344,23 @@
                         <com.github.mikephil.charting.charts.PieChart
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/chartGoalsP" android:layout_gravity="center" android:layout_weight="0.5"/>
+                                android:id="@+id/chartGoalsP" android:layout_gravity="center"
+                                android:layout_weight="0.5"/>
                     </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp" android:layout_weight="0.5"
-                        android:background="@drawable/corners10" android:padding="5dp" android:layout_margin="5dp">
+                        android:background="@drawable/corners10" android:padding="5dp"
+                        android:layout_marginStart="2.5dp" android:layout_marginLeft="2.5dp"
+                        android:layout_marginTop="5dp" android:layout_marginEnd="5dp" android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp">
                     <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:text="team goals percentage"
+                                android:text="team goals %"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
@@ -356,7 +369,8 @@
                         <com.github.mikephil.charting.charts.PieChart
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/chartPointsP" android:layout_gravity="center" android:layout_weight="0.5"/>
+                                android:id="@+id/chartPointsP" android:layout_gravity="center"
+                                android:layout_weight="0.5"/>
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
@@ -369,14 +383,15 @@
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent" android:foreground="@drawable/card_top"
+                        android:foregroundTint="#16FFFFFF" android:paddingTop="12dp" android:paddingBottom="15dp">
                     <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" android:layout_weight="0.5">
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="10dp" android:layout_marginEnd="2.5dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -394,7 +409,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="000:00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/timeOnIce"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -405,7 +420,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="10dp" android:layout_marginEnd="2.5dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -423,7 +438,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="000"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/pim"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -434,7 +449,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="10dp" android:layout_marginEnd="2.5dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -452,7 +467,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/hits"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -463,7 +478,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="10dp" android:layout_marginEnd="2.5dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -481,7 +496,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/WinningGoals"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -492,7 +507,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="10dp" android:layout_marginEnd="2.5dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -510,7 +525,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/overTimeGoals"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -526,7 +541,7 @@
                             android:layout_height="match_parent" android:layout_weight="0.5">
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="2.5dp" android:layout_marginEnd="10dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -544,7 +559,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/blocked"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -555,7 +570,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="2.5dp" android:layout_marginEnd="10dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -573,7 +588,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/plusMinus"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -584,7 +599,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="2.5dp" android:layout_marginEnd="10dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -602,7 +617,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/shifts"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -613,7 +628,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="2.5dp" android:layout_marginEnd="10dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -631,7 +646,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/games"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
@@ -642,7 +657,7 @@
                         </FrameLayout>
                         <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" android:background="@drawable/corners10"
+                                android:layout_height="30dp" android:background="@drawable/corners_radius_4_200"
                                 android:layout_marginStart="2.5dp" android:layout_marginEnd="10dp"
                                 android:layout_weight="0.5" android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp">
@@ -660,7 +675,7 @@
                                         android:layout_weight="0.5" android:alpha="0.5"
                                         android:layout_gravity="center" android:maxLines="1"/>
                                 <TextView
-                                        android:text="00:00"
+                                        android:text="0"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/timeOnIcePerGame"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,17 +35,22 @@ import java.util.*;
 
 public class TeamInfoActivity extends AppCompatActivity {
 
-    private String[] titles = new String[]{"Stats", "Players"};
+    private String[] titles = new String[]{"stats", "roster"};
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private TextView teamnameView, confAndPos, teamWLO;
     private ImageView teamlogoView;
+    Display display;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_info);
+        if (Build.VERSION.SDK_INT >= 26) {
+            display = getDisplay();
+        }else display = getWindowManager().getDefaultDisplay();
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -70,19 +76,23 @@ public class TeamInfoActivity extends AppCompatActivity {
         String teamname = intent.getStringExtra("TEAMNAME");
 
         teamnameView.setText(teamname);
-        teamlogoView.setImageDrawable(resizeImage(StaticData.logosMap.get(teamname)));
+        teamlogoView.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(teamname),this,display));
 
-
-
-
-       /* viewPager.addOnLayoutChangeListener();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
+                if (tab.getPosition()==0){
+                    Drawable myIcon = getApplicationContext().getDrawable( R.drawable.news_list );
+                    tabLayout.setForeground(myIcon);
+                }else {
+                    Drawable myIcon = getApplicationContext().getDrawable( R.drawable.news_list2 );
+                    tabLayout.setForeground(myIcon);
+                }
                 viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
@@ -94,7 +104,7 @@ public class TeamInfoActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });*/
+        });
 
     }
 
@@ -139,49 +149,6 @@ public class TeamInfoActivity extends AppCompatActivity {
                         Gravity.CENTER_VERTICAL | Gravity.RIGHT));
 
     }
-
-    public Drawable resizeImage(int imageResource) {// R.drawable.large_image
-        // Get device dimensions
-        Display display = getWindowManager().getDefaultDisplay();
-        double deviceWidth = display.getWidth();
-
-        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(
-                imageResource);
-        double imageHeight = bd.getBitmap().getHeight();
-        double imageWidth = bd.getBitmap().getWidth();
-
-        double ratio = deviceWidth / imageWidth;
-        int newImageHeight = (int) (imageHeight * ratio);
-
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), imageResource);
-        Drawable drawable = new BitmapDrawable(this.getResources(),
-                getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
-
-        return drawable;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-                matrix, false);
-
-        return resizedBitmap;
-    }
-
-    /************************ Resize Bitmap *********************************/
 
 
 }

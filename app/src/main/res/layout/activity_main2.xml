@@ -24,12 +24,15 @@
                 app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp" android:layout_weight="0.7">
+                android:layout_marginEnd="10dp" android:layout_weight="0.5" android:paddingTop="30dp"
+                android:foreground="@drawable/overview" android:foregroundTint="#17FFFFFF"
+                android:paddingBottom="10dp">
 
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:foregroundTint="#20FFFFFF">
                 <TextView
                         android:text="NHL JAN 23 5:00PM"
                         android:layout_width="wrap_content"
@@ -65,7 +68,7 @@
                                     android:gravity="center_horizontal|left" android:textColor="@color/textlesswhite"
                                     android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
                                     android:minLines="2" android:layout_gravity="center_horizontal" android:maxLines="2"
-                                    android:textAlignment="center"/>
+                                    android:textAlignment="center" android:paddingStart="5sp"/>
                             <TextView
                                     android:text="Position1"
                                     android:layout_width="match_parent"
@@ -109,7 +112,7 @@
                                     android:textColor="@color/textlesswhite"
                                     android:fontFamily="@font/rubik_bold" android:textSize="22sp" android:padding="2sp"
                                     android:minLines="2" android:gravity="right|center_horizontal" android:maxLines="2"
-                                    android:textAlignment="center"/>
+                                    android:textAlignment="center" android:paddingEnd="5sp"/>
                             <TextView
                                     android:text="Position2"
                                     android:layout_width="match_parent"
@@ -132,22 +135,29 @@
         </FrameLayout>
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/frameLayout7" android:minHeight="300dp"
+                android:layout_height="match_parent" android:id="@+id/frameLayout7"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.7"
                 app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/corners10"
                 app:layout_constraintTop_toBottomOf="parent" android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp" android:layout_marginTop="10dp" android:layout_weight="0.5">
+                android:layout_marginEnd="10dp" android:layout_marginTop="10dp" android:layout_weight="0.5"
+                android:foreground="@drawable/overview" android:foregroundTint="#23FFFFFF"
+                android:layout_marginBottom="10dp" android:padding="30dp">
 
-            <com.github.mikephil.charting.charts.PieChart
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="270dp"
-                    android:id="@+id/pieChart" android:layout_gravity="center"/>
-            <TextView
-                    android:text="Prediction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView11"
-                    android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_height="match_parent">
+                <TextView
+                        android:text="Prediction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/textView11"
+                        android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
+                        android:layout_gravity="center_horizontal"/>
+                <com.github.mikephil.charting.charts.PieChart
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/pieChart" android:layout_gravity="center"/>
+            </LinearLayout>
         </FrameLayout>
     </LinearLayout>
 

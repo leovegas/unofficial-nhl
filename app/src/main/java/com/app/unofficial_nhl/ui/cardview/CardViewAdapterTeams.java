@@ -1,21 +1,19 @@
 package com.app.unofficial_nhl.ui.cardview;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.*;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.unofficial_nhl.R;
-import com.app.unofficial_nhl.TeamInfoActivity;
 import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.helper_classes.TinyDB;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CardViewAdapterTeams extends RecyclerView.Adapter<CardViewAdapterTeams.StockViewHolder> {
@@ -62,7 +60,12 @@ public class CardViewAdapterTeams extends RecyclerView.Adapter<CardViewAdapterTe
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override

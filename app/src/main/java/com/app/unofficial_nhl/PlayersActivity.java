@@ -124,6 +124,7 @@ public class PlayersActivity extends AppCompatActivity {
                                     if (splits != null && splits.size() > 0) {
                                         Stat__1 stat__1 = splits.get(0).getStat();
                                         if (stat__1 != null) {
+                                            System.out.println(playerid);
                                             goals.setText(stat__1.getGoals() + "");
                                             assists.setText(stat__1.getAssists() + "");
                                             shots.setText(stat__1.getShots() + "");
@@ -154,13 +155,14 @@ public class PlayersActivity extends AppCompatActivity {
                                             setChart(procentPoints / 100, chartPointsP);
 
 
-                                        }
+                                        }else System.out.println("stat__1==null");
                                     } else {
                                         //TODO
+                                        System.out.println("splits==null");
                                     }
-                                }
+                                }else System.out.println("stats == null");
 
-                            }
+                            } else System.out.println("stat==null");
                         }
 
                         @Override

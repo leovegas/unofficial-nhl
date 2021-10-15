@@ -14,6 +14,17 @@ public class Away {
     @SerializedName("team")
     @Expose
     private Team team_;
+    @SerializedName("teamStats")
+    @Expose
+    private TeamStats teamStats;
+
+    public TeamStats getTeamStats() {
+        return teamStats;
+    }
+
+    public void setTeamStats(TeamStats teamStats) {
+        this.teamStats = teamStats;
+    }
 
     public LeagueRecord getLeagueRecord() {
         return leagueRecord;

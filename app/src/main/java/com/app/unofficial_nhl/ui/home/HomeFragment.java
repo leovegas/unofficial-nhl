@@ -11,9 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.app.unofficial_nhl.R;
-import com.app.unofficial_nhl.tabs.Today;
-import com.app.unofficial_nhl.tabs.Tomorrow;
-import com.app.unofficial_nhl.tabs.Yesterday;
+import com.app.unofficial_nhl.tabs.*;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -23,24 +21,52 @@ public class HomeFragment extends Fragment {
 
 
     private HomeViewModel homeViewModel;
-    private String[] titles = new String[]{"Yesterday", "Today", "Tomorrow"};
+    private String[] titles;
     View root;
-    private MotionLayout motionLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =  ViewModelProviders.of(this).get(HomeViewModel.class);
+        titles = new String[]{"-3 day", "-2 day", "      Yesterday       ", "       Today       ", "       Tomorrow       ", "+2 day", "+3 day"};
+
         root = inflater.inflate(R.layout.fragment_home, container, false);
         ViewPager2 vp = root.findViewById(R.id.view_pager);
         TabLayout tl = root.findViewById(R.id.tab_layout);
-        motionLayout = (MotionLayout) getActivity().findViewById(R.id.container);
+
+
+
+        tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //do stuff here
+                Objects.requireNonNull(tl.getTabAt(tab.getPosition())).select();
+                vp.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        tl.getTabAt(0).view.performClick();
+        vp.setCurrentItem(0);
         vp.setUserInputEnabled(false);
 
         vp.setAdapter(new ViewPagerFragmentAdapter(this));
 
-        new TabLayoutMediator(tl, vp,
-                (tab, position) -> tab.setText(titles[position])).attach();
-        Objects.requireNonNull(tl.getTabAt(1)).select();
+        tl.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tl.setTabGravity(TabLayout.GRAVITY_CENTER);
+/*
+       new TabLayoutMediator(tl, vp,
+                (tab, position) -> tab.setText(titles[position])).attach();*/
+
+
+
         return root;
 
 
@@ -56,19 +82,29 @@ public class HomeFragment extends Fragment {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new Yesterday();
+                    return new minusThree(86400000*3);
                 case 1:
-                    return new Today();
+                    return new minusTwo(86400000*2);
                 case 2:
-                    return new Tomorrow();
-                default: return new Today();
+                    return new Yesterday(86400000);
+                case 3:
+                    return new Today();
+                case 4:
+                    return new Tomorrow(86400000);
+                case 5:
+                    return new plusTwo(86400000*2);
+                case 6:
+                    return new plusThree(86400000*3);
+
+
+                default: return null;
             }
 
         }
 
         @Override
         public int getItemCount() {
-            return titles.length;
+            return 7;
         }
     }
 

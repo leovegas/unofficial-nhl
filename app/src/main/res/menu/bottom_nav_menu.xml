@@ -6,16 +6,18 @@
             android:icon="@drawable/ic_flame"
             android:title="@string/title_home"/>
     <item
-            android:id="@+id/navigation_dashboard"
-            android:icon="@drawable/ic_table"
-            android:title="@string/title_dashboard"/>
+            android:id="@+id/navigation_favorites"
+            android:icon="@drawable/ic_hockey"
+            android:enabled="true"
+            android:title="@string/favorite"/>
     <item
             android:id="@+id/navigation_notifications"
             android:icon="@drawable/ic_teams"
             android:title="@string/title_notifications"/>
     <item
-            android:id="@+id/navigation_favorites"
-            android:icon="@drawable/ic_hockey"
-            android:enabled="true"
-            android:title="@string/favorite"/>
+            android:id="@+id/navigation_dashboard"
+            android:icon="@drawable/ic_table"
+            android:title="@string/title_dashboard"/>
+
+
 </menu>
