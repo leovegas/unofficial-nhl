@@ -1,37 +1,27 @@
 package com.app.unofficial_nhl;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.*;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-import com.allyants.notifyme.NotifyMe;
 import com.app.unofficial_nhl.helper_classes.StaticData;
-import com.app.unofficial_nhl.pojos.Record;
-import com.app.unofficial_nhl.pojos.Team;
-import com.app.unofficial_nhl.pojos.TeamRecord;
-import com.app.unofficial_nhl.pojos.Teams;
 import com.app.unofficial_nhl.team_tab.TabLayoutAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
 
 public class TeamInfoActivity extends AppCompatActivity {
 
@@ -40,6 +30,7 @@ public class TeamInfoActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TextView teamnameView, confAndPos, teamWLO;
     private ImageView teamlogoView;
+    private ScrollView scrollviewTeamInfo;
     Display display;
 
 
@@ -65,15 +56,18 @@ public class TeamInfoActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Tab1"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab2"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        scrollviewTeamInfo=findViewById(R.id.scrollviewTeamInfo);
 
         TabLayoutAdapter adapter=new TabLayoutAdapter(this);
         viewPager.setAdapter(adapter);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(titles[position])).attach();
-        Objects.requireNonNull(tabLayout.getTabAt(0)).select();
 
         Intent intent = getIntent();
         String teamname = intent.getStringExtra("TEAMNAME");
+        int tabnumber = intent.getIntExtra("tabnumber",0);
+
+        Objects.requireNonNull(tabLayout.getTabAt(tabnumber)).select();
 
         teamnameView.setText(teamname);
         teamlogoView.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(teamname),this,display));
@@ -87,9 +81,12 @@ public class TeamInfoActivity extends AppCompatActivity {
                 if (tab.getPosition()==0){
                     Drawable myIcon = getApplicationContext().getDrawable( R.drawable.news_list );
                     tabLayout.setForeground(myIcon);
+                    scrollviewTeamInfo.pageScroll(View.FOCUS_UP);
                 }else {
                     Drawable myIcon = getApplicationContext().getDrawable( R.drawable.news_list2 );
                     tabLayout.setForeground(myIcon);
+                    scrollviewTeamInfo.pageScroll(View.FOCUS_UP);
+
                 }
                 viewPager.setCurrentItem(tab.getPosition());
 
@@ -114,6 +111,20 @@ public class TeamInfoActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                StaticData.showAbout(this,getCurrentFocus());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             android:visibility="visible" android:scaleX="1.5" android:scaleY="1.5"/>
     <TextView
-            android:text="No games found or check connection..."
+            android:text="..."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/nogames"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"

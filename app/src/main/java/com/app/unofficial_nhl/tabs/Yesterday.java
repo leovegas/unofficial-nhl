@@ -61,6 +61,8 @@ public class Yesterday extends Fragment {
     RecyclerView recyclerView;
     CustomAdapterGames recyclerAdapter;
     TextView nogames;
+    FrameLayout frameLayout4;
+    FrameLayout frameLayout7;
 
     public Yesterday(long time) {
         this.time = time;
@@ -76,8 +78,8 @@ public class Yesterday extends Fragment {
     ) {
         View root = inflater.inflate(R.layout.fragment_yesteday_today_tomorrow, container, false);
         if (Build.VERSION.SDK_INT >= 26) {
-              display = getActivity().getDisplay();
-        }else display = getActivity().getWindowManager().getDefaultDisplay();
+            display = getActivity().getDisplay();
+        } else display = getActivity().getWindowManager().getDefaultDisplay();
 
         SimpleDateFormat sdfDateToday = new SimpleDateFormat("yyyy-MM-dd");
         ProgressBar loadingBar = root.findViewById(R.id.progressBar);
@@ -90,8 +92,13 @@ public class Yesterday extends Fragment {
         preteamrecord1 = getActivity().findViewById(R.id.preteamrecord1);
         preteamrecord2 = getActivity().findViewById(R.id.preteamrecord2);
         nogames = root.findViewById(R.id.nogames);
+        frameLayout4 = getActivity().findViewById(R.id.frameLayout4);
+        frameLayout7 = getActivity().findViewById(R.id.frameLayout7);
         nogames.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
+        frameLayout4.setVisibility(View.GONE);
+        frameLayout7.setVisibility(View.GONE);
+
 
 /*        Disposable disposable = Observable.timer(3000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
@@ -114,7 +121,6 @@ public class Yesterday extends Fragment {
 
                     @Override
                     public void onNext(List<Game> gamesByDate) {
-
                         Log.i("reading", "Yesterday");
 
                         ArrayList<ListRow> alldata = new ArrayList<ListRow>();
@@ -131,9 +137,9 @@ public class Yesterday extends Fragment {
                             awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
                             @DrawableRes
-                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()), getActivity(),display);
+                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()), getActivity(), display);
                             @DrawableRes
-                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()),getActivity(),display);
+                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()), getActivity(), display);
 
                             ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
                             alldata.add(listRow);
@@ -151,9 +157,13 @@ public class Yesterday extends Fragment {
                         recyclerView.startAnimation(animation1);
 
                         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+
                             @Override
                             public void onClick(View view, int position) {
+                                frameLayout4.setVisibility(View.VISIBLE);
+                                frameLayout7.setVisibility(View.VISIBLE);
                                 cardflip(view, root.getContext(), gamesByDate, position);
+
 
                                 // getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
                             }
@@ -169,19 +179,37 @@ public class Yesterday extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        System.out.println(e.getClass().getName());
                         Handler uiThread = new Handler(Looper.getMainLooper());
 
                         uiThread.post(new Runnable() {
                             @Override
                             public void run() {
-                                loadingBar.setVisibility(View.GONE);
-                                nogames.setVisibility(View.VISIBLE);
+
+                                if (e instanceof IndexOutOfBoundsException) {
+                                    loadingBar.setVisibility(View.GONE);
+                                    nogames.setVisibility(View.VISIBLE);
+                                    nogames.setText("There are no games...");
+                                } else {
+                                    if (e instanceof retrofit2.adapter.rxjava2.HttpException) {
+                                        loadingBar.setVisibility(View.GONE);
+                                        nogames.setVisibility(View.VISIBLE);
+                                        nogames.setText("Try again later...");
+                                    }else{
+                                        loadingBar.setVisibility(View.GONE);
+                                        nogames.setVisibility(View.VISIBLE);
+                                        nogames.setText("Check internet connection...");
+                                    }
+                                }
+                                frameLayout4.setVisibility(View.GONE);
+                                frameLayout7.setVisibility(View.GONE);
                             }
                         });
                     }
 
                     @Override
                     public void onComplete() {
+                        dispose();
                         loadingBar.setVisibility(View.GONE);
                     }
                 });

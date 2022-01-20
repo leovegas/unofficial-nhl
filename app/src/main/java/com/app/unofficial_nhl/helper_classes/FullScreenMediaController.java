@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.MediaController;
 import com.app.unofficial_nhl.FullscreenActivity;
+import com.app.unofficial_nhl.MainActivity2;
 import com.app.unofficial_nhl.R;
 import com.app.unofficial_nhl.ui.video.FullScreenVideoActivity;
 
@@ -18,9 +19,11 @@ public class FullScreenMediaController extends MediaController {
     private ImageButton fullScreen;
     private String isFullScreen;
     private String url;
+    Context context;
 
     public FullScreenMediaController(Context context, String url) {
         super(context);
+        this.context = context;
         this.url = url;
     }
     public FullScreenMediaController(Context context) {
@@ -51,7 +54,6 @@ public class FullScreenMediaController extends MediaController {
         }else{
             fullScreen.setImageResource(R.drawable.full_screen);
             fullScreen.setBackgroundColor(Color.TRANSPARENT);
-
         }
 
         //add listener to image button to handle full screen and exit full screen events
@@ -60,16 +62,16 @@ public class FullScreenMediaController extends MediaController {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), FullScreenVideoActivity.class);
-                Intent intentBack = new Intent(getContext(), FullscreenActivity.class);
+                Intent intentBack = new Intent(getContext(), MainActivity2.class);
 
                 if(!"y".equals(isFullScreen)){
-                    intent.putExtra("fullScreenInd", "");
+                    intent.putExtra("fullScreenInd", "y");
                     intent.putExtra("url", url);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     ((Activity)getContext()).startActivity(intent);
                 }else{
-                    intentBack.putExtra("fullScreenInd", "y");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     ((Activity)getContext()).startActivity(intentBack);
-
                 }
             }
         });

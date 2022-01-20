@@ -3,9 +3,12 @@ package com.app.unofficial_nhl;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.*;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.*;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -27,6 +30,8 @@ public class GoaliePlayersActivity extends AppCompatActivity {
     private TextView wins, losses, ot, shutouts, timeOnIce, saves, ppsaves, goalsagainstgame;
     private TextView games_goalie, shotsAgainst, goalsAgainst, powerPlaySavePercentage, evenStrengthSavePercentage, gamesStarted;
     private PieChart chartSave, chartWins;
+    private TextView rank_wins,rank_saves,rank_shutOuts,rank_shotsAgainst,rank_savePercentage,rank_timeOnIce;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,13 @@ public class GoaliePlayersActivity extends AppCompatActivity {
         chartSave = findViewById(R.id.chartSave);
         chartWins = findViewById(R.id.chartWins);
 
+        rank_wins = findViewById(R.id.rank_wins);
+        rank_saves = findViewById(R.id.rank_saves);
+        rank_shutOuts = findViewById(R.id.rank_shutOuts);
+        rank_shotsAgainst = findViewById(R.id.rank_shotsAgainst);
+        rank_savePercentage = findViewById(R.id.rank_savePercentage);
+        rank_timeOnIce = findViewById(R.id.rank_timeOnIce);
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -70,6 +82,8 @@ public class GoaliePlayersActivity extends AppCompatActivity {
 
         int playerid = getIntent().getIntExtra("playerid",0);
         String role = getIntent().getStringExtra("role");
+
+        getPlayerRanks(playerid);
 
         if (playerid!=0) {
             NetworkService.getInstance()
@@ -129,12 +143,12 @@ public class GoaliePlayersActivity extends AppCompatActivity {
                                             timeOnIce.setText(stat__1.getTimeOnIce());
                                             saves.setText(stat__1.getSaves() + "");
                                             ppsaves.setText(stat__1.getPowerPlaySaves() + "");
-                                            goalsagainstgame.setText(stat__1.getGoalAgainstAverage() + "");
+                                            goalsagainstgame.setText(String.format("%.2f", stat__1.getGoalAgainstAverage()));
                                             games_goalie.setText(stat__1.getGames() + "");
                                             shotsAgainst.setText(stat__1.getShotsAgainst() + "");
                                             goalsAgainst.setText(stat__1.getGoalsAgainst()+"");
-                                            powerPlaySavePercentage.setText(stat__1.getPowerPlaySavePercentage() + "");
-                                            evenStrengthSavePercentage.setText(stat__1.getEvenStrengthSavePercentage() + "");
+                                            powerPlaySavePercentage.setText(String.format("%.2f", stat__1.getPowerPlaySavePercentage()));
+                                            evenStrengthSavePercentage.setText(String.format("%.2f", stat__1.getEvenStrengthSavePercentage()));
                                             gamesStarted.setText(stat__1.getGamesStarted() + "");
 
                                             double saveProcent = 0;
@@ -251,6 +265,19 @@ public class GoaliePlayersActivity extends AppCompatActivity {
                     }).create().show();*/
 
 
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                StaticData.showAbout(this,getCurrentFocus());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -265,4 +292,64 @@ public class GoaliePlayersActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    public void getPlayerRanks(int playerid) {
+
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getPlayerRanks(playerid)
+                .enqueue(new Callback<PlayerRank>() {
+
+                    @Override
+                    public void onResponse(Call<PlayerRank> call, Response<PlayerRank> response) {
+                        if (response.body()!=null) {
+                            if (response.body().getStats()!=null&&response.body().getStats().size()>0){
+                                if (response.body().getStats().get(0).getSplits()!=null&&response.body().getStats().get(0).getSplits().size()>0) {
+                                    rank_wins.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getWins());
+                                    rank_saves.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getSaves());
+                                    rank_shutOuts.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getShutOuts());
+                                    rank_shotsAgainst.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getShotsAgainst());
+                                    rank_saves.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getSaves());
+                                    rank_timeOnIce.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getTimeOnIce());
+
+                                    if (Integer.parseInt(rank_wins.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.framePoints);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_saves.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameGoals);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_shutOuts.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameAssists);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_shotsAgainst.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameShots);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_saves.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameHits);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_timeOnIce.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.framePlusMinus);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+
+                                }
+                            }
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PlayerRank> call, Throwable t) {
+
+                    }
+                });
+    }
+
 }

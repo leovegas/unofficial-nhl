@@ -8,7 +8,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:padding="10dp" android:foreground="@drawable/teams_list"
-            android:foregroundTint="#32FFFFFF">
+            android:foregroundTint="#4DFFFFFF">
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -24,8 +24,8 @@
                         android:scaleType="fitCenter"
                         android:alpha="0.6"
                         android:layout_weight="0.7"
-                        tools:srcCompat="@android:drawable/ic_popup_reminder" android:padding="2dp"
-                        app:srcCompat="@android:drawable/ic_popup_reminder" android:layout_gravity="center"
+                        tools:srcCompat="@drawable/myreminder" android:padding="2dp"
+                        app:srcCompat="@drawable/myreminder" android:layout_gravity="center"
                         tools:visibility="invisible" android:visibility="invisible"/>
                 <TextView
                         android:layout_width="match_parent"
@@ -33,15 +33,15 @@
                         android:id="@+id/shortname"
                         android:textSize="18sp"
                         android:text="NYR"
-                        android:fontFamily="@font/rubik" android:textColor="#BEBCBABA"
-                        android:layout_weight="0.4"
+                        android:fontFamily="@font/rubik" android:textColor="#F0BCBABA"
+                        android:layout_weight="0.3"
                         android:gravity="left" android:paddingStart="10dp" android:minLines="1"
                         android:textAlignment="viewStart" android:layout_gravity="center"/>
                 <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="50dp" app:srcCompat="@drawable/test" android:id="@+id/logo"
                         android:scaleType="centerInside" tools:srcCompat="@drawable/boston_bruins_logo"
-                        android:alpha="0.5" android:layout_gravity="right"
+                        android:alpha="0.7" android:layout_gravity="right"
                         android:layout_weight="0.7"
                         android:visibility="visible"/>
             </LinearLayout>
@@ -55,20 +55,24 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <ImageButton
+                <Button
                         android:layout_width="30dp"
-                        android:layout_height="30dp" app:srcCompat="@android:drawable/ic_dialog_info"
+                        android:layout_height="30dp"
                         android:id="@+id/teaminfo" android:layout_weight="1"
                         android:scaleType="fitCenter" android:padding="3dp"
-                        android:background="@drawable/corners_radius_4_200"
-                        android:alpha="0.6" android:layout_marginStart="20dp" android:layout_marginEnd="20dp"/>
-                <ImageButton
+                        android:alpha="0.6" android:layout_marginStart="20dp" android:layout_marginEnd="20dp"
+                        android:foreground="@drawable/card_list" android:foregroundTint="#4BFFFFFF"
+                        android:background="@android:color/transparent" android:text="info"
+                        android:textColor="#9CFFFFFF"/>
+                <Button
                         android:layout_width="30dp"
-                        android:layout_height="30dp" app:srcCompat="@android:drawable/ic_popup_reminder"
+                        android:layout_height="30dp"
                         android:id="@+id/alarm" android:layout_weight="1"
                         android:scaleType="fitCenter" android:padding="3dp"
-                        android:background="@drawable/corners_radius_4_200"
-                        android:alpha="0.6" android:layout_marginStart="20dp" android:layout_marginEnd="20dp"/>
+                        android:alpha="0.6" android:layout_marginStart="20dp" android:layout_marginEnd="20dp"
+                        android:foreground="@drawable/card_list" android:foregroundTint="#4BFFFFFF"
+                        android:background="@android:color/transparent" android:text="notify"
+                        android:textColor="#9CFFFFFF"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

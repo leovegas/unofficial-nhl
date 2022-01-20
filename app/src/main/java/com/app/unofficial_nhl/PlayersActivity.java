@@ -2,12 +2,15 @@ package com.app.unofficial_nhl;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.*;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import com.app.unofficial_nhl.helper_classes.StaticData;
 import com.app.unofficial_nhl.pojos.*;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -29,6 +32,7 @@ public class PlayersActivity extends AppCompatActivity {
     private TextView shootsCatches, goals, assists, shots, games, timeOnIce, pim, hits, WinningGoals, overTimeGoals;
     private TextView blocked, plusMinus, points, shifts, timeOnIcePerGame;
     private PieChart chartGoalsP, chartPointsP;
+    private TextView rank_points, rank_goals, rank_assists, rank_shots, rank_hits, rankPlusMinus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,13 @@ public class PlayersActivity extends AppCompatActivity {
         chartGoalsP = findViewById(R.id.chartGoalsP);
         chartPointsP = findViewById(R.id.chartPointsP);
 
+        rank_points = findViewById(R.id.rank_points);
+        rank_goals = findViewById(R.id.rank_goals);
+        rank_assists = findViewById(R.id.rank_assists);
+        rank_shots = findViewById(R.id.rank_shots);
+        rank_hits = findViewById(R.id.rank_hits);
+        rankPlusMinus = findViewById(R.id.rankPlusMinus);
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -72,6 +83,8 @@ public class PlayersActivity extends AppCompatActivity {
 
         int playerid = getIntent().getIntExtra("playerid",0);
         String teamgoals = getIntent().getStringExtra("teamgoals");
+
+        getPlayerRanks(playerid);
 
         if (playerid!=0) {
             NetworkService.getInstance()
@@ -124,7 +137,6 @@ public class PlayersActivity extends AppCompatActivity {
                                     if (splits != null && splits.size() > 0) {
                                         Stat__1 stat__1 = splits.get(0).getStat();
                                         if (stat__1 != null) {
-                                            System.out.println(playerid);
                                             goals.setText(stat__1.getGoals() + "");
                                             assists.setText(stat__1.getAssists() + "");
                                             shots.setText(stat__1.getShots() + "");
@@ -268,5 +280,76 @@ public class PlayersActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                StaticData.showAbout(this,getCurrentFocus());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void getPlayerRanks(int playerid) {
+
+        NetworkService.getInstance()
+                .getJSONApi()
+                .getPlayerRanks(playerid)
+                .enqueue(new Callback<PlayerRank>() {
+
+                    @Override
+                    public void onResponse(Call<PlayerRank> call, Response<PlayerRank> response) {
+                        if (response.body()!=null) {
+                            if (response.body().getStats()!=null&&response.body().getStats().size()>0){
+                                if (response.body().getStats().get(0).getSplits()!=null&&response.body().getStats().get(0).getSplits().size()>0) {
+                                    rank_points.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getRankPoints());
+                                    rank_goals.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getRankGoals());
+                                    rank_assists.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getRankAssists());
+                                    rank_shots.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getRankShots());
+                                    rank_hits.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getRankHits());
+                                    rankPlusMinus.setText(response.body().getStats().get(0).getSplits().get(0).getStat().getRankPlusMinus());
+
+                                    if (Integer.parseInt(rank_points.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.framePoints);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_goals.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameGoals);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_assists.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameAssists);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_shots.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameShots);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rank_hits.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.frameHits);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+                                    if (Integer.parseInt(rankPlusMinus.getText().toString().replaceAll("\\D+",""))<=5) {
+                                        FrameLayout frameLayout1 = findViewById(R.id.framePlusMinus);
+                                        frameLayout1.setBackgroundResource(R.drawable.corners10_marked);
+                                    }
+
+                                }
+                            }
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PlayerRank> call, Throwable t) {
+
+                    }
+                });
     }
 }

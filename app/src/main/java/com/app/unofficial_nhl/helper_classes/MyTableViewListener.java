@@ -43,7 +43,7 @@ public class MyTableViewListener implements ITableViewListener {
     public void onColumnHeaderClicked(@NonNull RecyclerView.ViewHolder columnHeaderView, int
             column) {
         System.out.println("column" + column);
-        if (column!=2&&column!=7&&column!=4&&column!=6) {
+        if (column==0) {
             if (columnHeaderView != null && columnHeaderView instanceof ColumnHeaderViewHolder) {
 
                 // Create Long Press Popup

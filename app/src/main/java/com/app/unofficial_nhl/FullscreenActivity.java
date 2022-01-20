@@ -20,6 +20,7 @@ import android.view.*;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.motion.widget.MotionLayout;
@@ -78,6 +79,7 @@ public class FullscreenActivity extends AppCompatActivity {
     Display display;
     private FrameLayout frameLayoutBehind;
     private int gameid;
+    private ImageButton rosterHome, rosterAway;
 
 
     /**
@@ -137,7 +139,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        FullscreenActivity.super.onBackPressed();
+        super.onBackPressed();
+
 /*            new AlertDialog.Builder(this)
                     .setTitle("Really Exit?")
                     .setMessage("Are you sure you want to exit?")
@@ -155,7 +158,8 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
+            case R.id.about:
+                StaticData.showAbout(this,getCurrentFocus());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -207,24 +211,31 @@ public class FullscreenActivity extends AppCompatActivity {
         card_hits_home = findViewById(R.id.card_hits_home);
         card_hits_away = findViewById(R.id.card_hits_away);
         stars = findViewById(R.id.stars);
+        rosterHome = findViewById(R.id.rosterHome);
+        rosterAway = findViewById(R.id.rosterAway);
 
         frameLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(gameid);
+                //System.out.println(gameid);
                 if (gameid != 0) {
                     getGameStats(gameid);
                 }
-                cardflip(v, getApplicationContext(), false);
+                cardflip(v, getApplicationContext(), 0);
             }
         });
         frameLayoutBehind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardflip(v, getApplicationContext(), true);
+                cardflip(v, getApplicationContext(), 1);
             }
         });
-
+        iceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardflip(v, getApplicationContext(), 2);
+            }
+        });
 
         motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
             @Override
@@ -248,7 +259,19 @@ public class FullscreenActivity extends AppCompatActivity {
                     videoView.start();
                 }
                 getGameStats(gameid);
-                cardflip(frameLayout2, getApplicationContext(), false);
+                cardflip(frameLayout2, getApplicationContext(), 0);
+                ValueAnimator anim2 = ValueAnimator.ofInt(iceLayout.getMeasuredHeight(), StaticData.dpToPx(0, getApplicationContext()));
+                anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        int val = (Integer) valueAnimator.getAnimatedValue();
+                        ViewGroup.LayoutParams layoutParams = iceLayout.getLayoutParams();
+                        layoutParams.height = val;
+                        iceLayout.setLayoutParams(layoutParams);
+                    }
+                });
+                anim2.setDuration(400);
+                anim2.start();
 
             }
 
@@ -259,7 +282,7 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         if (!tinyDB.getListString("teams").isEmpty()) {
-            System.out.println("yes not empty");
+            //System.out.println("yes not empty");
             ArrayList<String> s = tinyDB.getListString("teams");
             teams = new String[s.size()];
             for (int i = 0, sSize = s.size(); i < sSize; i++) {
@@ -380,6 +403,28 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
+        rosterHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TeamInfoActivity.class);
+                intent.putExtra("tabnumber",1);
+                intent.putExtra("TEAMNAME", home);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        rosterAway.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TeamInfoActivity.class);
+                intent.putExtra("tabnumber",1);
+                intent.putExtra("TEAMNAME", away);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
         getEventContent(feedid);
 
         NetworkService.getInstance()
@@ -443,6 +488,20 @@ public class FullscreenActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete() {
                                         dispose();
+
+                                        ValueAnimator anim2 = ValueAnimator.ofInt(iceLayout.getMeasuredHeight(), StaticData.dpToPx(0, getApplicationContext()));
+                                        anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                            @Override
+                                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                                int val = (Integer) valueAnimator.getAnimatedValue();
+                                                ViewGroup.LayoutParams layoutParams = iceLayout.getLayoutParams();
+                                                layoutParams.height = val;
+                                                iceLayout.setLayoutParams(layoutParams);
+                                            }
+                                        });
+                                        anim2.setDuration(1000);
+                                        anim2.start();
+
                                         drawGoals(gooalCoordinates, scoredteams);
                                         NetworkService.getInstance()
                                                 .getJSONApi()
@@ -454,13 +513,16 @@ public class FullscreenActivity extends AppCompatActivity {
 
                                                     @Override
                                                     public void onNext(Decisions value) {
-                                                        String sb = value.getFirstStar().getFullName() +
-                                                                ". " +
-                                                                value.getSecondStar().getFullName() +
-                                                                ". " +
-                                                                value.getThirdStar().getFullName() +
-                                                                ". ";
-                                                        stars.setText(sb);
+                                                        if (value.getFirstStar() != null) {
+                                                            String sb = value.getFirstStar().getFullName() +
+                                                                    ". " +
+                                                                    value.getSecondStar().getFullName() +
+                                                                    ". " +
+                                                                    value.getThirdStar().getFullName() +
+                                                                    ". ";
+                                                            stars.setText(sb);
+                                                        }
+
                                                     }
 
                                                     @Override
@@ -711,12 +773,13 @@ public class FullscreenActivity extends AppCompatActivity {
         }
         tinyDB.putListInt("arrayMessage",listInt);
         tinyDB.putListString("teams",listString);*/
+        videoView.setVideoPath(videoSource);
 
         mediaController = new FullScreenMediaController(this, videoSource);
         mediaController.setAnchorView(videoView);
 
-        videoView.setVideoPath(videoSource);
         videoView.setMediaController(mediaController);
+
         MediaPlayer.OnCompletionListener myVideoViewCompletionListener
                 = new MediaPlayer.OnCompletionListener() {
 
@@ -759,8 +822,8 @@ public class FullscreenActivity extends AppCompatActivity {
         //videoView.start();
     }
 
-    public synchronized void cardflip(View v, Context context, boolean isopen) {
-        if (!isopen) {
+    public synchronized void cardflip(View v, Context context, int isopen) {
+        if (isopen==0) {
             ValueAnimator anim = ValueAnimator.ofInt(frameLayoutBehind.getMeasuredHeight(), StaticData.dpToPx(250, context));
             anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -787,7 +850,7 @@ public class FullscreenActivity extends AppCompatActivity {
             anim2.setDuration(400);
             anim2.start();
 
-        } else {
+        } else if(isopen==2) {
             ValueAnimator anim = ValueAnimator.ofInt(frameLayout2.getMeasuredHeight(), StaticData.dpToPx(250, context));
             anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
@@ -796,6 +859,32 @@ public class FullscreenActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams layoutParams = frameLayout2.getLayoutParams();
                     layoutParams.height = val;
                     frameLayout2.setLayoutParams(layoutParams);
+                }
+            });
+            anim.setDuration(400);
+            anim.start();
+            ValueAnimator anim2 = ValueAnimator.ofInt(iceLayout.getMeasuredHeight(), StaticData.dpToPx(0, context));
+            anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = iceLayout.getLayoutParams();
+                    layoutParams.height = val;
+                    iceLayout.setLayoutParams(layoutParams);
+                }
+            });
+            anim2.setDuration(400);
+            anim2.start();
+        } else if (isopen==1) {
+
+            ValueAnimator anim = ValueAnimator.ofInt(iceLayout.getMeasuredHeight(), StaticData.dpToPx(270, context));
+            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = iceLayout.getLayoutParams();
+                    layoutParams.height = val;
+                    iceLayout.setLayoutParams(layoutParams);
                 }
             });
             anim.setDuration(400);
@@ -812,6 +901,7 @@ public class FullscreenActivity extends AppCompatActivity {
             });
             anim2.setDuration(400);
             anim2.start();
+
         }
 
     }

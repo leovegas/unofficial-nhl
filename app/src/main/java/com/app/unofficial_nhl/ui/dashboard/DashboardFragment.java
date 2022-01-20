@@ -94,8 +94,8 @@ public class DashboardFragment extends Fragment {
         adapter2.add("Central division");
         adapter2.add("East division");
         adapter2.add("North division");
-        adapter2.add("League");
-        adapter2.add("League");
+        adapter2.add("League (press here)");
+        adapter2.add("League (press here)");
 
 
         spinner2.setAdapter(adapter2);
@@ -354,20 +354,22 @@ public class DashboardFragment extends Fragment {
                 // The order should be same with column header list;
                 List<Cell> listBuf= new ArrayList<>();
 
-                listBuf.add(new Cell(t.getLeagueRank(),  Integer.parseInt(t.getLeagueRank()))); // "UpdatedAt"
-                listBuf.add(new Cell(t.getLeagueRecord().getWins() + "-" + t.getLeagueRecord().getLosses() + "-" + t.getLeagueRecord().getOt(), String.valueOf(t.getLeagueRecord().getWins())));    // "Nickname"
-                listBuf.add(new Cell(t.getRegulationWins() + "", String.valueOf(t.getRegulationWins())));       // "Email"
-                listBuf.add(new Cell(t.getGoalsScored() + "/" + t.getGoalsAgainst(), String.valueOf(t.getGoalsScored())));   // "BirthDay"
-                listBuf.add(new Cell(t.getPoints() + "", Integer.parseInt(t.getPoints()+"")));      // "Gender"
-                listBuf.add(new Cell(t.getGamesPlayed() + "", String.valueOf(t.getGamesPlayed())));         // "Age"
+                listBuf.add(new Cell(t.getLeagueRank(),  Integer.parseInt(t.getLeagueRank())));
+                listBuf.add(new Cell(t.getLeagueRecord().getWins() + "-" + t.getLeagueRecord().getLosses() + "-" + t.getLeagueRecord().getOt(), String.valueOf(t.getLeagueRecord().getWins())));
+                listBuf.add(new Cell(t.getRegulationWins() + "", String.valueOf(t.getRegulationWins())));
+                listBuf.add(new Cell(t.getGoalsScored() + "/" + t.getGoalsAgainst(), String.valueOf(t.getGoalsScored())));
+                listBuf.add(new Cell(t.getPoints() + "", Integer.parseInt(t.getPoints()+"")));
+                listBuf.add(new Cell(t.getGamesPlayed() + "", String.valueOf(t.getGamesPlayed())));
+
                 if (t.getStreak() != null) {
                     listBuf.add(new Cell(t.getStreak().getStreakCode(), String.valueOf(t.getStreak())));
                 } else {
                     listBuf.add(new Cell("-", "-"));
-                }                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));      // "Salary"
-                listBuf.add(new Cell(t.getConferenceRank(),Integer.parseInt(t.getConferenceRank()))); // "CreatedAt"
-                listBuf.add(new Cell(t.getWildCardRank(), Integer.parseInt(t.getWildCardRank())));    // "Address"
-                listBuf.add(new Cell(t.getPpLeagueRank(), Integer.parseInt(t.getPpLeagueRank())));    // "Address"
+                }
+                listBuf.add(new Cell(t.getDivisionRank(), Integer.parseInt(t.getDivisionRank())));
+                listBuf.add(new Cell(t.getConferenceRank(),Integer.parseInt(t.getConferenceRank())));
+                listBuf.add(new Cell(t.getWildCardRank(), Integer.parseInt(t.getWildCardRank())));
+                listBuf.add(new Cell(t.getPpLeagueRank(), Integer.parseInt(t.getPpLeagueRank())));
 
                 lists.add(listBuf);
 

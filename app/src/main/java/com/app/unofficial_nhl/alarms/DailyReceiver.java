@@ -18,6 +18,10 @@ import com.allyants.notifyme.ActionReceiver;
 import com.allyants.notifyme.DeletePendingIntent;
 import com.app.unofficial_nhl.MainActivity2;
 import com.app.unofficial_nhl.R;
+import com.app.unofficial_nhl.helper_classes.StaticData;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.allyants.notifyme.Notification.NotificationEntry.NOTIFICATION_SMALL_ICON;
 
@@ -42,9 +46,11 @@ public class DailyReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, String.valueOf(randomID));
 
-        mBuilder.setSmallIcon(R.drawable.ic_check_circle);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date dat = new Date(Long.parseLong(date));
+        mBuilder.setSmallIcon(R.drawable.logo_clean);
        // mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher2));
-        mBuilder.setContentTitle(teamname + " "+date);
+        mBuilder.setContentTitle(teamname + " "+ sdf.format(dat));
         mBuilder.setContentText("Check results in our app");
         mBuilder.setColor(Color.BLUE);
         mBuilder.setVibrate(new long[]{1000, 1000, 1000});

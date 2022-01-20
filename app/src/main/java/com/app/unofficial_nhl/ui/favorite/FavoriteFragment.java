@@ -37,7 +37,7 @@ public class FavoriteFragment extends Fragment {
 
     private FavoritesViewModel notificationsViewModel;
     private FrameLayout buttonsLayout;
-    private ImageButton info, alarm;
+    private Button info, alarm;
     private MotionLayout motionLayout;
     private boolean open = false;
 
@@ -76,7 +76,7 @@ public class FavoriteFragment extends Fragment {
             public void onClick(View v, int position) {
 
                 buttonsLayout = (FrameLayout) v.findViewById(R.id.buttonsLayout);
-                info = (ImageButton) v.findViewById(R.id.teaminfo);
+                info = (Button) v.findViewById(R.id.teaminfo);
                 info.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -97,7 +97,7 @@ public class FavoriteFragment extends Fragment {
                     }
                 });
 
-                alarm = (ImageButton) v.findViewById(R.id.alarm);
+                alarm = (Button) v.findViewById(R.id.alarm);
                 alarm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View valarm) {
@@ -221,20 +221,18 @@ public class FavoriteFragment extends Fragment {
                             }
                         }
 
-/*
-                        datemap.putAll(StaticData.StrToCalendar("2021-10-15T22:57:00Z"));
-*/
+                       // datemap.putAll(StaticData.StrToCalendar("2021-10-16T18:26:00Z"));
 
                         if (!datemap.isEmpty()) {
                             for (Map.Entry<Calendar, Integer> entry : datemap.entrySet()) {
                                 Calendar k = entry.getKey();
                                 Integer v = entry.getValue();
-                                StaticData.setAlarm(getContext(), k, v, teamname, k.getTime().toString());
+                                StaticData.setAlarm(getContext(), k, v, teamname, String.valueOf(k.getTime().getTime()));
                                 notesIDs.add(v);
                             }
 
                             tinydb.putListInt(teamname + "1", notesIDs);
-                            System.out.println(tinydb.getListInt(teamname + "1").size());
+                            //System.out.println(tinydb.getListInt(teamname + "1").size());
                         }
 
                     }

@@ -13,7 +13,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
 import android.view.Display;
+import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationManagerCompat;
 import com.allyants.notifyme.NotifyMe;
 import com.app.unofficial_nhl.MainActivity2;
@@ -155,7 +157,6 @@ public class StaticData {
 
     public static void setAlarm(Context context, Calendar calendar, int randomID, String teamname, String date) {
 
-        System.out.println(calendar.getTime().toString());
         Intent myIntent = new Intent(context, DailyReceiver.class);
         myIntent.putExtra("randomID",(Integer) randomID);
         myIntent.putExtra("teamname",(String) teamname);
@@ -237,6 +238,23 @@ public class StaticData {
                 matrix, false);
 
         return resizedBitmap;
+    }
+
+    public static void showAbout(Context context, View view) {
+
+        // setup the alert builder
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
+        builder.setTitle("About");
+        builder.setMessage("!Important note!  \nThis app is not an official National Hockey League app. All trademarks used in the app are used for the sole purpose of identifying  the respective teams and franchises and remain the property of their respective owners. \n" +
+                "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. \n © NHL 2021. All Rights Reserved. \n \n"
+                +"App developer  \ntimplay89@gmail.com");
+
+        // add a button
+        builder.setPositiveButton("OK", null);
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

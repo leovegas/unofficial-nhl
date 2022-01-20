@@ -7,7 +7,7 @@
         tools:context="com.app.unofficial_nhl.ui.home.HomeFragment"
         android:background="@android:color/transparent" app:layoutDescription="@xml/fragment_home_scene3"
         android:id="@+id/constr">
-    <SearchView
+<!--    <SearchView
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/corners"
@@ -21,7 +21,7 @@
                 android:textSize="34sp" android:fontFamily="@font/rubik_bold"
                 android:textColor="#FF6500"
         />
-    </SearchView>
+    </SearchView>-->
     <com.google.android.material.tabs.TabLayout
             android:background="@color/background"
             android:layout_width="match_parent"
@@ -67,6 +67,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+3 days"/>
+        <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="date" android:id="@+id/withdate"/>
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"

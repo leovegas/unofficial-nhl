@@ -12,6 +12,7 @@ public class Split {
     @Expose
     private Team team;
 
+
     public Stat_ getStat() {
         return stat;
     }

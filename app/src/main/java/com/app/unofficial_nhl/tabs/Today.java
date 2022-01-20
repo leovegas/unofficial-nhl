@@ -224,8 +224,9 @@ public class Today extends Fragment {
 
         nogames.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
-        frameLayout4.setVisibility(View.VISIBLE);
-        frameLayout7.setVisibility(View.VISIBLE);
+        frameLayout4.setVisibility(View.GONE);
+        frameLayout7.setVisibility(View.GONE);
+
 
         HomeViewModel homeViewModel =
                 ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
@@ -293,6 +294,8 @@ public class Today extends Fragment {
 
                             @Override
                             public void onClick(View view, int position) {
+                                frameLayout4.setVisibility(View.VISIBLE);
+                                frameLayout7.setVisibility(View.VISIBLE);
                                 if (gamesByDate.get(position).getStatus().getDetailedState().startsWith("In Progress")||gamesByDate.get(position).getStatus().getDetailedState().equals("Final")) {
                                     String home = gamesByDate.get(position).getTeams().getHome().getTeam().getName();
                                     String away = gamesByDate.get(position).getTeams().getAway().getTeam().getName();
@@ -308,8 +311,9 @@ public class Today extends Fragment {
                                     int awayid = gamesByDate.get(position).getTeams().getAway().getTeam().getId();
                                     String feedid = gamesByDate.get(position).getLink().replaceAll("\\D+","").substring(1);
                                     String state = gamesByDate.get(position).getStatus().getDetailedState();
+                                    int gameid = gamesByDate.get(position).getGamePk();
 
-                                    int[] arrayMessage =new int[]{scorehome,scoreaway,wins1,losses1,ot1,wins2,losses2,ot2,homeid,awayid};
+                                    int[] arrayMessage =new int[]{scorehome,scoreaway,wins1,losses1,ot1,wins2,losses2,ot2,homeid,awayid,gameid};
                                     String[] teams = new String[]{home,away,feedid, state};
 
                                     view.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
@@ -381,19 +385,32 @@ public class Today extends Fragment {
                         uiThread.post(new Runnable() {
                             @Override
                             public void run() {
-                                loadingBar.setVisibility(View.GONE);
-                                nogames.setVisibility(View.VISIBLE);
+
+                                if (e instanceof IndexOutOfBoundsException) {
+                                    loadingBar.setVisibility(View.GONE);
+                                    nogames.setVisibility(View.VISIBLE);
+                                    nogames.setText("There are no games today...");
+                                } else {
+                                    if (e instanceof retrofit2.adapter.rxjava2.HttpException) {
+                                        loadingBar.setVisibility(View.GONE);
+                                        nogames.setVisibility(View.VISIBLE);
+                                        nogames.setText("Try again later...");
+                                    }else{
+                                        loadingBar.setVisibility(View.GONE);
+                                        nogames.setVisibility(View.VISIBLE);
+                                        nogames.setText("Check internet connection...");
+                                    }
+                                }
+
                                 frameLayout4.setVisibility(View.GONE);
                                 frameLayout7.setVisibility(View.GONE);
                             }
                         });
-
-
-
                     }
 
                     @Override
                     public void onComplete() {
+                        dispose();
                         loadingBar.setVisibility(View.GONE);
                     }
                 });

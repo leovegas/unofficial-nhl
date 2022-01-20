@@ -10,11 +10,13 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/linearLayout2">
+            android:layout_height="match_parent" android:id="@+id/linearLayout2"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent">
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="190dp" android:background="@drawable/corners10"
-                android:layout_marginStart="10dp" android:layout_marginEnd="10dp" android:layout_marginBottom="5dp"
+                android:layout_marginBottom="5dp"
                 android:foregroundTint="#19FFFFFF" android:foreground="@drawable/playerside">
 
             <LinearLayout
@@ -31,14 +33,14 @@
                             android:layout_height="wrap_content" android:id="@+id/playerNumber" android:padding="5dp"
                             android:textAlignment="viewEnd" android:fontFamily="@font/rubik_bold"
                             android:textColor="@color/textlesswhite" android:textSize="24sp"
-                            android:layout_weight="0.90"/>
+                            android:layout_weight="0.9"/>
                     <TextView
                             android:text="Player Name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/playerName" android:padding="5dp"
-                            android:textAlignment="viewStart" android:fontFamily="@font/rubik_bold"
+                            android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                             android:textColor="@color/textlesswhite" android:textSize="24sp"
-                            android:layout_weight="0.4"/>
+                            android:layout_weight="0.15"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="vertical"
@@ -228,7 +230,7 @@
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
-                                android:layout_weight="1" android:alpha="1"/>
+                                android:layout_weight="1" android:alpha="0.7"/>
                     </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
@@ -255,7 +257,7 @@
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
-                                android:layout_weight="1" android:alpha="1"/>
+                                android:layout_weight="1" android:alpha="0.7"/>
                     </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
@@ -282,7 +284,7 @@
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
-                                android:layout_weight="1" android:alpha="1"/>
+                                android:layout_weight="1" android:alpha="0.7"/>
                     </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
@@ -310,7 +312,7 @@
                                 android:padding="5dp"
                                 android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                 android:textColor="@color/textlesswhite" android:textSize="18sp"
-                                android:layout_weight="1" android:alpha="1"/>
+                                android:layout_weight="1" android:alpha="0.7"/>
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
@@ -338,11 +340,12 @@
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
                                 android:textColor="@color/textlesswhite" android:textSize="10sp"
-                                android:layout_weight="0.1" android:alpha="0.5"/>
+                                android:layout_weight="0.02" android:alpha="0.5"/>
                         <com.github.mikephil.charting.charts.PieChart
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/chartSave" android:layout_gravity="center" android:layout_weight="0.5"/>
+                                android:id="@+id/chartSave" android:layout_gravity="center"
+                                android:layout_weight="0.5"/>
                     </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
@@ -359,11 +362,12 @@
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center" android:fontFamily="@font/rubik"
                                 android:textColor="@color/textlesswhite" android:textSize="10sp"
-                                android:layout_weight="0.1" android:alpha="0.5"/>
+                                android:layout_weight="0.02" android:alpha="0.5"/>
                         <com.github.mikephil.charting.charts.PieChart
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/chartWins" android:layout_gravity="center" android:layout_weight="0.5"/>
+                                android:id="@+id/chartWins" android:layout_gravity="center"
+                                android:layout_weight="0.5"/>
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
@@ -373,6 +377,184 @@
                 android:layout_height="match_parent">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:orientation="vertical">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foregroundTint="#22FFFFFF" android:foreground="@drawable/ranks"
+                        android:paddingStart="13dp" android:paddingTop="15dp" android:paddingEnd="23dp"
+                        android:paddingBottom="15dp" android:layout_marginStart="5dp" android:layout_marginEnd="5dp">
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp" android:layout_weight="0.5"
+                            android:background="@drawable/corners10" android:layout_margin="1dp"
+                            android:id="@+id/framePoints">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            <TextView
+                                    android:text="0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="14sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="1" android:id="@+id/rank_wins"
+                                    android:foregroundTint="#54FFFFFF" android:paddingTop="5sp"/>
+                            <TextView
+                                    android:text="wins"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="12sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="2"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp" android:layout_weight="0.5"
+                            android:background="@drawable/corners10" android:layout_margin="1dp"
+                            android:id="@+id/frameGoals">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            <TextView
+                                    android:text="0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="14sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="1" android:id="@+id/rank_saves"
+                                    android:paddingTop="5sp"/>
+                            <TextView
+                                    android:text="saves"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="12sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="2"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp" android:layout_weight="0.5"
+                            android:background="@drawable/corners10" android:layout_margin="1dp"
+                            android:id="@+id/frameAssists">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            <TextView
+                                    android:text="0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="14sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="1"
+                                    android:id="@+id/rank_shutOuts" android:paddingTop="5sp"/>
+                            <TextView
+                                    android:text="shutouts"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="12sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="2"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp" android:layout_weight="0.5"
+                            android:background="@drawable/corners10" android:layout_margin="1dp"
+                            android:id="@+id/frameShots">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            <TextView
+                                    android:text="0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="14sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="1"
+                                    android:id="@+id/rank_shotsAgainst"
+                                    android:paddingTop="5sp"/>
+                            <TextView
+                                    android:text="shots against"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="12sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="2"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp" android:layout_weight="0.5"
+                            android:background="@drawable/corners10" android:layout_margin="1dp"
+                            android:id="@+id/frameHits">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            <TextView
+                                    android:text="0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="14sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="1"
+                                    android:id="@+id/rank_savePercentage"
+                                    android:paddingTop="5sp"/>
+                            <TextView
+                                    android:text="save %"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="12sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="2"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp" android:layout_weight="0.5"
+                            android:background="@drawable/corners10" android:layout_margin="1dp"
+                            android:id="@+id/framePlusMinus">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                            <TextView
+                                    android:text="0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="14sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="1"
+                                    android:id="@+id/rank_timeOnIce" android:paddingTop="5sp"/>
+                            <TextView
+                                    android:text="time on ice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center" android:fontFamily="@font/rubik"
+                                    android:textColor="@color/textlesswhite" android:textSize="12sp"
+                                    android:layout_weight="0.5" android:alpha="0.5"
+                                    android:layout_gravity="center" android:maxLines="2"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
@@ -407,7 +589,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/timeOnIce"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -436,7 +618,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/saves"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -465,7 +647,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/ppsaves"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -494,7 +676,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/goalsagainstgame"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -523,7 +705,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/games_goalie"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -557,7 +739,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/shotsAgainst"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -586,7 +768,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/goalsAgainst"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -615,7 +797,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/powerPlaySavePercentage"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -645,7 +827,7 @@
                                         android:id="@+id/evenStrengthSavePercentage"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>
@@ -674,7 +856,7 @@
                                         android:layout_height="wrap_content" android:id="@+id/gamesStarted"
                                         android:textAlignment="center" android:fontFamily="@font/rubik_bold"
                                         android:textColor="@color/textlesswhite" android:textSize="14sp"
-                                        android:layout_weight="0.8" android:alpha="1" android:gravity="center"
+                                        android:layout_weight="0.8" android:alpha="0.7" android:gravity="center"
                                         android:layout_gravity="center" android:maxLines="1"/>
                             </LinearLayout>
                         </FrameLayout>

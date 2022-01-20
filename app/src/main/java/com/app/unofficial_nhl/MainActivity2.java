@@ -3,10 +3,7 @@ package com.app.unofficial_nhl;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ViewGroup;
+import android.view.*;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,7 +77,6 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main2);
-
             NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
             BottomNavigationView bottomNav = findViewById(R.id.nav_view);
@@ -165,4 +161,6 @@ public class MainActivity2 extends AppCompatActivity {
 
             //-----------
         }
+
+
 }

@@ -64,7 +64,7 @@
                                                 style="@style/Base.Widget.MaterialComponents.TextView"
                                                 android:fontFamily="@font/rubik"
                                                 android:textColor="@color/textlesswhite"
-                                                android:textSize="10sp" android:layout_weight="0.5"
+                                                android:textSize="12sp" android:layout_weight="0.5"
                                                 android:alpha="0.7"/>
                                         <TextView
                                                 android:text="0"
@@ -74,7 +74,7 @@
                                                 android:fontFamily="@font/rubik_bold"
                                                 android:textColor="@color/textlesswhite"
                                                 android:textSize="12sp" android:layout_weight="0.5"
-                                                android:textAlignment="viewEnd"/>
+                                                android:textAlignment="viewEnd" android:paddingEnd="3sp"/>
                                     </LinearLayout>
                                     <ProgressBar
                                             style="@android:style/Widget.ProgressBar.Horizontal"
@@ -105,7 +105,7 @@
                                                 style="@style/Base.Widget.MaterialComponents.TextView"
                                                 android:fontFamily="@font/rubik"
                                                 android:textColor="@color/textlesswhite"
-                                                android:textSize="10sp" android:layout_weight="0.5"
+                                                android:textSize="12sp" android:layout_weight="0.5"
                                                 android:alpha="0.7"/>
                                         <TextView
                                                 android:text="0"
@@ -115,7 +115,7 @@
                                                 android:fontFamily="@font/rubik_bold"
                                                 android:textColor="@color/textlesswhite"
                                                 android:textSize="12sp" android:layout_weight="0.5"
-                                                android:textAlignment="viewEnd"/>
+                                                android:textAlignment="viewEnd" android:paddingEnd="3sp"/>
                                     </LinearLayout>
                                     <ProgressBar
                                             style="?android:attr/progressBarStyleHorizontal"
@@ -145,7 +145,7 @@
                                                 style="@style/Base.Widget.MaterialComponents.TextView"
                                                 android:fontFamily="@font/rubik"
                                                 android:textColor="@color/textlesswhite"
-                                                android:textSize="10sp" android:layout_weight="0.5"
+                                                android:textSize="12sp" android:layout_weight="0.5"
                                                 android:alpha="0.7"/>
                                         <TextView
                                                 android:text="0"
@@ -155,7 +155,7 @@
                                                 android:fontFamily="@font/rubik_bold"
                                                 android:textColor="@color/textlesswhite"
                                                 android:textSize="12sp" android:layout_weight="0.5"
-                                                android:textAlignment="viewEnd"/>
+                                                android:textAlignment="viewEnd" android:paddingEnd="3sp"/>
                                     </LinearLayout>
                                     <ProgressBar
                                             style="?android:attr/progressBarStyleHorizontal"
@@ -185,7 +185,7 @@
                                 android:layout_height="153dp"
                                 android:id="@+id/chart" android:layout_gravity="center"
                                 android:layout_weight="0.5" android:foreground="@drawable/round"
-                                android:foregroundTint="#25FFFFFF"/>
+                                android:foregroundTint="#19FFFFFF"/>
                     </FrameLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -223,7 +223,7 @@
                                     android:layout_height="wrap_content"
                                     style="@style/Base.Widget.MaterialComponents.TextView"
                                     android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"
+                                    android:textSize="12sp" android:layout_weight="0.5" android:textAlignment="center"
                                     android:layout_gravity="center" android:paddingStart="5sp" android:alpha="0.7"/>
                             <TextView
                                     android:text="0"
@@ -251,7 +251,7 @@
                                     android:layout_height="wrap_content"
                                     style="@style/Base.Widget.MaterialComponents.TextView"
                                     android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"
+                                    android:textSize="12sp" android:layout_weight="0.5" android:textAlignment="center"
                                     android:layout_gravity="center" android:paddingStart="5sp" android:alpha="0.7"/>
                             <TextView
                                     android:text="0"
@@ -279,7 +279,7 @@
                                     android:layout_height="wrap_content"
                                     style="@style/Base.Widget.MaterialComponents.TextView"
                                     android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"
+                                    android:textSize="12sp" android:layout_weight="0.5" android:textAlignment="center"
                                     android:layout_gravity="center" android:paddingStart="5sp" android:alpha="0.7"/>
                             <TextView
                                     android:text="0"
@@ -313,7 +313,7 @@
                                     android:layout_height="wrap_content"
                                     style="@style/Base.Widget.MaterialComponents.TextView"
                                     android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"
+                                    android:textSize="12sp" android:layout_weight="0.5" android:textAlignment="center"
                                     android:layout_gravity="center" android:paddingStart="5sp" android:alpha="0.7"/>
                             <TextView
                                     android:text="0"
@@ -341,7 +341,7 @@
                                     android:layout_height="wrap_content"
                                     style="@style/Base.Widget.MaterialComponents.TextView"
                                     android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"
+                                    android:textSize="12sp" android:layout_weight="0.5" android:textAlignment="center"
                                     android:layout_gravity="center" android:paddingStart="5sp" android:alpha="0.7"/>
                             <TextView
                                     android:text="0"
@@ -369,7 +369,7 @@
                                     android:layout_height="wrap_content"
                                     style="@style/Base.Widget.MaterialComponents.TextView"
                                     android:fontFamily="@font/rubik" android:textColor="@color/textlesswhite"
-                                    android:textSize="10sp" android:layout_weight="0.5" android:textAlignment="center"
+                                    android:textSize="12sp" android:layout_weight="0.5" android:textAlignment="center"
                                     android:id="@+id/streakField" android:layout_gravity="center"
                                     android:paddingStart="5sp" android:alpha="0.7"/>
                             <TextView

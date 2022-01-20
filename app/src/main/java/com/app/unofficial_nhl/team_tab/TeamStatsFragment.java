@@ -30,6 +30,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.android.material.snackbar.Snackbar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,6 +48,7 @@ public class TeamStatsFragment extends Fragment {
     ProgressBar progressBarWins;
     ProgressBar progressBarLosses;
     ProgressBar progressBarOt;
+    TextView headcoach;
 
     public TeamStatsFragment() {
         // Required empty public constructor
@@ -78,6 +80,7 @@ public class TeamStatsFragment extends Fragment {
         city = getActivity().findViewById(R.id.city);
         firstYear = getActivity().findViewById(R.id.firstYearOfPlay);
         ImageView teamlogoView = getActivity().findViewById(R.id.teamLogo);
+        headcoach = getActivity().findViewById(R.id.headcoach);
 
         teamlogoView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +108,7 @@ public class TeamStatsFragment extends Fragment {
         TextView textViewId = (TextView) getActivity().findViewById(R.id.teamName);
         int id = StaticData.teamToIdMap.get(textViewId.getText());
 
-        getCoach(id);
+        //getCoach(id);
 
         NetworkService.getInstance()
                 .getJSONApi()
@@ -120,6 +123,7 @@ public class TeamStatsFragment extends Fragment {
                         city.setText(team.getVenue().getCity());
                         firstYear.setText(team.getFirstYearOfPlay());
                         teamlogoView.setTag(team.getOfficialSiteUrl());
+                        headcoach.setText(team.getDivision().getName());
 
                         NetworkService.getInstance()
                                 .getJSONApi()

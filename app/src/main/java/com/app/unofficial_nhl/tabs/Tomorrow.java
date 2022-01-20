@@ -81,6 +81,8 @@ public class Tomorrow extends Fragment {
     TextView prestarttime;
     List<Integer> wlo = new ArrayList<>();
     Display display;
+    FrameLayout frameLayout4;
+    FrameLayout frameLayout7;
 
     public Tomorrow(long time) {
         this.time = time;
@@ -218,12 +220,17 @@ public class Tomorrow extends Fragment {
         preteamposition2 = getActivity().findViewById(R.id.preteamposition2);
         preteamrecord1 = getActivity().findViewById(R.id.preteamrecord1);
         preteamrecord2 = getActivity().findViewById(R.id.preteamrecord2);
+        frameLayout4 = getActivity().findViewById(R.id.frameLayout4);
+        frameLayout7 = getActivity().findViewById(R.id.frameLayout7);
 
         nogames = root.findViewById(R.id.nogames);
         prestarttime = getActivity().findViewById(R.id.prestarttime);
 
         nogames.setVisibility(View.GONE);
         loadingBar.setVisibility(View.VISIBLE);
+        frameLayout4.setVisibility(View.GONE);
+        frameLayout7.setVisibility(View.GONE);
+
 
         HomeViewModel homeViewModel =
                 ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
@@ -291,6 +298,8 @@ public class Tomorrow extends Fragment {
 
                             @Override
                             public void onClick(View view, int position) {
+                                frameLayout4.setVisibility(View.VISIBLE);
+                                frameLayout7.setVisibility(View.VISIBLE);
                                 view.findViewById(R.id.home_score).setVisibility(View.GONE);
                                 view.findViewById(R.id.away_score).setVisibility(View.GONE);
                                 homeViewModel.fire();
@@ -347,19 +356,37 @@ public class Tomorrow extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        System.out.println(e.getClass().getName());
                         Handler uiThread = new Handler(Looper.getMainLooper());
+
                         uiThread.post(new Runnable() {
                             @Override
                             public void run() {
-                                loadingBar.setVisibility(View.GONE);
-                                nogames.setVisibility(View.VISIBLE);
+
+                                if (e instanceof IndexOutOfBoundsException) {
+                                    loadingBar.setVisibility(View.GONE);
+                                    nogames.setVisibility(View.VISIBLE);
+                                    nogames.setText("There are no games...");
+                                } else {
+                                    if (e instanceof retrofit2.adapter.rxjava2.HttpException) {
+                                        loadingBar.setVisibility(View.GONE);
+                                        nogames.setVisibility(View.VISIBLE);
+                                        nogames.setText("Try again later...");
+                                    }else{
+                                        loadingBar.setVisibility(View.GONE);
+                                        nogames.setVisibility(View.VISIBLE);
+                                        nogames.setText("Check internet connection...");
+                                    }
+                                }
+                                frameLayout4.setVisibility(View.GONE);
+                                frameLayout7.setVisibility(View.GONE);
                             }
                         });
                     }
 
                     @Override
                     public void onComplete() {
+                        dispose();
                         loadingBar.setVisibility(View.GONE);
                     }
                 });
