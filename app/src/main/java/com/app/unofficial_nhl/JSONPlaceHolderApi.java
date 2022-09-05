@@ -26,13 +26,13 @@ public interface JSONPlaceHolderApi {
     @GET("/api/v1/game/{gameid}/boxscore")
     Call<GameStats> getGameStats(@Path("gameid") int gameid);
 
-    @GET("/api/v1/people/{playerid}/stats?stats=regularSeasonStatRankings&season=20212022")
+    @GET("/api/v1/people/{playerid}/stats?stats=regularSeasonStatRankings&season=20222023")
     Call<PlayerRank> getPlayerRanks(@Path("playerid") int playerid);
 
-    @GET("api/v1/people/{playerid}/stats?stats=statsSingleSeason&season=20212022")
+    @GET("api/v1/people/{playerid}/stats?stats=statsSingleSeason&season=20222023")
     Call<PlayerStat> getPlayerStats(@Path("playerid") int playerid);
 
-    @GET("/api/v1/schedule?season=20212022")
+    @GET("/api/v1/schedule?season=20222023")
     Call<Teams> getAllGamesForTeam(@Query("teamId") int teamid);
 
     @GET("/api/v1/teams/{id}/stats")

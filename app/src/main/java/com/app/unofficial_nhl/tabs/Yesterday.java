@@ -137,9 +137,15 @@ public class Yesterday extends Fragment {
                             awayScore = String.valueOf(game.getTeams().getAway().getScore());
 
                             @DrawableRes
-                            Drawable logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()), getActivity(), display);
+                            Drawable logo_team1 = StaticData.resizeImage(R.drawable.main_logo,getActivity(),display);
                             @DrawableRes
-                            Drawable logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()), getActivity(), display);
+                            Drawable logo_team2 = StaticData.resizeImage(R.drawable.main_logo,getActivity(),display);
+                            try {
+                                logo_team1 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getHome().getTeam().getName()), getActivity(), display);
+                                logo_team2 = StaticData.resizeImage(StaticData.logosMap.get(game.getTeams().getAway().getTeam().getName()), getActivity(), display);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
                             ListRow listRow = new ListRow(teamHome, teamAway, venueName, gameTime, gameDate, detailedState, awayScore, homeScore, logo_team1, logo_team2);
                             alldata.add(listRow);

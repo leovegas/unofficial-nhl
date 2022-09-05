@@ -214,6 +214,9 @@ public class FullscreenActivity extends AppCompatActivity {
         rosterHome = findViewById(R.id.rosterHome);
         rosterAway = findViewById(R.id.rosterAway);
 
+        preteam1logo.setImageDrawable(StaticData.resizeImage(R.drawable.main_logo, this, display));
+        preteam2logo.setImageDrawable(StaticData.resizeImage(R.drawable.main_logo, this, display));
+
         frameLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -366,8 +369,12 @@ public class FullscreenActivity extends AppCompatActivity {
 
         postteam1name.setText(home);
         preteam2name.setText(away);
-        preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home), this, display));
-        preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away), this, display));
+        try {
+            preteam1logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(home), this, display));
+            preteam2logo.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(away), this, display));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         score1.setText(String.valueOf(arrayMessage[0]));
         score2.setText(String.valueOf(arrayMessage[1]));
         gamestate.setText("Status " + detailedState);
@@ -650,8 +657,14 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
+
             // Set an image for ImageView
-            iv.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(teams.get(i)), this, display));
+            try {
+                iv.setImageDrawable(StaticData.resizeImage(StaticData.logosMap.get(teams.get(i)), this, display));
+            } catch (Exception e) {
+                e.printStackTrace();
+                iv.setImageDrawable(StaticData.resizeImage(R.drawable.main_logo, this, display));
+            }
 
             // Add layout parameters to ImageView
             iv.setLayoutParams(lp);

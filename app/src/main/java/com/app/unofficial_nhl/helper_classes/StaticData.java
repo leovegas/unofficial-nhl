@@ -203,6 +203,8 @@ public class StaticData {
 
         double deviceWidth = display.getWidth();
 
+        if(imageResource==0) imageResource = R.drawable.main_logo;
+
         BitmapDrawable bd = (BitmapDrawable) activity.getResources().getDrawable(
                 imageResource);
         double imageHeight = bd.getBitmap().getHeight();

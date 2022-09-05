@@ -55,7 +55,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.StockV
         animation1.setDuration(1000);
         holder.cv.setAlpha(1f);
         holder.cv.startAnimation(animation1);
-        holder.scoredlogo.setImageDrawable((ContextCompat.getDrawable(holder.cv.getContext(), StaticData.logosMap.get(scoredteams.get(position)))));
+        try {
+            holder.scoredlogo.setImageDrawable((ContextCompat.getDrawable(holder.cv.getContext(), StaticData.logosMap.get(scoredteams.get(position)))));
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.scoredlogo.setImageDrawable((ContextCompat.getDrawable(holder.cv.getContext(), R.drawable.main_logo)));
+        }
         holder.stockName.setText(" Period " + periods.get(position) + "\n " + infolist.get(position));
 
 /*        ImageView goal = new ImageView(holder.itemView.getContext());

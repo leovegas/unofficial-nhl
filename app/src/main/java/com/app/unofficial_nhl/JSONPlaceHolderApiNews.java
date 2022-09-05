@@ -18,10 +18,10 @@ public interface JSONPlaceHolderApiNews {
     Call<Teams> getPlayerInfoById(@Path("id") int id);
     @GET("api/v1/schedule")
     Call<Teams> getSheduledGamesByDate(@Query("date") String date);*/
-    @GET("/svc/search/v2/articlesearch.json?q=nhl&api-key=eMFFsFjAIVEfSSf7Uf19bPkwv4HDP66FX")
+    @GET("/svc/search/v2/articlesearch.json?q=nhl&api-key=MFFsFjAIVEfSSf7Uf19bPkwv4HDP66FX")
     Call<News> getNews();
 
-    @GET("/svc/search/v2/articlesearch.json?q=nhl&api-key=wMFFsFjAIVEfSSf7Uf19bPkwv4HDP66FX")
+    @GET("/svc/search/v2/articlesearch.json?q=nhl&api-key=MFFsFjAIVEfSSf7Uf19bPkwv4HDP66FX")
         // Call<News> getNews();
     Observable<News> getNews2();
 }
