@@ -8,7 +8,7 @@ android {
         applicationId "com.app.nhl_recaps_stats_schelude"
         minSdkVersion 22
         targetSdkVersion 31
-        versionCode 7
+        versionCode 8
         versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
