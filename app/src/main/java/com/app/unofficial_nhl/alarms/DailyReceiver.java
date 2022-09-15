@@ -58,7 +58,17 @@ public class DailyReceiver extends BroadcastReceiver {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         mBuilder.setSound(uri);
         Intent deleteIntent = new Intent(context, MainActivity2.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, randomID, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        PendingIntent pendingIntent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+             pendingIntent = PendingIntent.getBroadcast(context, randomID, deleteIntent, PendingIntent.FLAG_MUTABLE);
+
+        }
+        else
+        {
+             pendingIntent = PendingIntent.getBroadcast(context, randomID, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
         mBuilder.setDeleteIntent(pendingIntent);
         Notification notification = mBuilder.build();
 

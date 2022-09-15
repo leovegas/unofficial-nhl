@@ -4,10 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_fullscreen.xml" value="0.21913072110635495" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3005464480874317" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.21913072110635495" />
+        <entry key="app/src/main/res/layout/activity_team_info.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/fragment_players_tab2.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/fragment_teams_stat_tab1.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/fragment_yesteday_today_tomorrow.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/fullscreen_videoview.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/row_layout.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/row_layout_player.xml" value="0.4057377049180328" />
         <entry key="app/src/main/res/layout/row_layout_teams.xml" value="0.4057377049180328" />
         <entry key="app/src/main/res/layout/table_view_corner_layout.xml" value="0.4057377049180328" />
         <entry key="app/src/main/res/layout/table_view_row_header_layout.xml" value="0.4057377049180328" />
+        <entry key="app/src/main/res/layout/test_layout.xml" value="0.4057377049180328" />
         <entry key="app/src/main/res/menu/main_activity_actions.xml" value="0.4668918918918919" />
       </map>
     </option>

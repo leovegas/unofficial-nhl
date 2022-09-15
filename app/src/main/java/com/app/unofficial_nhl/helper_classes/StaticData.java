@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -12,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Toast;
@@ -162,8 +164,18 @@ public class StaticData {
         myIntent.putExtra("teamname",(String) teamname);
         myIntent.putExtra("date",(String) date);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, randomID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        PendingIntent pendingIntent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+             pendingIntent = PendingIntent.getBroadcast(
+                    context, randomID, myIntent, PendingIntent.FLAG_MUTABLE);
+        }
+        else
+        {
+             pendingIntent = PendingIntent.getBroadcast(
+                    context, randomID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-(3600 * 1000), pendingIntent);
         System.out.println("alarm set " + randomID);
@@ -184,8 +196,16 @@ public class StaticData {
 
         for (Integer integer : list) {
             Intent intent1 = new Intent(context, DailyReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                    integer, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            PendingIntent pendingIntent = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                 pendingIntent = PendingIntent.getBroadcast(context,
+                        integer, intent1, PendingIntent.FLAG_MUTABLE);
+            }
+            else
+            {
+                 pendingIntent = PendingIntent.getBroadcast(context,
+                        integer, intent1, PendingIntent.FLAG_UPDATE_CURRENT);            }
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             am.cancel(pendingIntent);
             pendingIntent.cancel();
@@ -205,8 +225,13 @@ public class StaticData {
 
         if(imageResource==0) imageResource = R.drawable.main_logo;
 
-        BitmapDrawable bd = (BitmapDrawable) activity.getResources().getDrawable(
-                imageResource);
+        BitmapDrawable bd = null;
+        try {
+            bd = (BitmapDrawable) activity.getResources().getDrawable(imageResource);
+        } catch (Resources.NotFoundException e) {
+            Log.i("No resource", "No resource");
+            e.printStackTrace();
+        }
         double imageHeight = bd.getBitmap().getHeight();
         double imageWidth = bd.getBitmap().getWidth();
 
@@ -248,8 +273,8 @@ public class StaticData {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
         builder.setTitle("About");
         builder.setMessage("!Important note!  \nThis app is not an official National Hockey League app. All trademarks used in the app are used for the sole purpose of identifying  the respective teams and franchises and remain the property of their respective owners. \n" +
-                "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. \n © NHL 2021. All Rights Reserved. \n \n"
-                +"App developer  \ntimplay89@gmail.com");
+                "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. \n © NHL 2022. All Rights Reserved. \n \n"
+                +"Contacts: \nYou can request additional features here timplay89@gmail.com");
 
         // add a button
         builder.setPositiveButton("OK", null);

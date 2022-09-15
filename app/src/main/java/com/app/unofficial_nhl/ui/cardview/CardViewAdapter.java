@@ -32,13 +32,15 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.StockV
     List<String> infolist;
     List<String> periods;
     List<String> scoredteams;
+    List<String> currentGoals;
     List<Coordinates> gooalCoordinates;
 
-    public CardViewAdapter(List<String> infolist, List<String> periods, List<String> scoredteams, List<Coordinates> gooalCoordinates) {
+    public CardViewAdapter(List<String> infolist, List<String> periods, List<String> scoredteams, List<Coordinates> gooalCoordinates, List<String> currentGoals) {
         this.infolist = infolist;
         this.periods = periods;
         this.scoredteams = scoredteams;
         this.gooalCoordinates = gooalCoordinates;
+        this.currentGoals = currentGoals;
     }
 
 
@@ -61,7 +63,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.StockV
             e.printStackTrace();
             holder.scoredlogo.setImageDrawable((ContextCompat.getDrawable(holder.cv.getContext(), R.drawable.main_logo)));
         }
-        holder.stockName.setText(" Period " + periods.get(position) + "\n " + infolist.get(position));
+        holder.stockName.setText(" ("+currentGoals.get(position)+")" + " Period " + periods.get(position) + "\n " + infolist.get(position));
 
 /*        ImageView goal = new ImageView(holder.itemView.getContext());
         goal.setImageDrawable((ContextCompat.getDrawable(holder.cv.getContext(), StaticData.logosMap.get(scoredteams.get(position)))));

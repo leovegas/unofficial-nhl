@@ -70,6 +70,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private Team team;
     private List<Integer> scoringPlays = new ArrayList<Integer>();
     private List<String> whoscored = new ArrayList<>();
+    private List<String> currentGoals = new ArrayList<>();
     private List<String> periodsAndTime = new ArrayList<>();
     private List<String> scoredteams = new ArrayList<>();
     private List<Coordinates> gooalCoordinates = new ArrayList<>();
@@ -477,13 +478,14 @@ public class FullscreenActivity extends AppCompatActivity {
                                                 Play play = plays.get(i);
                                                 if (i == score) {
                                                     whoscored.add(play.getResult().getDescription());
+                                                    currentGoals.add(play.getAbout().getGoals().getHome() + ":" + play.getAbout().getGoals().getAway());
                                                     periodsAndTime.add(play.getAbout().getOrdinalNum() + " " + play.getAbout().getPeriodTime());
                                                     scoredteams.add(play.getTeam().getName());
                                                     gooalCoordinates.add(play.getCoordinates());
                                                 }
                                             }
                                         }
-                                        CardViewAdapter cardViewAdapter = new CardViewAdapter(whoscored, periodsAndTime, scoredteams, gooalCoordinates);
+                                        CardViewAdapter cardViewAdapter = new CardViewAdapter(whoscored, periodsAndTime, scoredteams, gooalCoordinates, currentGoals);
                                         recyclerView.setAdapter(cardViewAdapter);
                                     }
 
