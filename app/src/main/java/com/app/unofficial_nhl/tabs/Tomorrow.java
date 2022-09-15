@@ -366,7 +366,7 @@ public class Tomorrow extends Fragment {
                                 if (e instanceof IndexOutOfBoundsException) {
                                     loadingBar.setVisibility(View.GONE);
                                     nogames.setVisibility(View.VISIBLE);
-                                    nogames.setText("There are no games...");
+                                    nogames.setText("There are no games \non the selected day...");
                                 } else {
                                     if (e instanceof retrofit2.adapter.rxjava2.HttpException) {
                                         loadingBar.setVisibility(View.GONE);

@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =  ViewModelProviders.of(this).get(HomeViewModel.class);
-        titles = new String[]{"Yesterday", "Today", "Tomorrow","ANY DATE"};
+        titles = new String[]{"Yesterday", "Today", "Tomorrow", "Calendar"};
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
