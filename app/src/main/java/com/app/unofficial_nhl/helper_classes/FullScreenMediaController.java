@@ -2,13 +2,16 @@ package com.app.unofficial_nhl.helper_classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.MediaController;
+import androidx.appcompat.app.AlertDialog;
 import com.app.unofficial_nhl.FullscreenActivity;
 import com.app.unofficial_nhl.MainActivity2;
 import com.app.unofficial_nhl.R;
@@ -61,19 +64,46 @@ public class FullScreenMediaController extends MediaController {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getContext(), FullScreenVideoActivity.class);
-                Intent intentBack = new Intent(getContext(), MainActivity2.class);
+                showAbout((Activity) getContext(), ((Activity) getContext()).getCurrentFocus());
 
-                if(!"y".equals(isFullScreen)){
-                    intent.putExtra("fullScreenInd", "y");
-                    intent.putExtra("url", url);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    ((Activity)getContext()).startActivity(intent);
-                }else{
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    ((Activity)getContext()).startActivity(intentBack);
-                }
+//                Intent intent = new Intent(getContext(), FullScreenVideoActivity.class);
+//                Intent intentBack = new Intent(getContext(), MainActivity2.class);
+//
+//                if(!"y".equals(isFullScreen)){
+//                    intent.putExtra("fullScreenInd", "y");
+//                    intent.putExtra("url", url);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    ((Activity)getContext()).startActivity(intent);
+//                }else{
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    ((Activity)getContext()).startActivity(intentBack);
+//                }
             }
         });
     }
+
+
+    public static void showAbout(Context context, View view) {
+
+        // setup the alert builder
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
+        builder.setTitle("Google Play");
+        builder.setMessage("Thank you for using our app!  \n\n The full version of the app with the a fullscreen video recaps and with a information about players can be purchased on Google Play.  \n \n \n"
+                +"Contacts: \n timplay89@gmail.com");
+
+        // add a button
+        builder.setPositiveButton("Get it", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.app.nhl_recaps_stats_schelude_p"));
+                context.startActivity(intent);
+                dialog.cancel();
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 } 

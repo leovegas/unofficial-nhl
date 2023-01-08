@@ -78,7 +78,12 @@ public class NotificationsFragment extends Fragment {
                             article = doc.getLeadParagraph();
                             source = doc.getSource();
                             date = doc.getPubDate();
-                            imageurl = doc.getMultimedia().get(0).getUrl();
+                            imageurl="https://static01.nyt.com/images/2022/08/14/world/14hockey-canada-print/14hockey-canada-mediumThreeByTwo440.jpg";
+                            try {
+                                imageurl = doc.getMultimedia().get(0).getUrl();
+                            } catch (Exception e) {
+                                imageurl="https://static01.nyt.com/images/2022/08/14/world/14hockey-canada-print/14hockey-canada-mediumThreeByTwo440.jpg";
+                            }
                             weburl = doc.getWebUrl();
                             String imageFull = "https://www.nytimes.com/" + imageurl;
                             System.out.println(imageFull);

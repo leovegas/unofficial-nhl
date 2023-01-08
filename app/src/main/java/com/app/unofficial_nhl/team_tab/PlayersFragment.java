@@ -1,12 +1,16 @@
 package com.app.unofficial_nhl.team_tab;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,33 +61,36 @@ public class PlayersFragment extends Fragment {
 
                 System.out.println(goalsScoredV.getText());
 
-                if (role.equals("Goalie")) {
-                    view.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.animate().withLayer()
-                                    .alpha(1f).setDuration(100).start();
-                            Intent intent = new Intent(getActivity(), GoaliePlayersActivity.class);
-                            intent.putExtra("playerid", playerid);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        }
-                    }).setStartDelay(200).start();
-                } else {
-                    view.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.animate().withLayer()
-                                    .alpha(1f).setDuration(100).start();
-                            Intent intent = new Intent(getActivity(), PlayersActivity.class);
-                            intent.putExtra("playerid", playerid);
-                            intent.putExtra("teamgoals", goalsScoredV.getText());
+                showAbout(getActivity(), getActivity().getCurrentFocus());
 
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        }
-                    }).setStartDelay(200).start();
-                }
+//                if (role.equals("Goalie")) {
+//                    view.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            view.animate().withLayer()
+//                                    .alpha(1f).setDuration(100).start();
+//                            Intent intent = new Intent(getActivity(), GoaliePlayersActivity.class);
+//                            intent.putExtra("playerid", playerid);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            startActivity(intent);
+//                        }
+//                    }).setStartDelay(200).start();
+//                } else {
+//                    view.animate().withLayer().alpha(0).setDuration(100).withEndAction(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            view.animate().withLayer()
+//                                    .alpha(1f).setDuration(100).start();
+//
+//                            Intent intent = new Intent(getActivity(), PlayersActivity.class);
+//                            intent.putExtra("playerid", playerid);
+//                            intent.putExtra("teamgoals", goalsScoredV.getText());
+//
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            startActivity(intent);
+//                        }
+//                    }).setStartDelay(200).start();
+//                }
 
             }
 
@@ -129,6 +136,29 @@ public class PlayersFragment extends Fragment {
                 });
 
 
+    }
+
+    public static void showAbout(Context context, View view) {
+
+        // setup the alert builder
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
+        builder.setTitle("Google Play");
+        builder.setMessage("Thank you for using our app!  \n\n The full version of the app with the a fullscreen video recaps and with a information about players can be purchased on Google Play.  \n \n \n"
+                +"Contacts: \n timplay89@gmail.com");
+
+        // add a button
+        builder.setPositiveButton("Get it", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.app.nhl_recaps_stats_schelude_p"));
+                context.startActivity(intent);
+                dialog.cancel();
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
